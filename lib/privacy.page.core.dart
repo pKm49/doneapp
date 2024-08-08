@@ -29,7 +29,7 @@ class PrivacyPage_Core extends StatelessWidget {
           ],
         ),
         actions: [
-          LanguagePreviewButtonComponentShared(isPrimaryMode:false),
+          LanguagePreviewButtonComponentShared(textColor:APPSTYLE_BackgroundWhite),
           addHorizontalSpace(APPSTYLE_SpaceLarge)
         ],
       ) ,

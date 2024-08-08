@@ -22,10 +22,13 @@ class AppHttpInterceptor implements InterceptorContract {
       if (Bearer != null && Bearer != "") {
         request.headers["Authorization"] = "Bearer $Bearer";
       }
+      print("interceptRequest");
+      print(request.headers);
     } catch (e) {
       print(e);
     }
     return request;
+
   }
 
   @override
@@ -33,24 +36,31 @@ class AppHttpInterceptor implements InterceptorContract {
       {required BaseResponse response}) async {
     // TODO: implement interceptResponse
     try {
+      print("interceptResponse");
+      print(response.statusCode);
       if (response is Response) {
-        var httpResponseBody = json.decode(response.body);
-        if (httpResponseBody['result'] != null) {
-          if (httpResponseBody['result'] is String &&
-              httpResponseBody["result"].toString().contains('UNAUTHORIZED')) {
+
+        var httpResponseBody = json.decode(response.body.toString());
+
+        if (httpResponseBody['payload'] != null) {
+
+          if (httpResponseBody['payload'] is String &&
+              httpResponseBody["payload"].toString().contains('UNAUTHORIZED')) {
             var sharedHttpService = new SharedHttpService();
             await sharedHttpService.getAccessToken();
           } else {
-            if (httpResponseBody['result']['access_token'] != null) {
+            if (httpResponseBody['payload'][0]['access_token'] != null) {
+
               var sharedPreferences = await SharedPreferences.getInstance();
               sharedPreferences.setString("access_token",
-                  httpResponseBody['result']['access_token'].toString());
+                  httpResponseBody['payload'][0]['access_token'].toString());
             }
           }
         }
       }
-    } catch (e) {
+    } catch (e,stc) {
       print(e);
+      print(stc);
     }
     return response;
 

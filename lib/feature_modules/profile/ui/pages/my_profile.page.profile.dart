@@ -10,6 +10,7 @@ import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyProfilePage_Profile extends StatelessWidget {
   const MyProfilePage_Profile({super.key});
@@ -242,12 +243,13 @@ class MyProfilePage_Profile extends StatelessWidget {
     final updateButtonTextWidget = Text('yes'.tr,style: TextStyle(color: APPSTYLE_PrimaryColor),);
     final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
 
-    updateLogoutAction() {
-      // Get.offAllNamed(Approute_LoginPage_Auth);
+    updateLogoutAction() async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('mobile');
+      Get.offAllNamed(AppRouteNames.loginRoute);
     }
     updateAction() {
       Navigator.pop(context);
-
     }
     List<Widget> actions = [
 

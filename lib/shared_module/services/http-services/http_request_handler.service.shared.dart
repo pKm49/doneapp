@@ -20,8 +20,8 @@ getRequest(endpoint, parameters) async {
     ]);
 
     final httpResponse = await http
-        .get(Uri.http(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
-    print(Uri.http(env.apiEndPoint, "$endpoint").toString());
+        .get(Uri.https(env.apiEndPoint, "$endpoint"),params: json.decode(json.encode(parameters)));
+    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
     print(parameters);
 
     print("httpResponse");
@@ -57,14 +57,14 @@ getRequest(endpoint, parameters) async {
 postRequest(endpoint, body) async {
   print("postRequest called");
   print(endpoint);
-  print(Uri.http(env.apiEndPoint, "$endpoint").toString());
+  print(Uri.https(env.apiEndPoint, "$endpoint").toString());
   print(body);
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
     print("postRequest called pass 1");
-    print(Uri.http(env.apiEndPoint, "$endpoint").toString());
+    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
     print("update_customer_profile request");
     print(endpoint.toString().contains('update_customer_profile'));
     late var httpResponse;
@@ -72,12 +72,12 @@ postRequest(endpoint, body) async {
       // print("update_customer_profile contains update_customer_profile");
 
       httpResponse = await http.post(
-          Uri.http(env.apiEndPoint, "$endpoint"),
+          Uri.https(env.apiEndPoint, "$endpoint"),
           params:endpoint.toString().contains('update_customer_profile')? json.decode(json.encode(body)) : null
       );
     }else{
       httpResponse = await http.post(
-          Uri.http(env.apiEndPoint, "$endpoint"),
+          Uri.https(env.apiEndPoint, "$endpoint"),
           body:endpoint.toString().contains('update_customer_profile')?null: json.encode(body)
       );
     }
@@ -126,7 +126,7 @@ patchRequest(endpoint, body) async {
     ]);
 
     final httpResponse = await http.patch(
-        Uri.http(env.apiEndPoint, "/$endpoint"),
+        Uri.https(env.apiEndPoint, "/$endpoint"),
         body: json.encode(body));
 
     var httpResponseBody = json.decode(httpResponse.body);
@@ -158,7 +158,7 @@ deleteRequest(endpoint) async {
     ]);
 
     final httpResponse =
-    await http.delete(Uri.http(env.apiEndPoint, "/$endpoint"));
+    await http.delete(Uri.https(env.apiEndPoint, "/$endpoint"));
 
     var httpResponseBody = json.decode(httpResponse.body);
 
@@ -189,7 +189,7 @@ generateErrorResponse(String errorMessage) {
   return poundHttpResponse;
 }
 
-generateSuccessResponse(dynamic httpResponseBody, int statusCode) {
+generateSuccessResponse(dynamic httpResponseBody, int requestStatusCode) {
 
   print("generateSuccessResponse");
   // print(httpResponseBody);
@@ -203,10 +203,10 @@ generateSuccessResponse(dynamic httpResponseBody, int statusCode) {
     return generateErrorResponse('Something went wrong, try again');
   }
   else{
-    num status_code = (result  != null && result['status_code']  != null)
-        ? result['status_code']
+    num statusCode = (result  != null && result['statusCode']  != null)
+        ? result['statusCode']
         :(result  != null && result['statusCode']  != null)
-        ? result['statusCode']:result.toString().contains('Error')?500: statusCode;
+        ? result['statusCode']:result.toString().contains('Error')?500: requestStatusCode;
     String message = (result  != null && result['message']  != null)
         ? result['message']
         :(result  != null && result['error']  != null)
@@ -217,20 +217,20 @@ generateSuccessResponse(dynamic httpResponseBody, int statusCode) {
         :(result  != null && result['payload']  != null)
         ? result['payload']
         : result;
-    print("status_code");
-    print(status_code);
+    print("statusCode");
+    print(statusCode);
     print("message");
     print(message);
     print("data");
     print(data);
     AppHttpResponse poundHttpResponse = AppHttpResponse(
-        statusCode:(result  != null && result['status_code']  != null)
-            ? result['status_code']
+        statusCode:(result  != null && result['statusCode']  != null)
+            ? result['statusCode']
             :(result  != null && result['statusCode']  != null)
             ? result['statusCode']: result.toString().contains('Error')?500: statusCode,
-        message: (result  != null && result['message']  != null)
+        message: (result  != null && result['message']  != null && result['message']  != "")
             ? result['message']
-            :(result  != null && result['error']  != null)
+            :(result  != null && result['error']  != null && result['error']  != "")
             ? result['error'] is String?result['error']:"something_wrong".tr
             : "something_wrong".tr ,
         data: (result  != null && result['data']  != null)

@@ -38,7 +38,7 @@ class NotificationsPage_Core extends StatelessWidget {
           ],
         ),
         actions: [
-          LanguagePreviewButtonComponentShared(isPrimaryMode:true),
+          LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
           addHorizontalSpace(APPSTYLE_SpaceLarge)
         ],
       ) ,

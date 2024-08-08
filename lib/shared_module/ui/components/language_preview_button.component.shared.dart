@@ -10,9 +10,9 @@ import 'package:ionicons/ionicons.dart';
 
 class LanguagePreviewButtonComponentShared extends StatelessWidget {
 
-  bool? isPrimaryMode;
+  Color textColor;
 
-  LanguagePreviewButtonComponentShared({super.key, this.isPrimaryMode});
+  LanguagePreviewButtonComponentShared({super.key, required this.textColor});
 
   final sharedController = Get.find<SharedController>();
 
@@ -20,93 +20,184 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
-    return Container(
-      width: screenwidth * .18,
-      height: 35,
-      decoration: APPSTYLE_BorderedContainerDarkSmallDecoration.copyWith(
-          borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
-
-          border: Border.all(color: APPSTYLE_Grey40, width: .5),
-
-          color: APPSTYLE_BackgroundWhite),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 1,
-            child: InkWell(
-              onTap: () {
-                 sharedController.changeLanguage('en', false);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                decoration:
-                    APPSTYLE_BorderedContainerDarkSmallDecoration.copyWith(
-                        borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
-
-                        border:
-                            Border.all(color: Colors.transparent, width: .2),
-                        color: Localizations.localeOf(context)
-                                    .languageCode
-                                    .toString() ==
-                                'en'
-                            ? isPrimaryMode==true?APPSTYLE_PrimaryColor: APPSTYLE_Black
-                            : APPSTYLE_BackgroundWhite),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    'En',
-                    style: TextStyle(
-                        color: Localizations.localeOf(context)
-                                    .languageCode
-                                    .toString() ==
-                                'en'
-                            ? APPSTYLE_BackgroundWhite
-                            : APPSTYLE_Black,
-                        fontSize: APPSTYLE_FontSize12,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+    return InkWell(
+      onTap: (){
+        Get.bottomSheet(
+          Container(
+            width: screenwidth,
+            height: 150,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(APPSTYLE_BorderRadiusSmall),
+                topRight: Radius.circular(APPSTYLE_BorderRadiusSmall),
               ),
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: InkWell(
-              onTap: () {
-                  sharedController.changeLanguage('ar', false);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                decoration:
-                    APPSTYLE_BorderedContainerDarkSmallDecoration.copyWith(
-                        borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
+            padding: APPSTYLE_LargePaddingAll,
+            child:  Column(
+              children: [
+                Text("app_language".tr,style: getHeadlineLargeStyle(context)),
+                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                Divider(),
+                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                Row(
+                  children: [
+                    Expanded(child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                        },
+                        style: getElevatedButtonStyle(context).copyWith(
+                            padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(
+                                    horizontal: APPSTYLE_SpaceLarge,
+                                    vertical:APPSTYLE_SpaceSmall))
+                        ),
+                        child: Text("عربي",
+                            style: getHeadlineMediumStyle(context).copyWith(
+                                color: APPSTYLE_BackgroundWhite,
+                                fontWeight: APPSTYLE_FontWeightBold),
+                            textAlign: TextAlign.center),
+                      ),
+                    )),
+                    addHorizontalSpace(APPSTYLE_SpaceMedium),
+                    Expanded(child: SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton(
 
-                        border:
-                            Border.all(color: Colors.transparent, width: .2),
-                        color: Localizations.localeOf(context)
-                                    .languageCode
-                                    .toString() ==
-                                'ar'
-                            ? isPrimaryMode==true?APPSTYLE_PrimaryColor: APPSTYLE_Black
-                            : APPSTYLE_BackgroundWhite),
-                child:  FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text('ع',
-                      style: TextStyle(
-                          color: Localizations.localeOf(context)
-                                      .languageCode
-                                      .toString() ==
-                                  'ar'
-                              ? APPSTYLE_BackgroundWhite
-                              : APPSTYLE_Black,
+                        onPressed: () {
+                        },
+                        style: getElevatedButtonStyle(context).copyWith(
+                            padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(
+                                    horizontal: APPSTYLE_SpaceLarge,
+                                    vertical:APPSTYLE_SpaceSmall))
+                        ),
+                        child: Text("English",
+                            style: getHeadlineMediumStyle(context).copyWith(
+                                color: APPSTYLE_PrimaryColor,
+                                fontWeight: APPSTYLE_FontWeightBold),
+                            textAlign: TextAlign.center),
+                      ),
+                    )),
 
-                          fontWeight: FontWeight.bold)),
-                ),
-              ),
+                  ],
+                )
+              ],
             ),
           ),
-        ],
+        );
+        
+      //   AlertDialog(
+        //           title: Text("app_language".tr),
+        //           actions: [
+        //             TextButton(
+        //                 onPressed: () {
+        //                   sharedController.changeLanguage('ar', false);
+        //                   Get.back();
+        //                 },
+        //                 child: Text("عربي",style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_PrimaryColor),)),
+        //             TextButton(
+        //                 onPressed: () {
+        //                   sharedController.changeLanguage('en', false);
+        //                   Get.back();
+        //                 },
+        //                 child: Text("English")),
+        //           ],
+        //         )
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: APPSTYLE_SpaceExtraSmall,
+          horizontal: APPSTYLE_SpaceSmall
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(Ionicons.globe_outline,color: textColor),
+            addHorizontalSpace(APPSTYLE_SpaceSmall),
+            Text(Localizations.localeOf(context)
+                .languageCode
+                .toString() ==
+                'ar'?'ع':'Eng',style: getBodyMediumStyle(context).copyWith(
+              color: textColor
+            ),),
+            // Expanded(
+            //   flex: 1,
+            //   child: InkWell(
+            //     onTap: () {
+            //        sharedController.changeLanguage('en', false);
+            //     },
+            //     child: Container(
+            //       alignment: Alignment.center,
+            //       decoration:
+            //           APPSTYLE_BorderedContainerDarkSmallDecoration.copyWith(
+            //               borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
+            //
+            //               border:
+            //                   Border.all(color: Colors.transparent, width: .2),
+            //               color: Localizations.localeOf(context)
+            //                           .languageCode
+            //                           .toString() ==
+            //                       'en'
+            //                   ? isPrimaryMode==true?APPSTYLE_PrimaryColor: APPSTYLE_Black
+            //                   : APPSTYLE_BackgroundWhite),
+            //       child: FittedBox(
+            //         fit: BoxFit.scaleDown,
+            //         child: Text(
+            //           'En',
+            //           style: TextStyle(
+            //               color: Localizations.localeOf(context)
+            //                           .languageCode
+            //                           .toString() ==
+            //                       'en'
+            //                   ? APPSTYLE_BackgroundWhite
+            //                   : APPSTYLE_Black,
+            //               fontSize: APPSTYLE_FontSize12,
+            //               fontWeight: FontWeight.bold),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // Expanded(
+            //   flex: 1,
+            //   child: InkWell(
+            //     onTap: () {
+            //         sharedController.changeLanguage('ar', false);
+            //     },
+            //     child: Container(
+            //       alignment: Alignment.center,
+            //       decoration:
+            //           APPSTYLE_BorderedContainerDarkSmallDecoration.copyWith(
+            //               borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
+            //
+            //               border:
+            //                   Border.all(color: Colors.transparent, width: .2),
+            //               color: Localizations.localeOf(context)
+            //                           .languageCode
+            //                           .toString() ==
+            //                       'ar'
+            //                   ? isPrimaryMode==true?APPSTYLE_PrimaryColor: APPSTYLE_Black
+            //                   : APPSTYLE_BackgroundWhite),
+            //       child:  FittedBox(
+            //         fit: BoxFit.scaleDown,
+            //         child: Text('ع',
+            //             style: TextStyle(
+            //                 color: Localizations.localeOf(context)
+            //                             .languageCode
+            //                             .toString() ==
+            //                         'ar'
+            //                     ? APPSTYLE_BackgroundWhite
+            //                     : APPSTYLE_Black,
+            //
+            //                 fontWeight: FontWeight.bold)),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

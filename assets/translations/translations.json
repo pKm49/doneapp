@@ -40,7 +40,7 @@
       "send_otp": "Send OTP",
       "verify_otp": "Verify OTP",
       "verification_code": "Verification Code",
-      "enter_otp": "Please enter OTP Code sent to mobile",
+      "enter_otp": "Please enter OTP Code sent to \n mobile",
       "otp_verified": "OTP Verified",
       "otp_verified_message": "The OTP was successfully verified Welcome to Diet Done",
       "enter_your_address": "Enter Your Address",
@@ -129,7 +129,14 @@
       "diet_done_description":"At DietDone, we're committed to helping you achieve your health and wellness goals in a way that's tailored to your lifestyle. Our mobile application is designed to make your journey towards a healthier you both effortless and enjoyable",
       "terms": "Conditions for canceling a subscription to Diet Done\n◦ If the customer decides to cancel the subscription on the first day or 48 hours before the end of the first week, the amount of a week’s subscription will be deducted and completed.\n◦ If the customer decides to cancel the subscription 48 hours before the end of the second week, the two-week subscription amount will be deducted and supplemented.\n◦ If the customer decides to cancel the subscription 24 hours or more before the end of the second week, the customer cannot refund any amount and can roll over the subscription for 3 months.\nNote: The value of the one or two-week subscription is not calculated by dividing the amount by 4 or 2, but it has other criteria.\nThe service of stopping and activating the subscription\n◦ To stop certain days during subscription, it must be 48 hours or more in advance through the application\n◦ To activate any suspended day, it must be 48 hours or more ago through the application",
       "privacy": "Conditions for canceling a subscription to Diet Done\n◦ If the customer decides to cancel the subscription on the first day or 48 hours before the end of the first week, the amount of a week’s subscription will be deducted and completed.\n◦ If the customer decides to cancel the subscription 48 hours before the end of the second week, the two-week subscription amount will be deducted and supplemented.\n◦ If the customer decides to cancel the subscription 24 hours or more before the end of the second week, the customer cannot refund any amount and can roll over the subscription for 3 months.\nNote: The value of the one or two-week subscription is not calculated by dividing the amount by 4 or 2, but it has other criteria.\nThe service of stopping and activating the subscription\n◦ To stop certain days during subscription, it must be 48 hours or more in advance through the application\n◦ To activate any suspended day, it must be 48 hours or more ago through the application",
-      "reset_password": "Reset Password"
+      "reset_password": "Reset Password",
+      "something_wrong": "Something went wrong, Please try again",
+      "enter_valid_mobile": "Enter a valid mobile number",
+      "enter_valid_otp": "Enter a valid OTP",
+      "didnt_receive_otp": "Didn't Recieve OTP?",
+      "resend": "Resend",
+      "successfully_loggedin": "Login Success, Welcome back"
+
     }
   },
   {
@@ -173,7 +180,7 @@
       "send_otp": "Send OTP",
       "verify_otp": "Verify OTP",
       "verification_code": "Verification Code",
-      "enter_otp": "Please enter OTP Code sent to mobile",
+      "enter_otp": "Please enter OTP Code sent to \n mobile",
       "otp_verified": "OTP Verified",
       "otp_verified_message": "The OTP was successfully verified Welcome to Diet Done",
       "enter_your_address": "Enter Your Address",
@@ -262,8 +269,13 @@
       "diet_done_description":"At DietDone, we're committed to helping you achieve your health and wellness goals in a way that's tailored to your lifestyle. Our mobile application is designed to make your journey towards a healthier you both effortless and enjoyable",
       "terms": "Conditions for canceling a subscription to Diet Done\n◦ If the customer decides to cancel the subscription on the first day or 48 hours before the end of the first week, the amount of a week’s subscription will be deducted and completed.\n◦ If the customer decides to cancel the subscription 48 hours before the end of the second week, the two-week subscription amount will be deducted and supplemented.\n◦ If the customer decides to cancel the subscription 24 hours or more before the end of the second week, the customer cannot refund any amount and can roll over the subscription for 3 months.\nNote: The value of the one or two-week subscription is not calculated by dividing the amount by 4 or 2, but it has other criteria.\nThe service of stopping and activating the subscription\n◦ To stop certain days during subscription, it must be 48 hours or more in advance through the application\n◦ To activate any suspended day, it must be 48 hours or more ago through the application",
       "privacy": "Conditions for canceling a subscription to Diet Done\n◦ If the customer decides to cancel the subscription on the first day or 48 hours before the end of the first week, the amount of a week’s subscription will be deducted and completed.\n◦ If the customer decides to cancel the subscription 48 hours before the end of the second week, the two-week subscription amount will be deducted and supplemented.\n◦ If the customer decides to cancel the subscription 24 hours or more before the end of the second week, the customer cannot refund any amount and can roll over the subscription for 3 months.\nNote: The value of the one or two-week subscription is not calculated by dividing the amount by 4 or 2, but it has other criteria.\nThe service of stopping and activating the subscription\n◦ To stop certain days during subscription, it must be 48 hours or more in advance through the application\n◦ To activate any suspended day, it must be 48 hours or more ago through the application",
-      "reset_password": "Reset Password"
-
+      "reset_password": "Reset Password",
+      "something_wrong": "حدث خطأ ما ، يرجى المحاولة مرة أخرى",
+      "enter_valid_mobile": "Enter a valid mobile number",
+      "enter_valid_otp": "Enter a valid OTP",
+      "didnt_receive_otp": "Didn't Recieve OTP?",
+      "resend": "Resend",
+      "successfully_loggedin": "Login Success, Welcome back"
     }
   }
 ]

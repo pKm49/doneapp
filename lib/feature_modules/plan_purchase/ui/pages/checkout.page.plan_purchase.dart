@@ -61,7 +61,7 @@ class _CheckoutPage_PlanPurchaseState
             ],
           ),
           actions: [
-            LanguagePreviewButtonComponentShared(isPrimaryMode: true),
+            LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
             addHorizontalSpace(APPSTYLE_SpaceLarge)
           ],
         ),

@@ -50,7 +50,7 @@ class _SuccessConfirmationPage_SharedState
         scrolledUnderElevation:0.0,
 
         actions: [
-          LanguagePreviewButtonComponentShared(isPrimaryMode:true),
+          LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
           addHorizontalSpace(APPSTYLE_SpaceLarge)
         ],
       ),
@@ -104,7 +104,6 @@ class _SuccessConfirmationPage_SharedState
                             color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
                       ),
                       onPressed: () {
-
                         Get.back(result: true);
                       })),
             ],

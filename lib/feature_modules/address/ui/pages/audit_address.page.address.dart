@@ -22,6 +22,15 @@ class AuditAddressPage_Address extends StatefulWidget {
 class _AuditAddressPage_AddressState
     extends State<AuditAddressPage_Address> {
    VALIDADDRESSAUTHOR_MODES addressAuthorMode = VALIDADDRESSAUTHOR_MODES.complete_registration;
+   var getArguments = Get.arguments;
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    addressAuthorMode = getArguments[0]??VALIDADDRESSAUTHOR_MODES.complete_registration;
+
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +63,7 @@ class _AuditAddressPage_AddressState
             ],
           ),
           actions: [
-            LanguagePreviewButtonComponentShared(isPrimaryMode:true),
+            LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
             addHorizontalSpace(APPSTYLE_SpaceLarge)
           ],
         ) ,

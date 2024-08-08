@@ -13,6 +13,7 @@ import 'package:doneapp/shared_module/ui/components/custom_back_button.component
 import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationOtpInputPage_Shared extends StatefulWidget {
@@ -27,12 +28,14 @@ class _OtpVerificationOtpInputPage_SharedState extends State<OtpVerificationOtpI
   var getArguments = Get.arguments;
   final sharedController = Get.find<SharedController>();
   VALIDPHONEVERIFICATION_MODES phoneVerificationMode = VALIDPHONEVERIFICATION_MODES.register;
+  num otp = 0;
 
-  var mobile = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    phoneVerificationMode = getArguments[0]??VALIDPHONEVERIFICATION_MODES.register;
+
   }
 
   @override
@@ -53,120 +56,111 @@ class _OtpVerificationOtpInputPage_SharedState extends State<OtpVerificationOtpI
           ],
         ),
         actions: [
-          LanguagePreviewButtonComponentShared(isPrimaryMode:true),
+          LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
           addHorizontalSpace(APPSTYLE_SpaceLarge)
         ],
       ),
       resizeToAvoidBottomInset: true,
-      body: Container(
-        width: screenwidth,
-        height: screenheight,
-        padding: APPSTYLE_LargePaddingAll.copyWith(top: 0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(ASSETS_OTPMESSAGE, width: screenwidth*.6),
-                    ],
-                  ),
-                  addVerticalSpace(APPSTYLE_SpaceLarge*3 ),
-                  Text("verification_code".tr,
-                      textAlign: TextAlign.center,
-                      style: getHeadlineLargeStyle(context).copyWith(
-                          fontSize: APPSTYLE_FontSize24*1.5 )),
-                  addVerticalSpace(APPSTYLE_SpaceLarge),
-                  Text("enter_otp".tr.replaceAll("mobile", mobile),
-                      textAlign: TextAlign.center,
-                      style: getHeadlineMediumStyle(context).copyWith()),
-                  addVerticalSpace(APPSTYLE_SpaceLarge*2),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: PinCodeTextField(
-                          backgroundColor: APPSTYLE_BackgroundWhite,
-                          keyboardType: TextInputType.number,
-                          appContext: context,
-                          length: 6,
-                          obscureText: false,
-                          pinTheme: PinTheme(
-                            inactiveColor: APPSTYLE_Grey60,
-                            activeFillColor: APPSTYLE_Grey20,
-                            selectedColor: APPSTYLE_Black,
-                            selectedFillColor: APPSTYLE_Grey40,
-                            inactiveFillColor: APPSTYLE_Grey20,
+      body:  Obx(
+            ()=> Container(
+          width: screenwidth,
+          height: screenheight,
+          padding: APPSTYLE_LargePaddingAll.copyWith(top: 0),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(ASSETS_OTPMESSAGE, width: screenwidth*.6),
+                      ],
+                    ),
+                    addVerticalSpace(APPSTYLE_SpaceLarge*3 ),
+                    Text("verification_code".tr,
+                        textAlign: TextAlign.center,
+                        style: getHeadlineLargeStyle(context).copyWith(
+                            fontSize: APPSTYLE_FontSize24*1.5 )),
+                    addVerticalSpace(APPSTYLE_SpaceLarge),
+                    Text("enter_otp".tr.replaceAll("mobile", "+965 ${sharedController.mobileTextEditingController.value.text}"),
+                        textAlign: TextAlign.center,
+                        style: getHeadlineMediumStyle(context).copyWith()),
+                    addVerticalSpace(APPSTYLE_SpaceLarge*2),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: PinCodeTextField(
+                            backgroundColor: APPSTYLE_BackgroundWhite,
+                            keyboardType: TextInputType.number,
+                            appContext: context,
+                            length: 6,
+                            obscureText: false,
+                            pinTheme: PinTheme(
+                              inactiveColor: APPSTYLE_Grey40,
+                              activeFillColor: APPSTYLE_Grey20,
+                              selectedColor: APPSTYLE_Black,
+                              selectedFillColor: APPSTYLE_Grey40,
+                              inactiveFillColor: APPSTYLE_Grey20,
 
-                            activeColor: APPSTYLE_PrimaryColor,
-                            shape: PinCodeFieldShape.underline,
-                            borderRadius: BorderRadius.circular(0),
-                            errorBorderColor: APPSTYLE_GuideRed,
+                              activeColor: APPSTYLE_PrimaryColor,
+                              shape: PinCodeFieldShape.underline,
+                              borderRadius: BorderRadius.circular(0),
+                              errorBorderColor: APPSTYLE_GuideRed,
+                            ),
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            onCompleted: (pin) {
+                              setState(() {
+                                otp = num.parse(pin);
+                              });
+                            },
                           ),
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          onCompleted: (pin) {
-                            setState(() {});
-                          },
                         ),
-                      ),
-                    ],
-                  ),
-                  addVerticalSpace(APPSTYLE_SpaceLarge ),
-
-                ],
+                      ],
+                    ),
+                    addVerticalSpace(APPSTYLE_SpaceLarge ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("didnt_receive_otp".tr,style: getBodyMediumStyle(context),),
+                        addHorizontalSpace(APPSTYLE_SpaceSmall),
+                        TextButton(onPressed: (){
+                          sharedController.sendOtp(phoneVerificationMode==VALIDPHONEVERIFICATION_MODES.reset_password,true);
+                        }, child:  Text("resend".tr,
+                          style: getBodyMediumStyle(context).copyWith(
+                              decoration: TextDecoration.underline,
+                              fontWeight: APPSTYLE_FontWeightBold),))
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 0,vertical: APPSTYLE_SpaceSmall),
-              child:   SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      child:   Text('verify_otp'.tr,
-                          style: getHeadlineMediumStyle(context).copyWith(
-                              color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                          textAlign: TextAlign.center),
-                      onPressed: () {
-                        if(phoneVerificationMode==VALIDPHONEVERIFICATION_MODES.register){
-                          Get.toNamed(
-                              AppRouteNames
-                                  .otpVerificationSuccessRoute,
-                              arguments: [
-                                ASSETS_SUCCESSMARK,
-                                "otp_verified".tr,
-                                "otp_verified_message".tr,
-                                'continue'.tr,
-                                true
-                              ])?.then((value) =>
-                          {
-                            if(value == true){
-                              Get.toNamed(
-                                  AppRouteNames.addressAuditRoute,
-                                  arguments: [VALIDADDRESSAUTHOR_MODES.complete_registration]
-                              )
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 0,vertical: APPSTYLE_SpaceSmall),
+                child:   SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        child:   sharedController.isOtpVerifying.value || sharedController.isOtpSending.value?
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: APPSTYLE_BackgroundWhite,
+                          size: 20,
+                        )
+                            : Text('verify_otp'.tr,
+                            style: getHeadlineMediumStyle(context).copyWith(
+                                color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                            textAlign: TextAlign.center),
+                        onPressed: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
 
-                            }
-
-
-                          }
-
-                          );
-
-                        }else if(phoneVerificationMode==VALIDPHONEVERIFICATION_MODES.forgot_password){
-                          Get.toNamed(
-                              AppRouteNames.resetPasswordNewpasswordRoute);
-                        }else if(phoneVerificationMode==VALIDPHONEVERIFICATION_MODES.reset_password){
-                          Get.toNamed(
-                              AppRouteNames.resetPasswordNewpasswordRoute);
-                        }
-
-                      })),
-            ),
-          ],
+                          sharedController.verifyOtp(otp.toString(),phoneVerificationMode==VALIDPHONEVERIFICATION_MODES.reset_password);
+                        })),
+              ),
+            ],
+          ),
         ),
       ),
     );

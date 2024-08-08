@@ -46,7 +46,7 @@ class _RegisterNameEnglishPage_AuthState extends State<RegisterNameEnglishPage_A
             ],
           ),
           actions: [
-            LanguagePreviewButtonComponentShared(isPrimaryMode:false),
+            LanguagePreviewButtonComponentShared(textColor:APPSTYLE_BackgroundWhite),
             addHorizontalSpace(APPSTYLE_SpaceLarge)
           ],
         ) ,

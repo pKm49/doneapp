@@ -54,7 +54,7 @@ class _RegisterAboutmePage_AuthState
             ],
           ),
           actions: [
-            LanguagePreviewButtonComponentShared(isPrimaryMode:true),
+            LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
             addHorizontalSpace(APPSTYLE_SpaceLarge)
           ],
         ) ,

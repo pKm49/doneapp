@@ -4,8 +4,11 @@ import 'package:doneapp/shared_module/constants/http_request_endpoints.constants
 import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
 import 'package:doneapp/shared_module/models/my_subscription.model.shared.dart';
 import 'package:doneapp/shared_module/models/notification.model.shared.dart';
+import 'package:doneapp/shared_module/models/sendotp_credential.model.auth.dart';
 import 'package:doneapp/shared_module/models/user_data.model.shared.dart';
 import 'package:doneapp/shared_module/services/http-services/http_request_handler.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
+import 'package:get/get.dart';
 
 class SharedHttpService {
   
@@ -13,8 +16,8 @@ class SharedHttpService {
     Map<String, dynamic> params = {};
     params["client_id"] = env.clientId;
     params["client_secret"] = env.clientSecret;
-    AppHttpResponse response = await postRequest(
-        SharedHttpRequestEndpoint_GetAccessToken, {'params': params});
+    AppHttpResponse response = await getRequest(
+        SharedHttpRequestEndpoint_GetAccessToken, params);
     print("response is");
     print(response.statusCode);
     print(response.message);
@@ -28,9 +31,9 @@ class SharedHttpService {
       AppHttpResponse response =
           await getRequest(SharedHttpRequestEndpoint_GetProfileData, params);
       print("getProfileData");
-      print(response);
+      print(response.data);
       if (response.statusCode == 200 && response.data != null) {
-        return mapUserData(response.data);
+        return mapUserData(response.data[0]);
       }
       return mapUserData({});
     } catch (e) {
@@ -42,10 +45,9 @@ class SharedHttpService {
 
 
     try{
-      Map<String, dynamic> params = {};
-      params["mobile"]=mobile;
+
       AppHttpResponse response =
-      await getRequest(SharedHttpRequestEndpoint_GetCustomerSubscriptions,params);
+      await getRequest(SharedHttpRequestEndpoint_GetCustomerSubscriptions+mobile,null);
 
       List<MySubscription> tempMealCategories = [];
       if (response.statusCode == 200 && response.data != null) {
@@ -91,4 +93,40 @@ class SharedHttpService {
       return false;
     }
   }
+
+  Future<bool> sendOtp(SendOTPCredential sendOTPCredential) async {
+
+    try{
+      AppHttpResponse response = await postRequest(SharedHttpRequestEndpoint_SendOTP, sendOTPCredential.toJson());
+
+      if(response.statusCode != 200){
+        showSnackbar(Get.context!, response.message, "error");
+      }
+      return response.statusCode == 200;
+    }catch (e){
+      showSnackbar(Get.context!, "something_wrong".tr, "error");
+      return false;
+    }
+  }
+
+  Future<bool> verifyOtp(String mobile, String otp) async {
+
+    try{
+      Map<String, dynamic> params = {};
+      params["mobile"]=mobile;
+      params["otp"]=otp;
+
+      AppHttpResponse response =
+      await getRequest(SharedHttpRequestEndpoint_VerifyOTP,params);
+
+      if(response.statusCode != 200){
+        showSnackbar(Get.context!, response.message, "error");
+      }
+      return response.statusCode == 200;
+    }catch (e){
+      showSnackbar(Get.context!, "something_wrong".tr, "error");
+      return false;
+    }
+  }
+
 }

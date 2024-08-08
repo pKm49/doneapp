@@ -63,6 +63,7 @@ class _MyAppState extends State<MyApp> {
 
     CoreTranslationController.initLanguages();
     appThemeManager.addListener(themeListener);
+  Get.put(SharedController());
 
     super.initState();
   }

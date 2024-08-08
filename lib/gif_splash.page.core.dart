@@ -12,13 +12,17 @@ class GifSplashPage_Core extends StatefulWidget {
 
 class _GifSplashPage_CoreState extends State<GifSplashPage_Core> {
 
-  SharedController sharedController = Get.put(SharedController());
+  final sharedController = Get.find<SharedController>();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    sharedController.setInitialScreen();
+
+    Future.delayed(const Duration(seconds: 2), () async {
+      sharedController.setInitialScreen();
+    });
+
   }
 
   @override

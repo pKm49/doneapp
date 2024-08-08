@@ -35,7 +35,7 @@ class RegisterOtherDataPage_Auth extends StatelessWidget {
             ],
           ),
           actions: [
-            LanguagePreviewButtonComponentShared(isPrimaryMode: false),
+            LanguagePreviewButtonComponentShared(textColor:APPSTYLE_BackgroundWhite),
             addHorizontalSpace(APPSTYLE_SpaceLarge)
           ],
         ),

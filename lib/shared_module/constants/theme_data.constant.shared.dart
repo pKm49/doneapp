@@ -58,7 +58,7 @@ ThemeData getThemeData( String type, String locale) {
             shape: MaterialStateProperty.all<OutlinedBorder>(
                 RoundedRectangleBorder(
                     borderRadius:
-                    BorderRadius.circular(APPSTYLE_BorderRadiusSmall))))),
+                    BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall))))),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
             textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(
@@ -185,7 +185,7 @@ ThemeData getThemeData( String type, String locale) {
             shape: MaterialStateProperty.all<OutlinedBorder>(
                 RoundedRectangleBorder(
                     borderRadius:
-                    BorderRadius.circular(APPSTYLE_BorderRadiusSmall))))),
+                    BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall))))),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
             textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(

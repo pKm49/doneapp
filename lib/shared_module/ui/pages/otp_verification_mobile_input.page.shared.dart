@@ -11,6 +11,7 @@ import 'package:doneapp/shared_module/ui/components/custom_back_button.component
 import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class OtpVerificationMobileInputPage_Shared extends StatefulWidget {
   const OtpVerificationMobileInputPage_Shared({super.key});
@@ -25,7 +26,6 @@ class _OtpVerificationMobileInputPage_SharedState extends State<OtpVerificationM
   final sharedController = Get.find<SharedController>();
   VALIDPHONEVERIFICATION_MODES phoneVerificationMode = VALIDPHONEVERIFICATION_MODES.register;
   var mobile = "";
-
   @override
   void initState() {
     // TODO: implement initState
@@ -51,66 +51,72 @@ class _OtpVerificationMobileInputPage_SharedState extends State<OtpVerificationM
           ],
         ),
         actions: [
-          LanguagePreviewButtonComponentShared(isPrimaryMode:true),
+          LanguagePreviewButtonComponentShared(textColor:APPSTYLE_PrimaryColor),
           addHorizontalSpace(APPSTYLE_SpaceLarge)
         ],
       ),
       resizeToAvoidBottomInset: true,
-      body: Container(
-        width: screenwidth,
-        height: screenheight,
-        padding: APPSTYLE_LargePaddingAll.copyWith(top: 0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                 children: [
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       Image.asset(ASSETS_MOBILEVERIFICATION, width: screenwidth*.8),
-                     ],
-                   ),
-                  addVerticalSpace(APPSTYLE_SpaceLarge ),
-                  Text("verify_your_number".tr,
-                      textAlign: TextAlign.center,
-                      style: getHeadlineLargeStyle(context).copyWith(
-                          fontSize: APPSTYLE_FontSize24*1.5 )),
-                  addVerticalSpace(APPSTYLE_SpaceLarge),
-                  Text("enter_mobile".tr,
-                      textAlign: TextAlign.center,
-                      style: getHeadlineMediumStyle(context).copyWith()),
-                  addVerticalSpace(APPSTYLE_SpaceLarge*2),
-                  TextFormField(
-                      validator: (value) => checkIfMobileNumberValid(value),
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          labelText: 'mobile_number'.tr ,
-                          hintText: 'enter_mobile_number'.tr
-                      )),
-                   addVerticalSpace(APPSTYLE_SpaceLarge ),
+      body: Obx(
+        ()=> Container(
+          width: screenwidth,
+          height: screenheight,
+          padding: APPSTYLE_LargePaddingAll.copyWith(top: 0),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                   children: [
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Image.asset(ASSETS_MOBILEVERIFICATION, width: screenwidth*.8),
+                       ],
+                     ),
+                    addVerticalSpace(APPSTYLE_SpaceLarge ),
+                    Text(phoneVerificationMode== VALIDPHONEVERIFICATION_MODES.reset_password?"forgot_password_q".tr:"verify_your_number".tr,
+                        textAlign: TextAlign.center,
+                        style: getHeadlineLargeStyle(context).copyWith(
+                            fontSize: APPSTYLE_FontSize24*1.5 )),
+                    addVerticalSpace(APPSTYLE_SpaceLarge),
+                    Text(phoneVerificationMode== VALIDPHONEVERIFICATION_MODES.reset_password ?"forgot_password_info".tr:"enter_mobile".tr,
+                        textAlign: TextAlign.center,
+                        style: getHeadlineMediumStyle(context).copyWith()),
+                    addVerticalSpace(APPSTYLE_SpaceLarge*2),
+                    TextFormField(
+                      controller: sharedController.mobileTextEditingController.value,
+                        validator: (value) => checkIfMobileNumberValid(value),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText: 'mobile_number'.tr ,
+                            hintText: 'enter_mobile_number'.tr
+                        )),
+                     addVerticalSpace(APPSTYLE_SpaceLarge ),
 
-                ],
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 0,vertical: APPSTYLE_SpaceSmall),
-              child:  SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      child:   Text('send_otp'.tr,
-                          style: getHeadlineMediumStyle(context).copyWith(
-                              color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                          textAlign: TextAlign.center),
-                      onPressed: () {
-                        Get.toNamed(
-                            AppRouteNames
-                                .otpVerificationOtpInputRoute );
-
-                      })),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 0,vertical: APPSTYLE_SpaceSmall),
+                child:  SizedBox(
+                    width:  double.infinity,
+                    child: ElevatedButton(
+                        child: sharedController.isOtpSending.value?
+                        LoadingAnimationWidget.staggeredDotsWave(
+                          color: APPSTYLE_BackgroundWhite,
+                          size: 20,
+                        )
+                        :Text('send_otp'.tr,
+                            style: getHeadlineMediumStyle(context).copyWith(
+                                color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                            textAlign: TextAlign.center),
+                        onPressed: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          sharedController.sendOtp(true,true);
+                        })),
+              ),
+            ],
+          ),
         ),
       ),
     );
