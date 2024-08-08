@@ -1,5 +1,5 @@
 
-import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
+ import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ionicons/ionicons.dart';
 
 class AddressCardComponentShared extends StatelessWidget {
-  ShippingAddress shippingAddress;
+   Address shippingAddress;
   GestureTapCallback onSelected;
   GestureTapCallback onEditSelected;
   bool isSelected;
@@ -75,7 +75,7 @@ class AddressCardComponentShared extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text(shippingAddress.addressString,
+                    child: Text(shippingAddress.comments,
                         style: getLabelLargeStyle(context).copyWith(
                             color: isSelected?APPSTYLE_Grey60: APPSTYLE_Grey40)),
                   ),

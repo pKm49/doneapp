@@ -46,6 +46,8 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
+                          sharedController.changeLanguage('ar', false);
+                          Navigator.pop(context);
                         },
                         style: getElevatedButtonStyle(context).copyWith(
                             padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -66,6 +68,8 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
                       child: OutlinedButton(
 
                         onPressed: () {
+                          sharedController.changeLanguage('en', false);
+                          Navigator.pop(context);
                         },
                         style: getElevatedButtonStyle(context).copyWith(
                             padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(

@@ -1,6 +1,6 @@
 
 
-import 'package:doneapp/shared_module/models/address.model.shared.dart';
+import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
 
 class MySubscription {
   final int id;

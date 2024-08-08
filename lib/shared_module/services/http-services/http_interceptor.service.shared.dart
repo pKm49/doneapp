@@ -49,12 +49,17 @@ class AppHttpInterceptor implements InterceptorContract {
             var sharedHttpService = new SharedHttpService();
             await sharedHttpService.getAccessToken();
           } else {
-            if (httpResponseBody['payload'][0]['access_token'] != null) {
-
-              var sharedPreferences = await SharedPreferences.getInstance();
-              sharedPreferences.setString("access_token",
-                  httpResponseBody['payload'][0]['access_token'].toString());
+            if(httpResponseBody['payload'] is! String){
+              if(httpResponseBody['payload'].length>0){
+                if (httpResponseBody['payload'][0]['access_token'] != null) {
+                  var sharedPreferences = await SharedPreferences.getInstance();
+                  sharedPreferences.setString("access_token",
+                      httpResponseBody['payload'][0]['access_token'].toString());
+                }
+              }
             }
+
+
           }
         }
       }

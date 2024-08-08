@@ -25,8 +25,8 @@ class PhotoSelector extends StatelessWidget {
     return AlertDialog(
       shape:   RoundedRectangleBorder(
           borderRadius:
-          BorderRadius.all(Radius.circular(APPSTYLE_BorderRadiusLarge))),
-      contentPadding: const EdgeInsets.symmetric(vertical: APPSTYLE_SpaceMedium, horizontal: APPSTYLE_SpaceLarge),
+          BorderRadius.all(Radius.circular(APPSTYLE_BorderRadiusSmall))),
+      contentPadding: const EdgeInsets.symmetric(vertical: APPSTYLE_SpaceMedium, horizontal: APPSTYLE_SpaceMedium),
       content: SizedBox(
         height: Localizations.localeOf(context)
             .languageCode
@@ -36,44 +36,46 @@ class PhotoSelector extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            addVerticalSpace(APPSTYLE_SpaceSmall),
             InkWell(
               onTap: () {
                 Navigator.pop(context);
                 handleMediaClick(context);
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(Icons.photo, color: APPSTYLE_PrimaryColor),
-                  addHorizontalSpace(APPSTYLE_SpaceMedium),
-                  Expanded(
-                    child: Text('choose_from_gallery'.tr),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(APPSTYLE_SpaceSmall),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(Icons.photo, color: APPSTYLE_PrimaryColor),
+                    addHorizontalSpace(APPSTYLE_SpaceMedium),
+                    Expanded(
+                      child: Text('choose_from_gallery'.tr),
+                    ),
+                  ],
+                ),
               ),
             ),
-            addVerticalSpace(APPSTYLE_SpaceSmall),
             Divider(),
-            addVerticalSpace(APPSTYLE_SpaceSmall),
             InkWell(
               onTap: () {
                 Navigator.pop(context);
                 handleCameraClick(context);
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(Icons.camera_alt,
-                      color: APPSTYLE_PrimaryColor),
-                  addHorizontalSpace(APPSTYLE_SpaceMedium),
-                  Expanded(
-                    child: Text('open_camera'.tr),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(APPSTYLE_SpaceSmall),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(Icons.camera_alt,
+                        color: APPSTYLE_PrimaryColor),
+                    addHorizontalSpace(APPSTYLE_SpaceMedium),
+                    Expanded(
+                      child: Text('open_camera'.tr),
+                    ),
+                  ],
+                ),
               ),
             ),
-            addVerticalSpace(APPSTYLE_SpaceSmall),
           ],
         ),
       ),
@@ -196,7 +198,7 @@ class PhotoSelector extends StatelessWidget {
     final dialogTitleWidget = Text('photo_access_permission_title'.tr,style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
     final dialogTextWidget = Text( 'photo_access_permission_info'.tr,style: getBodyMediumStyle(context));
 
-    final updateButtonTextWidget = Text('continue'.tr);
+    final updateButtonTextWidget = Text('continue'.tr,style: TextStyle(color: APPSTYLE_BackgroundWhite));
 
     updateAction() async {
       Navigator.pop(context);
@@ -263,7 +265,7 @@ class PhotoSelector extends StatelessWidget {
     final dialogTitleWidget = Text('camera_access_permission_title'.tr,style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
     final dialogTextWidget = Text( 'camera_access_permission_info'.tr,style: getBodyMediumStyle(context),);
 
-    final updateButtonTextWidget = Text('continue'.tr);
+    final updateButtonTextWidget = Text('continue'.tr,style: TextStyle(color: APPSTYLE_BackgroundWhite));
 
     updateAction() async {
       Navigator.pop(context);

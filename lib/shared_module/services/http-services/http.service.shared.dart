@@ -129,4 +129,21 @@ class SharedHttpService {
     }
   }
 
+ Future<String> getSupportNumber() async {
+
+    try{
+      AppHttpResponse response =
+          await getRequest(SharedHttpRequestEndpoint_GetSupportNumber,null);
+        print("getSupportNumber");
+        print(response.statusCode);
+        print(response.data);
+      if(response.statusCode == 200){
+        return response.data;
+      }
+      return "";
+    }catch (e){
+      return "";
+    }
+  }
+
 }

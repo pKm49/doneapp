@@ -35,7 +35,8 @@ class _OtpVerificationOtpInputPage_SharedState extends State<OtpVerificationOtpI
     // TODO: implement initState
     super.initState();
     phoneVerificationMode = getArguments[0]??VALIDPHONEVERIFICATION_MODES.register;
-
+    print("phoneVerificationMode otp");
+    print(phoneVerificationMode);
   }
 
   @override

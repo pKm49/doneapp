@@ -1,3 +1,5 @@
+import 'package:doneapp/feature_modules/address/controllers/address.controller.dart';
+import 'package:doneapp/feature_modules/auth/controllers/register.controller.auth.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/app_routes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
@@ -35,7 +37,8 @@ Future<void> main() async {
 
   PushNotificationService().initNotification();
 
-  PushNotificationController notificationController = PushNotificationController();
+  PushNotificationController notificationController =
+      PushNotificationController();
   notificationController.setupInteractedMessage();
   // await NotificationService.initializeNotification();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -60,10 +63,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-
     CoreTranslationController.initLanguages();
     appThemeManager.addListener(themeListener);
-  Get.put(SharedController());
+    Get.put(SharedController());
+    Get.put(AddressController());
+
 
     super.initState();
   }

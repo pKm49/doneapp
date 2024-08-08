@@ -1,5 +1,7 @@
-  import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+  import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/valid_addressauthor_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
@@ -22,6 +24,8 @@ class _SuccessConfirmationPage_SharedState
   String pageTitle = "password_changed".tr;
   String pageInfo = "password_changed_message".tr;
   String buttonText = "back_to_login".tr;
+  String toRoute = AppRouteNames.addressAuditRoute;
+  String mobile = "";
   bool isButtonPrimary = true;
 
   @override
@@ -33,6 +37,8 @@ class _SuccessConfirmationPage_SharedState
     pageInfo = getArguments[2];
     buttonText = getArguments[3];
     isButtonPrimary = getArguments[4];
+    toRoute = getArguments[5];
+    mobile = getArguments[6];
 
     super.initState();
   }
@@ -104,7 +110,13 @@ class _SuccessConfirmationPage_SharedState
                             color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
                       ),
                       onPressed: () {
-                        Get.back(result: true);
+                        if(toRoute == AppRouteNames.addressAuditRoute){
+                          Get.toNamed(
+                              AppRouteNames.addressAuditRoute,arguments: [VALIDADDRESSAUTHOR_MODES.complete_registration,mobile]);
+                        }else{
+                          Get.toNamed(toRoute);
+                        }
+
                       })),
             ],
           ),

@@ -25,13 +25,14 @@ class _OtpVerificationMobileInputPage_SharedState extends State<OtpVerificationM
   var getArguments = Get.arguments;
   final sharedController = Get.find<SharedController>();
   VALIDPHONEVERIFICATION_MODES phoneVerificationMode = VALIDPHONEVERIFICATION_MODES.register;
-  var mobile = "";
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     phoneVerificationMode = getArguments[0]??VALIDPHONEVERIFICATION_MODES.register;
-    mobile = getArguments[1]??"";
+    print("phoneVerificationMode");
+    print(phoneVerificationMode);
   }
 
   @override
@@ -112,7 +113,7 @@ class _OtpVerificationMobileInputPage_SharedState extends State<OtpVerificationM
                             textAlign: TextAlign.center),
                         onPressed: () {
                           FocusManager.instance.primaryFocus?.unfocus();
-                          sharedController.sendOtp(true,true);
+                          sharedController.sendOtp(phoneVerificationMode==VALIDPHONEVERIFICATION_MODES.reset_password,true);
                         })),
               ),
             ],

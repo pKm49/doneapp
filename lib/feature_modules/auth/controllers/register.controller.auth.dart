@@ -1,3 +1,4 @@
+import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
 import 'package:doneapp/feature_modules/auth/models/register_credential.model.auth.dart';
 import 'package:doneapp/shared_module/models/sendotp_credential.model.auth.dart';
 import 'package:doneapp/feature_modules/auth/services/http.services.auth.dart';
@@ -28,9 +29,6 @@ class RegisterController extends GetxController {
   Rx<TextEditingController> emailTextEditingController =
       TextEditingController().obs;
 
-  Rx<TextEditingController> mobileTextEditingController =
-      TextEditingController().obs;
-
   Rx<TextEditingController> passwordTextEditingController =
       TextEditingController().obs;
 
@@ -43,50 +41,54 @@ class RegisterController extends GetxController {
   Rx<TextEditingController> weightTextEditingController =
       TextEditingController().obs;
 
-  Rx<TextEditingController> streetTextEditingController =
-      TextEditingController().obs;
-
-  Rx<TextEditingController> jedhaTextEditingController =
-      TextEditingController().obs;
-
-  Rx<TextEditingController> houseNumberTextEditingController =
-      TextEditingController().obs;
-
-  Rx<TextEditingController> floorNumberTextEditingController =
-      TextEditingController().obs;
-
-  Rx<TextEditingController> flatNumberTextEditingController =
-      TextEditingController().obs;
-
-  Rx<TextEditingController> commentsTextEditingController =
-      TextEditingController().obs;
-
   Rx<TextEditingController> otherSourceTextEditingController =
       TextEditingController().obs;
 
   var isRegisterSubmitting = false.obs;
   var isOtpSending = false.obs;
 
-  var gender = VALID_GENDERS.male.name;
-  var source = VALID_SOURCES.social.name;
-  var nickname = "".obs;
+  var gender = VALID_GENDERS.male.name.obs;
+  var source = VALID_SOURCES.social.name.obs;
+  var mobile = "".obs;
 
-  var zoneId =  (-1).obs;
-  var zoneCount = 0.obs;
-  var areaCount = 0.obs;
-  var blockCount = 0.obs;
-  var zoneName = "".obs;
-  var areaName = "".obs;
-  var blockName = "".obs;
-  var areaId =  (-1).obs;
-  var blockId =  (-1).obs;
+  var address = mapAddress({}).obs;
+
   var profilePictureUrl = ASSETS_DEFAULTPROFILEPIC.obs;
+  var isFileSelected = false.obs;
+
+  void updateProfilePicture(String base64encode) {
+    isFileSelected.value = true;
+    profilePictureUrl.value = base64encode;
+  }
+
+  void updateMobile(String newMobile) {
+    mobile.value = newMobile;
+    print("updateMobile");
+    print(mobile.value);
+  }
+
+  void changeGender(String s) {
+    gender.value = s;
+  }
+  void changeSource(String s) {
+    source.value = s;
+  }
+
+  void updateAddressData(Address tAddress){
+    address.value = tAddress;
+    print("updateAddressData");
+    print(address.value.areaId);
+    print(address.value.blockId);
+  }
 
   handleRegistration() async {
+    print("handleRegistration");
+    print(heightTextEditingController.value.text.toString().trim());
+    print(weightTextEditingController.value.text.toString().trim());
     isRegisterSubmitting.value = true;
     var authHttpService = new AuthHttpService();
     bool isSuccess = await authHttpService.register(RegisterCredential(
-        mobile: mobileTextEditingController.value.text,
+        mobile: mobile.value,
         password: passwordTextEditingController.value.text,
         firstName: firstNameEnglishTextEditingController.value.text,
         lastName: lastNameEnglishTextEditingController.value.text,
@@ -94,30 +96,30 @@ class RegisterController extends GetxController {
         lastNameArabic: lastNameArabicTextEditingController.value.text,
         email: emailTextEditingController.value.text,
         dateOfBirth: "",
-        gender: gender,
-        height: double.parse(heightTextEditingController.value.text),
-        weight: double.parse(heightTextEditingController.value.text),
-        source: source,
-        nickname: nickname.value,
-        area: areaId.value,
-        block: blockId.value,
-        street: streetTextEditingController.value.text,
-        jedha: jedhaTextEditingController.value.text,
-        houseNumber: int.parse(houseNumberTextEditingController.value.text),
-        floorNumber: int.parse(floorNumberTextEditingController.value.text),
-        comments: commentsTextEditingController.value.text,
-        profile_picture: profilePictureUrl.value,
+        gender: gender.value,
+        height: double.parse(heightTextEditingController.value.text.toString().trim()),
+        weight: double.parse(weightTextEditingController.value.text.toString().trim()),
+        source: source.value,
+        nickname: "",
+        area: address.value.areaId,
+        block: address.value.blockId,
+        street: address.value.street,
+        jedha:address.value.jedha,
+        houseNumber: address.value.houseNumber,
+        floorNumber: address.value.floorNumber,
+        comments:address.value.comments,
+        profile_picture:isFileSelected.value? profilePictureUrl.value:"",
         other_source: otherSourceTextEditingController.value.text));
     isRegisterSubmitting.value = false;
     if (isSuccess) {
       var sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString(
-          "mobile", mobileTextEditingController.value.text);
+          "mobile", mobile.value);
       showSnackbar(Get.context!, "account_created".tr, "info");
       final sharedController = Get.find<SharedController>();
       sharedController.fetchUserData(
           AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute,
-          mobileTextEditingController.value.text);
+          mobile.value);
     }
   }
 

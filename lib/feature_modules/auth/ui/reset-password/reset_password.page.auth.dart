@@ -64,102 +64,103 @@ class _ResetPasswordPage_authState extends State<ResetPasswordPage_auth> {
             addHorizontalSpace(APPSTYLE_SpaceLarge)
           ],
         ) ,
-        body: Obx(
-          ()=> SafeArea(
-            child: Container(
-              padding: APPSTYLE_LargePaddingAll,
-              height: screenheight,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Form(
-                      key: resetPasswordFormKey,
-                      child: ListView(
-                        children: [
-                          Text(
-                            'create_new_password'.tr,
-                            style: getHeadlineLargeStyle(context).copyWith(
-                                fontWeight: APPSTYLE_FontWeightBold),
-                            textAlign: TextAlign.center,
-                          ),
-                          addVerticalSpace(APPSTYLE_SpaceLarge * 2),
-
-                          TextFormField(
-                            controller: resetPasswordController.passwordTextEditingController.value,
-                            validator: (password) =>
-                                checkIfPasswordFieldValid(password),
-                            decoration: InputDecoration(
-                              hintText: 'new_password'.tr,
-                              label: Row(
-                                children: [
-                                  Text('password'.tr),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                      "*",
-                                      style: TextStyle(color: APPSTYLE_GuideRed),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              isDense: true,
+        body:  SafeArea(
+            child:Obx(
+                  ()=> Container(
+                padding: APPSTYLE_LargePaddingAll,
+                height: screenheight,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Form(
+                        key: resetPasswordFormKey,
+                        child: ListView(
+                          children: [
+                            Text(
+                              'create_new_password'.tr,
+                              style: getHeadlineLargeStyle(context).copyWith(
+                                  fontWeight: APPSTYLE_FontWeightBold),
+                              textAlign: TextAlign.center,
                             ),
-                          ),
-                          addVerticalSpace(APPSTYLE_SpaceMedium),
-                          TextFormField(
-                            controller: resetPasswordController.confirmPasswordTextEditingController.value,
-                            validator: (confirm_password) =>
-                                checkIfConfirmPasswordFieldValid(
-                                    confirm_password, resetPasswordController.passwordTextEditingController.value.text),
-                            decoration: InputDecoration(
-                              hintText: 're_enter_password'.tr,
-                              label: Row(
-                                children: [
-                                  Text('confirm_password'.tr),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                      "*",
-                                      style: TextStyle(color: APPSTYLE_GuideRed),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              isDense: true,
-                            ),
-                          ),
+                            addVerticalSpace(APPSTYLE_SpaceLarge * 2),
 
-                        ],
+                            TextFormField(
+                              controller: resetPasswordController.passwordTextEditingController.value,
+                              validator: (password) =>
+                                  checkIfPasswordFieldValid(password),
+                              decoration: InputDecoration(
+                                hintText: 'new_password'.tr,
+                                label: Row(
+                                  children: [
+                                    Text('password'.tr),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        "*",
+                                        style: TextStyle(color: APPSTYLE_GuideRed),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                isDense: true,
+                              ),
+                            ),
+                            addVerticalSpace(APPSTYLE_SpaceMedium),
+                            TextFormField(
+                              controller: resetPasswordController.confirmPasswordTextEditingController.value,
+                              validator: (confirm_password) =>
+                                  checkIfConfirmPasswordFieldValid(
+                                      confirm_password, resetPasswordController.passwordTextEditingController.value.text),
+                              decoration: InputDecoration(
+                                hintText: 're_enter_password'.tr,
+                                label: Row(
+                                  children: [
+                                    Text('confirm_password'.tr),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        "*",
+                                        style: TextStyle(color: APPSTYLE_GuideRed),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                isDense: true,
+                              ),
+                            ),
+
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        if (resetPasswordFormKey.currentState!.validate() &&
-                            !resetPasswordController.isResetingPassword.value) {
-                          resetPasswordController.resetPassword();
-                        }
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          if (resetPasswordFormKey.currentState!.validate() &&
+                              !resetPasswordController.isResetingPassword.value) {
+                            resetPasswordController.resetPassword();
+                          }
 
-                      },
-                      style: getElevatedButtonStyle(context),
-                      child:resetPasswordController.isResetingPassword.value
-                          ? LoadingAnimationWidget.staggeredDotsWave(
-                        color: APPSTYLE_BackgroundWhite,
-                        size: 24,
-                      ): Text("submit".tr,
-                          style: getHeadlineMediumStyle(context).copyWith(
-                              color: APPSTYLE_BackgroundWhite,
-                              fontWeight: APPSTYLE_FontWeightBold),
-                          textAlign: TextAlign.center),
+                        },
+                        style: getElevatedButtonStyle(context),
+                        child:resetPasswordController.isResetingPassword.value
+                            ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: APPSTYLE_BackgroundWhite,
+                          size: 24,
+                        ): Text("submit".tr,
+                            style: getHeadlineMediumStyle(context).copyWith(
+                                color: APPSTYLE_BackgroundWhite,
+                                fontWeight: APPSTYLE_FontWeightBold),
+                            textAlign: TextAlign.center),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ));
+        ) ;
   }
 }

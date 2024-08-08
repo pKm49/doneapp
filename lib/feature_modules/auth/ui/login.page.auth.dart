@@ -158,6 +158,6 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
         AppRouteNames
             .otpVerificationMobileInputRoute,
         arguments: [
-          VALIDPHONEVERIFICATION_MODES.reset_password,"+965 12312345"]);
+          VALIDPHONEVERIFICATION_MODES.reset_password ]);
   }
 }

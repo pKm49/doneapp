@@ -4,6 +4,7 @@ import 'package:doneapp/shared_module/constants/app_route_names.constants.shared
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.component.dart';
@@ -244,10 +245,10 @@ class MyProfilePage_Profile extends StatelessWidget {
     final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
 
     updateLogoutAction() async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.remove('mobile');
-      Get.offAllNamed(AppRouteNames.loginRoute);
+      final sharedController = Get.find<SharedController>();
+      sharedController.handleLogout();
     }
+
     updateAction() {
       Navigator.pop(context);
     }

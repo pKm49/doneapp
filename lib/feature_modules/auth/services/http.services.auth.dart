@@ -30,9 +30,7 @@ class AuthHttpService {
   Future<bool> register(RegisterCredential registerCredentials) async {
 
     try{
-      AppHttpResponse response = await postRequest(AuthHttpRequestEndpoint_Register, {
-        'params': registerCredentials.toJson()
-      });
+      AppHttpResponse response = await postRequest(AuthHttpRequestEndpoint_Register,registerCredentials.toJson());
       if(response.statusCode != 200){
         showSnackbar(Get.context!, response.message, "error");
       }
