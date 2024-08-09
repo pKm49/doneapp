@@ -66,18 +66,19 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
   void initState() {
     super.initState();
     // checkNotificationsPermission();
+    sharedController.getNotifications();
     tabHistory.add(0);
     bool isValidSubscriptionPresent = false;
 
-    List<MySubscription> latestSubs = sharedController.mySubscriptions.where((p0) =>( p0.status=='in_progress' ||  p0.status=='paid')).toList();
+    List<MySubscription> latestSubs = sharedController.mySubscriptions.where((p0) =>( p0.status=='in_progress')).toList();
     if(latestSubs.isNotEmpty){
       isValidSubscriptionPresent = true;
     }
 
-    // if(isValidSubscriptionPresent){
-    //   _tabList.add(MealCalendarPage_MySubscription());
-    // }
-    _tabList.add(MealCalendarPage_MySubscription());
+    if(isValidSubscriptionPresent){
+      _tabList.add(MealCalendarPage_MySubscription());
+      }
+    // _tabList.add(MealCalendarPage_MySubscription());
 
     _tabList.add(MyProfilePage_Profile());
 

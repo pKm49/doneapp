@@ -8,14 +8,18 @@ import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class HomePage_Core extends StatelessWidget {
     HomePage_Core({super.key});
   final sharedController = Get.find<SharedController>();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,82 +167,137 @@ class HomePage_Core extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                        decoration: APPSTYLE_BorderedContainerDarkMediumDecoration.copyWith(
-                                            borderRadius: BorderRadius.circular(1000),
-                                            color: APPSTYLE_BackgroundWhite
-                                        ),
-                                        clipBehavior: Clip.hardEdge,
-                                        padding: APPSTYLE_SmallPaddingAll,
-                                        width: screenwidth*.3,
-                                        child: Image.asset(ASSETS_DEFAULTPROFILEPIC,)),
+                                    UpdateProfilePic(
+                                      onClick: () {
+                                        Get.toNamed(AppRouteNames.updateProfileRoute);
+                                      },
+                                      borderColor: APPSTYLE_BackgroundWhite,
+                                      profilePictureUrl: sharedController.userData.value.profilePictureUrl,
+                                    ),
+                                    // SUbscription name widget
                                     addVerticalSpace(APPSTYLE_SpaceLarge ),
-                                    FittedBox(
+                                    Visibility(
+                                      visible: !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
+                                      .contains("noactivesubscription"),
+                                      child: FittedBox(
+                                        fit:BoxFit.scaleDown,
+                                        child: Text((Localizations.localeOf(context)
+                                            .languageCode
+                                            .toString() ==
+                                            'ar')?sharedController.userData.value.subscriptionNameArabic:
+                                        sharedController.userData.value.subscriptionName,
+                                          textAlign: TextAlign.start,
+                                          style: getHeadlineLargeStyle(context).copyWith(
+                                              color: APPSTYLE_BackgroundWhite,
+                                              fontWeight: APPSTYLE_FontWeightBold),
+                                        ),
+                                      ),
+                                    ),
 
-                                      fit:BoxFit.scaleDown,
-                                      child: Text("2 Diet Meals",
-                                        textAlign: TextAlign.start,
-                                        style: getHeadlineLargeStyle(context).copyWith(
+                                    Visibility(
+                                      visible:  sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
+                                          .contains("noactivesubscription")
+                                      ,
+                                      child:
+                                      FittedBox(
+                                        fit:BoxFit.scaleDown,
+                                        child: Text("no_active_subscription".tr,
+                                          textAlign: TextAlign.start,
+                                          style: getHeadlineLargeStyle(context).copyWith(
+                                              color: APPSTYLE_BackgroundWhite,
+                                              fontWeight: APPSTYLE_FontWeightBold),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // Ends On Widget
+                                    addVerticalSpace(APPSTYLE_SpaceSmall),
+                                    Visibility(
+                                      visible: !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
+                                          .contains("noactivesubscription"),
+                                      child: FittedBox(
+                                        fit:BoxFit.scaleDown,
+                                        child: Text("ends_on_date".tr.replaceAll("datestring", sharedController.userData.value.subscriptionEndDate),
+                                          textAlign: TextAlign.start,
+                                          style: getBodyMediumStyle(context).copyWith(
                                             color: APPSTYLE_BackgroundWhite,
-                                            fontWeight: APPSTYLE_FontWeightBold),
-                                      ),
-                                    ),
-                                    addVerticalSpace(APPSTYLE_SpaceSmall),
-                                    FittedBox(
-                                      fit:BoxFit.scaleDown,
-                                      child: Text("Ends on 06-09-2024".tr,
-                                        textAlign: TextAlign.start,
-                                        style: getBodyMediumStyle(context).copyWith(
-                                          color: APPSTYLE_BackgroundWhite,
 
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    addVerticalSpace(APPSTYLE_SpaceSmall),
 
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                          Text(
-                                            Localizations.localeOf(context)
-                                                .languageCode
-                                                .toString() ==
-                                                'en'
-                                                ?
-                                          "Remain":"يوما",
+                                    Visibility(
+                                      visible:  sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
+                                          .contains("noactivesubscription"),
+                                      child: FittedBox(
+                                        fit:BoxFit.scaleDown,
+                                        child: Text(
+                                        sharedController.mySubscriptions.where((p0) => p0.status=="paid").isNotEmpty?"subscription_inactive_message".tr:
+                                        sharedController.mySubscriptions.where((p0) => p0.status=="not_paid").isNotEmpty?"subscription_payment_complete_message".tr:
+                                        "subscription_purchase_message".tr,
+                                          textAlign: TextAlign.start,
                                           style: getBodyMediumStyle(context).copyWith(
-                                              color: APPSTYLE_BackgroundWhite
+                                            color: APPSTYLE_BackgroundWhite,
+
                                           ),
                                         ),
-                                        addHorizontalSpace(APPSTYLE_SpaceSmall),
-                                        Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                            border:
-                                            Border.all(color: APPSTYLE_PrimaryColorBg, width: 2),
-                                            shape: BoxShape.circle,
+                                      ),
+                                    ),
+
+                                    // Remaining Days Widget
+                                    addVerticalSpace(APPSTYLE_SpaceSmall),
+                                    Visibility(
+                                      visible: !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
+                                          .contains("noactivesubscription"),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                            Text(
+                                              Localizations.localeOf(context)
+                                                  .languageCode
+                                                  .toString() ==
+                                                  'en'
+                                                  ?
+                                            "Remain":"يوما",
+                                            style: getBodyMediumStyle(context).copyWith(
+                                                color: APPSTYLE_BackgroundWhite
+                                            ),
                                           ),
-                                          child: Center(
-                                              child: Text(
-                                                "30",
-                                                style: getHeadlineLargeStyle(context).copyWith(
-                                                  color: APPSTYLE_PrimaryColorBg
-                                                ),
-                                              )),
-                                        ),
-                                        addHorizontalSpace(APPSTYLE_SpaceSmall),
-                                          Text(
-                                            Localizations.localeOf(context)
-                                                .languageCode
-                                                .toString() ==
-                                                'en'
-                                                ?"Days":"بقي",
-                                          style: getBodyMediumStyle(context).copyWith(
-                                              color: APPSTYLE_BackgroundWhite
+                                          addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                          Visibility(
+                                            visible: !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
+                                                .contains("noactivesubscription"),
+                                            child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                border:
+                                                Border.all(color: APPSTYLE_PrimaryColorBg, width: 2),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Center(
+                                                  child: Text(
+                                                    sharedController.userData.value.subscriptionRemainingDays,
+                                                    style: getHeadlineLargeStyle(context).copyWith(
+                                                      color: APPSTYLE_PrimaryColorBg
+                                                    ),
+                                                  )),
+                                            ),
                                           ),
-                                        )
-                                      ],
+                                          addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                            Text(
+                                              Localizations.localeOf(context)
+                                                  .languageCode
+                                                  .toString() ==
+                                                  'en'
+                                                  ?"Days":"بقي",
+                                            style: getBodyMediumStyle(context).copyWith(
+                                                color: APPSTYLE_BackgroundWhite
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -269,7 +328,10 @@ class HomePage_Core extends StatelessWidget {
                                 ),
                                 child:   FittedBox(
                                   fit: BoxFit.scaleDown,
-                                  child: Text('renew_subscription'.tr,
+                                  child: Text(
+                                      !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim().contains("noactivesubscription")?'renew_subscription'.tr:
+                                      sharedController.mySubscriptions.where((p0) => p0.status=="paid").isNotEmpty?"activate_subscription".tr:
+                                      sharedController.mySubscriptions.where((p0) => p0.status=="not_paid").isNotEmpty?"complete_payment".tr:"purchase_subscription".tr,
                                       style: getLabelLargeStyle(context).copyWith(
                                           color: APPSTYLE_PrimaryColor,fontWeight: APPSTYLE_FontWeightBold),
                                       textAlign: TextAlign.center),
@@ -298,13 +360,19 @@ class HomePage_Core extends StatelessWidget {
                               ),
                                 child:   FittedBox(
                                   fit: BoxFit.scaleDown,
-                                  child: Text('book_an_appointment'.tr,
+                                  child:sharedController.isAppointmentBooking.value
+                                      ? LoadingAnimationWidget.staggeredDotsWave(
+                                    color: APPSTYLE_BackgroundWhite,
+                                    size: 24,
+                                  ):  Text('book_an_appointment'.tr,
                                       style: getLabelLargeStyle(context).copyWith(
                                           color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
                                       textAlign: TextAlign.center),
                                 ),
                                 onPressed: () {
-                                  showLogoutConfirmDialogue(context);
+                                  if(!sharedController.isAppointmentBooking.value){
+                                    showLogoutConfirmDialogue(context);
+                                  }
                                 })),
                       ],
                     ),
@@ -342,7 +410,10 @@ class HomePage_Core extends StatelessWidget {
       final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
 
       updateLogoutAction() {
-
+        if(!sharedController.isAppointmentBooking.value){
+          sharedController.bookDietitionAppointment();
+        }
+        Navigator.pop(context);
       }
 
       updateAction() {

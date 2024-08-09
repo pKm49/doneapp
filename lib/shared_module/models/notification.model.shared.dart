@@ -23,6 +23,8 @@ String convertBirthDay(DateTime birthDay) {
 }
 
 AppNotification mapAppNotification(dynamic payload) {
+  print("payload");
+  print(payload);
   DateTime dateTime = DateTime.now();
   try {
     dateTime = payload["datetime"] != null
@@ -36,8 +38,7 @@ AppNotification mapAppNotification(dynamic payload) {
 
   return AppNotification(
     dateTime: dateTime,
-    message:
-    payload["message"] != null ? payload["message"].toString() : "",
+    message: payload["message"] != null ? payload["message"].toString() : "",
 
   );
 }
@@ -45,9 +46,11 @@ AppNotification mapAppNotification(dynamic payload) {
 
 
 getParsableDate(payload) {
+  List<String> dateItem = [];
   List<String> dateItems = [];
   List<String> dateItemsInt = [];
-  dateItems = payload.toString().split("-").toList();
+  dateItem = payload.toString().split(" ").toList() ;
+  dateItems = dateItem[0].split("-").toList();
   dateItems.forEach((element) {
     if(int.parse(element)<10 && !element.startsWith("0")){
       dateItemsInt.add('0$element');
@@ -55,5 +58,5 @@ getParsableDate(payload) {
       dateItemsInt.add(element);
     }
   });
-  return DateTime.parse(dateItemsInt.reversed.join("-"));
+  return DateTime.parse(dateItemsInt.join("-"));
 }

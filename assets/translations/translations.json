@@ -189,7 +189,10 @@
       "activate_subscription": "Activate Subscription",
       "purchase_subscription": "Purchase Subscription",
       "complete_payment": "Complete Payment",
-      "not_able_to_connect": "Not able to connect now, Please try again later"
+      "not_able_to_connect": "Not able to connect now, Please try again later",
+      "ends_on_date": "Ends On datestring",
+      "appointment_booking_request_recieved_successfully":"Appointment Booking Request processed successfully",
+      "our_rep_will_contact":"Our representative will contact you soon."
 
     }
   },
@@ -382,7 +385,11 @@
       "activate_subscription": "Activate Subscription",
       "purchase_subscription": "Purchase Subscription",
       "complete_payment": "Complete Payment",
-      "not_able_to_connect": "Not able to connect now, Please try again later"
+      "not_able_to_connect": "Not able to connect now, Please try again later",
+      "ends_on_date": "Ends On datestring",
+      "appointment_booking_request_recieved_successfully":"Appointment Booking Request processed successfully",
+      "our_rep_will_contact":"Our representative will contact you soon."
+
     }
   }
 ]

@@ -14,9 +14,11 @@ class UserData {
   final String birthday;
   final String mobile;
   final String email;
-  final String? profilePictureUrl;
+  final String  profilePictureUrl;
   final String subscriptionRemainingDays;
   final String subscriptionEndDate;
+  final String subscriptionName;
+  final String subscriptionNameArabic;
 
 
   UserData(
@@ -34,6 +36,8 @@ class UserData {
         required this.height,
         required this.weight,
         required this.subscriptionEndDate,
+        required this.subscriptionName,
+        required this.subscriptionNameArabic,
         required this.subscriptionRemainingDays });
 
   Map toJson(){
@@ -69,8 +73,14 @@ UserData mapUserData(dynamic payload) {
 
 
   return UserData(
-    subscriptionRemainingDays: payload["subscription_end_in"] ?? "No active subscription.",
-    subscriptionEndDate: payload["subscription_end_date"] ?? "No active subscription.",
+    subscriptionRemainingDays: payload["subscription_end_in"] != null?
+    payload["subscription_end_in"].toString():  "No active subscription.",
+    subscriptionEndDate: payload["subscription_end_date"] != null?
+    payload["subscription_end_date"].toString():  "No active subscription.",
+    subscriptionName: payload["subscription_name"] != null?
+    payload["subscription_name"].toString():  "No active subscription.",
+    subscriptionNameArabic: payload["subscription_arabic_name"] != null?
+    payload["subscription_arabic_name"].toString():  "No active subscription.",
     id: payload["id"] ?? -1,
     profilePictureUrl: payload["profile_picture"] != null
         ? payload["profile_picture"].toString()
@@ -93,7 +103,6 @@ UserData mapUserData(dynamic payload) {
     birthday: payload["birthday"] != null ? payload["birthday"].toString() : "",
     height: payload["height"] !=null ? double.parse(payload["height"].toString()):0.0,
     weight: payload["weight"] !=null ? double.parse(payload["weight"].toString()):0.0,
-
 
   );
 }

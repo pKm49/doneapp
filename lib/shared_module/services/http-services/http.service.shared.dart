@@ -64,11 +64,11 @@ class SharedHttpService {
   }
 
 
-  Future<List<AppNotification>> getNotifications(int userId) async {
+  Future<List<AppNotification>> getNotifications(String mobile) async {
     try {
       List<AppNotification> notifications = [];
       AppHttpResponse response =
-          await getRequest("/notification/$userId", null);
+          await getRequest(SharedHttpRequestEndpoint_GetNotifications+"$mobile", null);
       if (response.statusCode == 200 && response.data != null) {
         for (var i = 0; i < response.data.length; i++) {
           notifications.add(mapAppNotification(response.data[i]));
@@ -86,7 +86,7 @@ class SharedHttpService {
       body["mobile"] = mobile;
       body["device_token"] = deviceToken;
       AppHttpResponse response =
-          await postRequest("/device_token", body);
+          await postRequest(SharedHttpRequestEndpoint_SaveDeviceToken, body);
 
       return response.statusCode == 200;
     } catch (e) {
@@ -143,6 +143,20 @@ class SharedHttpService {
       return "";
     }catch (e){
       return "";
+    }
+  }
+
+  Future<bool> bookDietitionAppointment(String mobile) async {
+    try {
+      Map<String, dynamic> body = {};
+      body["mobile"] = mobile;
+      AppHttpResponse response =
+      await postRequest(SharedHttpRequestEndpoint_BookDietitianAppointment, body);
+
+      return response.statusCode == 200;
+    } catch (e) {
+      showSnackbar(Get.context!, "something_wrong".tr, "error");
+      return false;
     }
   }
 

@@ -31,6 +31,7 @@ class SharedController extends GetxController {
   //  Mobile Verification
   var isOtpVerifying = false.obs;
   var isOtpSending = false.obs;
+  var isAppointmentBooking = false.obs;
 
   Rx<TextEditingController> mobileTextEditingController = TextEditingController().obs;
 
@@ -171,7 +172,7 @@ class SharedController extends GetxController {
     isNotificationsFetching.value = true;
     var sharedHttpService = SharedHttpService();
     notifications.value =
-        await sharedHttpService.getNotifications(userData.value.id);
+        await sharedHttpService.getNotifications(userData.value.mobile);
     isNotificationsFetching.value = false;
   }
 
@@ -255,4 +256,14 @@ class SharedController extends GetxController {
     }
   }
 
+  bookDietitionAppointment() async {
+    isAppointmentBooking.value = true;
+    var sharedHttpService = SharedHttpService();
+    bool isSuccess = await sharedHttpService.bookDietitionAppointment(userData.value.mobile);
+    isAppointmentBooking.value = false;
+
+    if(isSuccess){
+      showSnackbar(Get.context!, "appointment_booking_request_recieved_successfully".tr, "info");
+      showSnackbar(Get.context!, "our_rep_will_contact".tr, "info");}
+  }
 }
