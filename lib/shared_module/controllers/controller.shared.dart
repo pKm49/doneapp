@@ -22,6 +22,7 @@ class SharedController extends GetxController {
   var mobile = "".obs;
   var isUserDataFetching = false.obs;
   var isNotificationsFetching = false.obs;
+  var isSubscriptionsFetching = false.obs;
   var isDeviceTokenUpdating = false.obs;
   var userData = mapUserData({}).obs;
   var notifications = <AppNotification>[].obs;
@@ -168,6 +169,15 @@ class SharedController extends GetxController {
     if (isNavigation) {
       Get.toNamed(AppRouteNames.loginRoute);
     }
+  }
+
+
+  Future<void> getCustomerSubscriptions() async {
+    isSubscriptionsFetching.value = true;
+    var sharedHttpService = SharedHttpService();
+    mySubscriptions.value =
+    await sharedHttpService.getMySubscriptions(userData.value.mobile);
+    isSubscriptionsFetching.value = false;
   }
 
   Future<void> getNotifications() async {

@@ -50,12 +50,20 @@ class AddressController extends GetxController {
 
 
   Future<void> getAreas(  ) async {
-    isAreasFetching.value = true;
-    areas.value = [];
-    var addressHttpService = new AddressHttpService();
-    areas.value =
-    await addressHttpService.getAreas();
-    isAreasFetching.value = false;
+    if(areas.isEmpty){
+      isAreasFetching.value = true;
+      areas.value = [];
+      var addressHttpService = new AddressHttpService();
+      areas.value =
+      await addressHttpService.getAreas();
+
+      if(areaId.value != -1 && blocks.isEmpty){
+        getBlocks(areaId.value);
+      }
+
+      isAreasFetching.value = false;
+
+    }
 
   }
 
@@ -94,7 +102,7 @@ class AddressController extends GetxController {
   Future<void> deleteAddress(int id) async {
     List<Address> tAddressList = customerAddressList.where((p0) => p0.id==id).toList();
 
-    if(tAddressList.isNotEmpty){
+    if(tAddressList.isNotEmpty && !isAddressDeleting.value){
       isAddressDeleting.value = true;
       var addressHttpService = new AddressHttpService();
       bool isSuccess =
@@ -112,37 +120,36 @@ class AddressController extends GetxController {
     List<Address> tAddressList = customerAddressList.where((p0) => p0.id==id).toList();
 
     if (tAddressList.isNotEmpty) {
-
       currentAddress.value = tAddressList[0];
-
-
       streetTextEditingController.value.text = currentAddress.value.street;
+      commentsTextEditingController.value.text = currentAddress.value.comments;
       apartmentNumberTextEditingController.value.text =currentAddress.value.apartmentNo==-1?"": currentAddress.value.apartmentNo.toString();
       houseNumberTextEditingController.value.text = currentAddress.value.houseNumber==-1?"":currentAddress.value.houseNumber.toString();
       floorNumberTextEditingController.value.text = currentAddress.value.floorNumber==-1?"":currentAddress.value.floorNumber.toString();
-       areaId.value = currentAddress.value.areaId;
-      debugPrint("changeAuditAddress");
-      debugPrint(areaId.value.toString());
-      debugPrint( streetTextEditingController.value.text.toString());
+      areaId.value = currentAddress.value.areaId;
       blockId.value = currentAddress.value.blockId;
-
-      if(areaId.value != -1){
-        getBlocks(areaId.value);
-      }
-
 
     }else{
       currentAddress.value = mapAddress({});
+      streetTextEditingController.value.text = "";
+      apartmentNumberTextEditingController.value.text =  "";
+      houseNumberTextEditingController.value.text =  "";
+      floorNumberTextEditingController.value.text =  "";
+      areaId.value = -1;
+      commentsTextEditingController.value.text = "";
+
+      blockId.value =-1;
     }
 
-    Get.toNamed(AppRouteNames.addressAuditRoute,arguments: [VALIDADDRESSAUTHOR_MODES.author_address]);
+    Get.toNamed(AppRouteNames.addressAuditRoute,arguments: [VALIDADDRESSAUTHOR_MODES.author_address,""]);
   }
 
 
   Future<void> auditAddress() async {
 
         if(   streetTextEditingController.value.text !=""
-            && houseNumberTextEditingController.value.text !="" && floorNumberTextEditingController.value.text !=""){
+            && houseNumberTextEditingController.value.text !=""
+            && floorNumberTextEditingController.value.text !=""){
 
 
           var sharedPreferences = await SharedPreferences.getInstance();
@@ -156,9 +163,13 @@ class AddressController extends GetxController {
                 id: currentAddress.value.id,
                 name: "",
                 comments: commentsTextEditingController.value.text,
-                apartmentNo: int.parse(apartmentNumberTextEditingController.value.text.toString().trim()),
-              houseNumber: int.parse(houseNumberTextEditingController.value.text.toString().trim()),
-              floorNumber: int.parse(floorNumberTextEditingController.value.text.toString().trim()),
+                apartmentNo:apartmentNumberTextEditingController.value.text.toString().trim() !=""?
+                int.parse(apartmentNumberTextEditingController.value.text.toString().trim()):-1,
+              houseNumber:houseNumberTextEditingController.value.text.toString().trim() !=""?
+              int.parse(houseNumberTextEditingController.value.text.toString().trim()):-1,
+              floorNumber:floorNumberTextEditingController.value.text.toString().trim() !=""?
+              int.parse(floorNumberTextEditingController.value.text.toString().trim()):-1,
+
                 street: streetTextEditingController.value.text,
                 areaId: areaId.value,
                 areaName: '',
@@ -171,9 +182,10 @@ class AddressController extends GetxController {
             isAddressAuditing.value = false;
             if(isSuccess){
               getCustomerAddressList();
+              Get.back();
               showSnackbar(Get.context!,currentAddress.value.id == -1?
               "address_added_successfully".tr:"address_updated_successfully".tr, "info");
-              Get.back();
+
             }
           }
         }else{

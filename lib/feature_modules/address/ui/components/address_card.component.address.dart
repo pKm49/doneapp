@@ -1,5 +1,4 @@
-
- import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
+import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
@@ -8,20 +7,19 @@ import 'package:doneapp/shared_module/services/utility-services/widget_propertie
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class AddressCardComponentShared extends StatelessWidget {
-   Address shippingAddress;
-  GestureTapCallback onSelected;
+  Address shippingAddress;
+  GestureTapCallback onDeleteSelected;
   GestureTapCallback onEditSelected;
-  bool isSelected;
 
   AddressCardComponentShared(
       {super.key,
       required this.shippingAddress,
-      required this.isSelected,
       required this.onEditSelected,
-      required this.onSelected});
+      required this.onDeleteSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class AddressCardComponentShared extends StatelessWidget {
 
     return Container(
       decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
-        color:APPSTYLE_BackgroundWhite,
+        color: APPSTYLE_BackgroundWhite,
         boxShadow: [
           const BoxShadow(
             color: APPSTYLE_Grey80Shadow24,
@@ -46,48 +44,61 @@ class AddressCardComponentShared extends StatelessWidget {
         direction: Axis.vertical,
         children: [
           Container(
-            width: screenwidth - ((APPSTYLE_SpaceMedium*2)+(APPSTYLE_SpaceLarge*2)),
+            width: screenwidth -
+                ((APPSTYLE_SpaceMedium * 2) + (APPSTYLE_SpaceLarge * 2)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: InkWell(
-                    onTap: onSelected,
-                    child: Text(shippingAddress.name,
-                        style: getBodyMediumStyle(context).copyWith(
-                            color:isSelected?APPSTYLE_PrimaryColor: APPSTYLE_Grey60, fontWeight: APPSTYLE_FontWeightBold)),
-                  ),
+                  child: Container(),
                 ),
-
                 InkWell(
                     onTap: onEditSelected,
-                    child: Icon(Ionicons.create_outline))
+                    child: Icon(Ionicons.create_outline)),
+                addHorizontalSpace(APPSTYLE_SpaceSmall),
+                InkWell(
+                    onTap: onDeleteSelected,
+                    child: Icon(Ionicons.trash_bin_outline))
               ],
             ),
           ),
-          InkWell(
-              onTap: onSelected,child: addVerticalSpace(APPSTYLE_SpaceMedium)),
-          InkWell(
-            onTap: onSelected,
-            child: Container(
-              width: screenwidth - ((APPSTYLE_SpaceMedium*2)+(APPSTYLE_SpaceLarge*2)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(shippingAddress.comments,
-                        style: getLabelLargeStyle(context).copyWith(
-                            color: isSelected?APPSTYLE_Grey60: APPSTYLE_Grey40)),
-                  ),
-                  addHorizontalSpace(APPSTYLE_SpaceMedium),
-                  Container(
-                    width: screenwidth*.15,
-                    height: screenwidth*.15,
-                      decoration: APPSTYLE_BorderedContainerSmallDecoration,
-                      clipBehavior: Clip.hardEdge,
-                      child: Center(child: Image.asset(ASSETS_LOCATIONPICKER, width:screenwidth*.06)))
-                ],
-              ),
+          addVerticalSpace(APPSTYLE_SpaceSmall),
+          Container(
+            width: screenwidth -
+                ((APPSTYLE_SpaceMedium * 2) + (APPSTYLE_SpaceLarge * 2)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                      "${Localizations.localeOf(context)
+                          .languageCode
+                          .toString() ==
+                          'ar'?shippingAddress.areaNameArabic:shippingAddress.areaName}, "
+                          " ${shippingAddress.street} ${'street'.tr}, "
+                          "Block ${Localizations.localeOf(context)
+                          .languageCode
+                          .toString() ==
+                          'ar'?shippingAddress.blockNameArabic:shippingAddress.blockName}, "
+                          "${shippingAddress.jedha.trim()!='' ?('${shippingAddress.jedha} '):''}${shippingAddress.jedha.trim()!=''?('${'street'.tr},'):''}"
+                          "${shippingAddress.houseNumber !=-1?'house_number'.tr:''} : ${shippingAddress.houseNumber!=-1 ?shippingAddress.houseNumber:''}"
+                          "${shippingAddress.floorNumber !=-1?(', ${'floor_number'.tr} : '):''} ${shippingAddress.floorNumber!=-1 ?shippingAddress.floorNumber:''}"
+                          "${shippingAddress.apartmentNo !=-1? (', ${'flat_number'.tr} : '):''} ${shippingAddress.apartmentNo!=-1 ?shippingAddress.apartmentNo:''}"
+                          "${shippingAddress.comments.trim()!=''? (', ${'comments'.tr} : '):'' } ${shippingAddress.comments.trim()!=''?shippingAddress.comments:''}",
+
+                      style: getBodyMediumStyle(context)
+                          .copyWith(color: APPSTYLE_Grey40)),
+                ),
+                addHorizontalSpace(APPSTYLE_SpaceMedium),
+                Container(
+                    width: screenwidth * .15,
+                    height: screenwidth * .15,
+                    decoration: APPSTYLE_BorderedContainerSmallDecoration,
+                    clipBehavior: Clip.hardEdge,
+                    child: Center(
+                        child: Image.asset(ASSETS_LOCATION,
+                            width: screenwidth * .15)))
+              ],
             ),
           ),
         ],

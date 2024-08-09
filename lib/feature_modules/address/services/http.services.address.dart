@@ -36,13 +36,17 @@ class AddressHttpService {
     try{
       if(isCreate){
 
-        AppHttpResponse response = await postRequest(AddressHttpRequestEndpoint_Address, {"params":address.toJson(mobile)});
-
+        AppHttpResponse response = await postRequest(AddressHttpRequestEndpoint_Address, address.toJson(mobile));
+        if(response.statusCode != 200){
+          showSnackbar(Get.context!, response.message, "error");
+        }
         return response.statusCode == 200;
       }else{
 
-        AppHttpResponse response = await patchRequest(AddressHttpRequestEndpoint_Address, {"params":address.toJson(mobile)});
-
+        AppHttpResponse response = await patchRequest(AddressHttpRequestEndpoint_Address, address.toJson(mobile));
+        if(response.statusCode != 200){
+          showSnackbar(Get.context!, response.message, "error");
+        }
         return response.statusCode == 200;
       }
 

@@ -15,6 +15,7 @@ import 'package:doneapp/shared_module/ui/components/language_preview_button.comp
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AuditAddressPage_Address extends StatefulWidget {
   const AuditAddressPage_Address({super.key});
@@ -39,9 +40,7 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
         getArguments[0] ?? VALIDADDRESSAUTHOR_MODES.complete_registration;
     mobile = getArguments[1];
     addressController.setFromRoute(addressAuthorMode);
-    if (addressAuthorMode == VALIDADDRESSAUTHOR_MODES.complete_registration) {
-      addressController.getAreas();
-    }
+    addressController.getAreas();
   }
 
   @override
@@ -74,11 +73,6 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
               )
             ],
           ),
-          actions: [
-            LanguagePreviewButtonComponentShared(
-                textColor: APPSTYLE_PrimaryColor),
-            addHorizontalSpace(APPSTYLE_SpaceLarge)
-          ],
         ),
         body: SafeArea(
           child: Obx(
@@ -359,7 +353,11 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
                           }
                         },
                         style: getElevatedButtonStyle(context),
-                        child: Text("continue".tr,
+                        child:addressController.isAddressAuditing.value
+                            ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: APPSTYLE_BackgroundWhite,
+                          size: 24,
+                        ):   Text("continue".tr,
                             style: getHeadlineMediumStyle(context).copyWith(
                                 color: APPSTYLE_BackgroundWhite,
                                 fontWeight: APPSTYLE_FontWeightBold)),
@@ -408,7 +406,9 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
           mobile
         ]);
       } else {
-        Get.back();
+        if(!addressController.isAddressAuditing.value){
+          addressController.auditAddress();
+        }
       }
     }
   }

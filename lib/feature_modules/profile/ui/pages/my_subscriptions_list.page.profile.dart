@@ -14,17 +14,24 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:shimmer/shimmer.dart';
 
-class MySubscriptionListPage_MySubscription extends StatefulWidget {
-  const MySubscriptionListPage_MySubscription({super.key});
+class MySubscriptionListPage_Profile extends StatefulWidget {
+  const MySubscriptionListPage_Profile({super.key});
 
   @override
-  State<MySubscriptionListPage_MySubscription> createState() =>
-      _MySubscriptionListPage_MySubscriptionState();
+  State<MySubscriptionListPage_Profile> createState() =>
+      _MySubscriptionListPage_ProfileState();
 }
 
-class _MySubscriptionListPage_MySubscriptionState
-    extends State<MySubscriptionListPage_MySubscription> {
+class _MySubscriptionListPage_ProfileState
+    extends State<MySubscriptionListPage_Profile> {
   final sharedController = Get.find<SharedController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sharedController.getCustomerSubscriptions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,8 @@ class _MySubscriptionListPage_MySubscriptionState
             child: Column(
               children: [
                 Visibility(
-                  visible:  sharedController.isUserDataFetching.value,
+                  visible:  sharedController.isUserDataFetching.value ||
+                      sharedController.isSubscriptionsFetching.value,
                   child: Expanded(
                       child: ListView(
                     children: [
@@ -168,7 +176,7 @@ class _MySubscriptionListPage_MySubscriptionState
                 ),
                 Visibility(
                   visible: sharedController.mySubscriptions.isNotEmpty &&
-                      !sharedController.isUserDataFetching.value,
+                      !sharedController.isUserDataFetching.value && !sharedController.isSubscriptionsFetching.value ,
                   child: Expanded(
                     child: ListView.builder(
                         itemCount: sharedController.mySubscriptions.length,
@@ -317,7 +325,7 @@ class _MySubscriptionListPage_MySubscriptionState
                 ),
                 Visibility(
                   visible: sharedController.mySubscriptions.isEmpty &&
-                      !sharedController.isUserDataFetching.value,
+                      !sharedController.isUserDataFetching.value && !sharedController.isSubscriptionsFetching.value ,
                   child: Expanded(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -336,7 +344,7 @@ class _MySubscriptionListPage_MySubscriptionState
                             child: Center(
                               child: Icon(Ionicons.cash_outline,
                                   size: screenwidth * .15,
-                                  color: APPSTYLE_Grey80),
+                                  color: APPSTYLE_PrimaryColorBg),
                             ),
                           )
                         ],

@@ -40,11 +40,12 @@ class Address {
         'jedha': jedha,
         'comments': comments,
         'street': street,
-        'house_number': houseNumber,
-        'floor_number': floorNumber,
-        'area_id': areaId,
+        'house_number': houseNumber==-1?'':houseNumber,
+        'floor_number': floorNumber==-1?'':floorNumber,
+        'apartment_no': apartmentNo==-1?'':apartmentNo,
+
+    'area_id': areaId,
         'block_id': blockId,
-        'apartment_no': apartmentNo,
       };
 }
 

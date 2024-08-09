@@ -9,7 +9,7 @@ import 'package:doneapp/feature_modules/auth/ui/reset-password/reset_password.pa
 import 'package:doneapp/feature_modules/auth/ui/welcome.page.auth.dart';
 import 'package:doneapp/feature_modules/my_subscription/ui/pages/freeze_subscription.page.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/ui/pages/meal_selection.page.my_subscription.dart';
-import 'package:doneapp/feature_modules/my_subscription/ui/pages/my_subscriptions_list.page.my_subscription.dart';
+import 'package:doneapp/feature_modules/profile/ui/pages/my_subscriptions_list.page.profile.dart';
 import 'package:doneapp/feature_modules/plan_purchase/ui/pages/checkout.page.plan_purchase.dart';
 import 'package:doneapp/feature_modules/plan_purchase/ui/pages/select_plan.page.plan_purchase.dart';
 import 'package:doneapp/feature_modules/plan_purchase/ui/pages/select_plan_category.page.plan_purchase.dart';
@@ -119,7 +119,7 @@ AppPages() => [
   ),
   GetPage(
     name: AppRouteNames.mySubscriptionsRoute,
-    page: () =>   MySubscriptionListPage_MySubscription(),
+    page: () =>   MySubscriptionListPage_Profile(),
   ),
   GetPage(
     name: AppRouteNames.addressListRoute,

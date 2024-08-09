@@ -10,6 +10,7 @@ const String ASSETS_SUCCESSMARK = "assets/images/successmark.png";
 const String ASSETS_SAMPLEFOOD = "assets/images/sample_food.png";
 const String ASSETS_DEFAULTPROFILEPIC = "assets/images/default_profilepic.png";
 const String ASSETS_LOCATIONPICKER = "assets/images/location_picker.png";
+const String ASSETS_LOCATION = "assets/images/location.png";
 const String ASSETS_MALE = "assets/images/male.svg";
 const String ASSETS_FEMALE = "assets/images/female.svg";
 const String ASSETS_OFFERPLAN = "assets/images/plans.svg";
