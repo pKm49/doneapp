@@ -426,6 +426,8 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                               ],
                             ),
                           ),
+
+                          addVerticalSpace(APPSTYLE_SpaceLarge)
                         ],
                       ),
                     ),

@@ -162,6 +162,7 @@ class _NotificationsPage_CoreState extends State<NotificationsPage_Core> {
                             );
                           }),),
                 ),
+
                 Visibility(
                   visible: sharedController.notifications.isEmpty &&
                       !sharedController.isNotificationsFetching.value,
@@ -194,6 +195,7 @@ class _NotificationsPage_CoreState extends State<NotificationsPage_Core> {
                     ],
                   )),
                 )
+
               ],
             ),
           ),

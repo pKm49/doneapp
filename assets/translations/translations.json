@@ -199,7 +199,8 @@
       "our_rep_will_contact":"Our representative will contact you soon.",
       "login_message": "Please Login to continue",
       "couldnt_load_profiledata": "Couldn't load profile data",
-      "profile_updated_successfully": "Profile Updated Successfully"
+      "profile_updated_successfully": "Profile Updated Successfully",
+      "no_subscription": "You haven't purchased any subscriptions yet"
     }
   },
   {
@@ -402,7 +403,9 @@
       "our_rep_will_contact":"Our representative will contact you soon.",
       "login_message": "الرجاء تسجيل الدخول للمتابعة",
       "couldnt_load_profiledata": "Couldn't load profile data",
-      "profile_updated_successfully": "تم تحديث الملف الشخصي بنجاح"
+      "profile_updated_successfully": "تم تحديث الملف الشخصي بنجاح",
+      "no_subscription": "You haven't purchased any subscriptions yet"
+
     }
   }
 ]

@@ -70,7 +70,7 @@ String convertBirthDay(DateTime birthDay) {
 UserData mapUserData(dynamic payload) {
   print("mapUserData");
   print(payload["subscription_end_date"]);
-  print(payload["profile_picture"]);
+  print(payload["subscription_end_in"]);
 
 
   return UserData(
@@ -84,8 +84,9 @@ UserData mapUserData(dynamic payload) {
     payload["subscription_arabic_name"].toString():  "No active subscription.",
     id: payload["id"] ?? -1,
     profilePictureUrl: payload["profile_picture"] != null
-        ? payload["profile_picture"].toString()=="https://vertexlabs.online/web/image/ir.attachment/6145/datas"?
-        ASSETS_DEFAULTPROFILEPIC:payload["profile_picture"].toString()
+        ? payload["profile_picture"].toString() !=""?
+          payload["profile_picture"].toString()
+        : ASSETS_DEFAULTPROFILEPIC
         : ASSETS_DEFAULTPROFILEPIC,
     mobile: payload["mobile"] ?? "",
     customerCode: payload["customer_code"] != null ?
