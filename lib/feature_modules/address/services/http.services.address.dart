@@ -61,10 +61,10 @@ class AddressHttpService {
   Future<bool> deleteUserAddressess(int addressId) async {
 
     try{
+      Map<String, dynamic> params = {};
+      params["address_id"]=addressId;
       AppHttpResponse response =
-      await postRequest(AddressHttpRequestEndpoint_Address, {"params":{
-        "address_id":addressId
-      }});
+      await deleteRequest(AddressHttpRequestEndpoint_Address, params);
       return response.statusCode == 200;
 
     }catch (e){

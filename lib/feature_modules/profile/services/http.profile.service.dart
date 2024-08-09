@@ -38,6 +38,7 @@ class ProfileHttpService {
       return mapReferralData({});
     }
   }
+
   Future<String> updateProfileData(UserData userData, String mobile ) async {
 
     try{
@@ -51,36 +52,45 @@ class ProfileHttpService {
     }
   }
 
-  Future<bool> updateAllergyDislikes(AllergyDislikes allergyDislikes, String mobile ) async {
+  Future<bool> updateAllergies(List<GeneralItem> allergies, String mobile ) async {
 
     try{
-      AppHttpResponse response = await postRequest(ProfileHttpRequestEndpoint_UpdateAllergyDislikes,
-          {"params":{
-            "mobile": mobile,
-            "allergy_categories": allergyDislikes.allergyCategories,
-            "allergies": allergyDislikes.allergies,
-            "dislike_categories": allergyDislikes.dislikeCategories ,
-            "dislikes": allergyDislikes.dislikes
-          }});
+      print("updateAllergies");
 
+
+      AppHttpResponse response = await patchRequest(ProfileHttpRequestEndpoint_Allergy,
+          {
+            "mobile": mobile,
+            "allergies": allergies.map((e) => e.id).toList(),
+          });
+      print("response");
+      print(response.statusCode);
+      if(response.statusCode != 200){
+        showSnackbar(Get.context!, "something_wrong".tr, "error");
+      }
       return response.statusCode == 200;
 
-    }catch (e){
+    }catch (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }
   }
 
-  Future<List<GeneralItem>> getIngredientCategories() async {
+  Future<List<GeneralItem>> getAllergies(String mobile) async {
 
     try{
+      Map<String, dynamic> params = {};
+      params["mobile"]=mobile;
       AppHttpResponse response =
-      await getRequest(ProfileHttpRequestEndpoint_GetIngredientCategories,null);
+      await getRequest(ProfileHttpRequestEndpoint_Allergy,params);
+
       final List<GeneralItem> tempItems = [];
 
       if (response.statusCode == 200 && response.data != null) {
-        for (var i = 0; i < response.data.length; i++) {
-          tempItems.add(mapGeneralItem(response.data[i]));
+        for (var i = 0; i < response.data[0].length; i++) {
+          tempItems.add(mapGeneralItem(response.data[0][i]));
         }
       }
       return tempItems;
@@ -91,13 +101,12 @@ class ProfileHttpService {
     }
   }
 
-  Future<List<GeneralItem>> getIngredients(int categoryId) async {
+  Future<List<GeneralItem>> getIngredients( ) async {
 
     try{
       Map<String, dynamic> params = {};
-      params["category"]=categoryId;
       AppHttpResponse response =
-      await getRequest(ProfileHttpRequestEndpoint_GetIngredients,params);
+      await getRequest(ProfileHttpRequestEndpoint_Ingredient,null);
 
       final List<GeneralItem> tempItems = [];
 
@@ -106,43 +115,15 @@ class ProfileHttpService {
           tempItems.add(mapGeneralItem(response.data[i]));
         }
       }
+      print("getIngredients tempItems");
+      print(tempItems.length);
       return tempItems;
 
-    }catch (e){
+    }catch (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return [];
-    }
-  }
-
-  Future<QueryResponse> getIngredientsByQuery(String searchQuery) async {
-
-    try{
-      Map<String, dynamic> params = {};
-      params["keyword"]=searchQuery;
-      AppHttpResponse response =
-      await getRequest(ProfileHttpRequestEndpoint_SearchAllergyDislike,params);
-
-      final List<GeneralItem> tempCategories = [];
-      final List<GeneralItem> tempIngredients = [];
-
-      if (response.statusCode == 200 && response.data != null) {
-        if (response.data['categories'] != null) {
-          for (var i = 0; i < response.data['categories'].length; i++) {
-            tempCategories.add(mapGeneralItem(response.data['categories'][i]));
-          }
-        }
-        if (response.data['ingredients'] != null) {
-          for (var i = 0; i < response.data['ingredients'].length; i++) {
-            tempIngredients.add(mapGeneralItem(response.data['ingredients'][i]));
-          }
-        }
-
-      }
-      return QueryResponse(ingredients: tempIngredients, categories: tempCategories);
-
-    }catch (e){
-      showSnackbar(Get.context!, "something_wrong".tr, "error");
-      return QueryResponse(ingredients: [], categories: []);
     }
   }
 
@@ -152,7 +133,7 @@ class ProfileHttpService {
       Map<String, dynamic> params = {};
       params["mobile"]=mobile;
       AppHttpResponse response =
-          await getRequest(ProfileHttpRequestEndpoint_DeleteAccount,params);
+          await deleteRequest(ProfileHttpRequestEndpoint_Profile,params);
 
       return response.statusCode == 200;
 

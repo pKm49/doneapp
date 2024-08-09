@@ -3,6 +3,7 @@ import 'package:doneapp/feature_modules/profile/services/http.profile.service.da
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/models/general_item.model.shared.dart';
 import 'package:doneapp/shared_module/models/user_data.model.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,12 @@ class ProfileController extends GetxController {
   var isRefferalDataFetching = false.obs;
   var userData = mapUserData({}).obs;
   var isProfileUpdating = false.obs;
+  var isAllergiesFetching = false.obs;
+  var isAllergiesUpdating = false.obs;
+  var isIngredientsFetching = false.obs;
+  var ingredients = <GeneralItem>[].obs;
+  var allergies = <GeneralItem>[].obs;
+  var ingredientsToShow = <GeneralItem>[].obs;
 
   void updateProfilePicture(String base64encode) {
     isFileSelected.value = true;
@@ -135,6 +142,61 @@ class ProfileController extends GetxController {
 
   }
 
+  getIngredients() async {
+    if(! isIngredientsFetching.value){
+      isIngredientsFetching.value = true;
+      var profileHttpService = ProfileHttpService();
+      ingredients.value = await profileHttpService.getIngredients();
+      ingredientsToShow.value = ingredients.value;
+      print("getIngredients");
+      print(ingredientsToShow.length);
+      print(ingredients.length);
+      isIngredientsFetching.value = false;
+    }
+  }
+
+  getAllergies() async {
+    if(! isAllergiesFetching.value){
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? tMobile = prefs.getString('mobile');
+      if (tMobile != null && tMobile != '') {
+        isAllergiesFetching.value = true;
+        var profileHttpService = ProfileHttpService();
+        allergies.value = await profileHttpService.getAllergies(tMobile);
+        isAllergiesFetching.value = false;
+      }else {
+        showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
+        showSnackbar(Get.context!, "login_message".tr, "error");
+        Get.offAllNamed(AppRouteNames.loginRoute);
+      }
+
+    }
+
+  }
+  updateAllergies() async {
+    if(! isAllergiesUpdating.value && allergies.isNotEmpty){
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? tMobile = prefs.getString('mobile');
+      if (tMobile != null && tMobile != '') {
+        isAllergiesUpdating.value = true;
+        var profileHttpService = ProfileHttpService();
+        bool isSuccess = await profileHttpService.updateAllergies(allergies,tMobile);
+        isAllergiesUpdating.value = false;
+        if(isSuccess){
+          Get.back();
+          showSnackbar(Get.context!, "allergies_updated_successfully".tr, "info");
+
+        }
+      }else {
+        showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
+        showSnackbar(Get.context!, "login_message".tr, "error");
+        Get.offAllNamed(AppRouteNames.loginRoute);
+      }
+
+    }
+
+  }
+
   Future<void> deleteAccount() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     final String? mobile = sharedPreferences.getString('mobile');
@@ -147,6 +209,35 @@ class ProfileController extends GetxController {
         showSnackbar(Get.context!, "account_delete_success_message".tr, "info");
         showSnackbar(Get.context!, "our_rep_will_contact".tr, "info");
       }
+    }
+  }
+
+  void updateIngredientsListByQuery(String query) {
+    if (query== "") {
+      ingredientsToShow.value = ingredients.value;
+    } else {
+       List<GeneralItem> tIngredients = [];
+       for (var element in ingredients) {
+         if(element.name.toLowerCase().contains(query) ||
+         element.arabicName.contains(query)){
+           tIngredients.add(element);
+         }
+       }
+       ingredientsToShow.value = tIngredients;
+    }
+  }
+
+  void updateAllergyValues(GeneralItem ingredient) {
+    if(allergies.map((element) => element.id).toList().contains(ingredient.id)){
+      List<GeneralItem> tAllergies = [];
+      for (var element in allergies) {
+        if(element.id != ingredient.id){
+          tAllergies.add(element);
+        }
+      }
+      allergies.value = tAllergies;
+    }else{
+      allergies.add(ingredient);
     }
   }
 

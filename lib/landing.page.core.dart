@@ -1,4 +1,5 @@
 import 'package:doneapp/feature_modules/my_subscription/ui/pages/meal_calendar.page.my_subscription.dart';
+import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/feature_modules/profile/ui/pages/my_profile.page.profile.dart';
 import 'package:doneapp/home.page.core.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
@@ -19,6 +20,7 @@ class LandingPage_Core extends StatefulWidget {
 class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProviderStateMixin{
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final profileController = Get.find<ProfileController>();
   final sharedController = Get.find<SharedController>();
 
   List<int> tabHistory = [];
@@ -67,6 +69,8 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
     super.initState();
     // checkNotificationsPermission();
     sharedController.getNotifications();
+    profileController.getIngredients();
+    profileController.getAllergies();
     tabHistory.add(0);
     bool isValidSubscriptionPresent = false;
 

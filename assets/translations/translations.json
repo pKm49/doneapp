@@ -204,8 +204,9 @@
       "no_subscription": "You haven't purchased any subscriptions yet",
       "no_address": "No Shipping address to display",
       "address_updated_successfully": "Address Updated Successfully",
-      "address_added_successfully": "Address Added Successfully"
-
+      "address_added_successfully": "Address Added Successfully",
+      "search_ingredients": "Search Ingredients",
+      "allergies_updated_successfully": "Allergies Updated Successfully"
     }
   },
   {
@@ -413,7 +414,9 @@
       "no_subscription": "You haven't purchased any subscriptions yet",
       "no_address": "No Shipping address to display",
       "address_updated_successfully": "تم تحديث العنوان بنجاح",
-      "address_added_successfully": "تمت إضافة العنوان بنجاح"
+      "address_added_successfully": "تمت إضافة العنوان بنجاح",
+      "search_ingredients": "Search Ingredients",
+      "allergies_updated_successfully": "تم تحديث"
     }
   }
 ]

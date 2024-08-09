@@ -389,6 +389,7 @@ class MyProfilePage_Profile extends StatelessWidget {
     updateLogoutAction() async {
       final profileController = Get.find<ProfileController>();
       profileController.deleteAccount();
+      Navigator.pop(context);
     }
 
     updateAction() {

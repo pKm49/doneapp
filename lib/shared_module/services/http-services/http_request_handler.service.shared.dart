@@ -151,14 +151,15 @@ patchRequest(endpoint, body) async {
   }
 }
 
-deleteRequest(endpoint) async {
+deleteRequest(endpoint,parameters) async {
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
-
+    print("deleteRequest called pass 1");
+    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
     final httpResponse =
-    await http.delete(Uri.https(env.apiEndPoint, "/$endpoint"));
+    await http.delete(Uri.https(env.apiEndPoint, "/$endpoint"),params: json.decode(json.encode(parameters)));
 
     var httpResponseBody = json.decode(httpResponse.body);
 
