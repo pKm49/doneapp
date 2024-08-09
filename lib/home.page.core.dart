@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class HomePage_Core extends StatelessWidget {
@@ -167,18 +168,40 @@ class HomePage_Core extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    UpdateProfilePic(
-                                      onClick: () {
-                                        Get.toNamed(AppRouteNames.updateProfileRoute);
-                                      },
-                                      borderColor: APPSTYLE_BackgroundWhite,
-                                      profilePictureUrl: sharedController.userData.value.profilePictureUrl,
+                                    Visibility(
+                                      visible: !sharedController.isUserDataFetching.value,
+
+                                      child: UpdateProfilePic(
+                                        onClick: () {
+                                          Get.toNamed(AppRouteNames.updateProfileRoute);
+                                        },
+                                        borderColor: APPSTYLE_BackgroundWhite,
+                                        profilePictureUrl: sharedController.userData.value.profilePictureUrl,
+                                      ),
                                     ),
+                                    Visibility(
+                                      visible: sharedController.isUserDataFetching.value,
+                                      child: Shimmer.fromColors(
+                                        baseColor: APPSTYLE_Grey20,
+                                        highlightColor: APPSTYLE_Grey40,
+                                        child: Container(
+                                          height: screenwidth * .3,
+                                          width: screenwidth * .3,
+
+                                          decoration:
+                                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                                              .copyWith(
+                                            borderRadius: BorderRadius.circular(1000),
+                                            border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                                            color: APPSTYLE_Grey20
+                                          ),),
+                                      ),),
+
                                     // SUbscription name widget
                                     addVerticalSpace(APPSTYLE_SpaceLarge ),
                                     Visibility(
                                       visible: !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
-                                      .contains("noactivesubscription"),
+                                      .contains("noactivesubscription")  &&  !sharedController.isUserDataFetching.value,
                                       child: FittedBox(
                                         fit:BoxFit.scaleDown,
                                         child: Text((Localizations.localeOf(context)
@@ -193,10 +216,9 @@ class HomePage_Core extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-
                                     Visibility(
                                       visible:  sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
-                                          .contains("noactivesubscription")
+                                          .contains("noactivesubscription") &&  !sharedController.isUserDataFetching.value
                                       ,
                                       child:
                                       FittedBox(
@@ -209,12 +231,29 @@ class HomePage_Core extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                                    Visibility(
+                                      visible: sharedController.isUserDataFetching.value,
+                                      child: Shimmer.fromColors(
+                                      baseColor: APPSTYLE_Grey20,
+                                      highlightColor: APPSTYLE_Grey40,
+                                      child: Container(
+                                        height: 30,
+                                        width: screenwidth * .5,
+                                        decoration:
+                                        APPSTYLE_BorderedContainerExtraSmallDecoration
+                                            .copyWith(
+                                          border: null,
+                                          color: APPSTYLE_Grey20,
+                                          borderRadius: BorderRadius.circular(
+                                              APPSTYLE_BlurRadiusSmall),
+                                        ),),
+                                    ),),
 
                                     // Ends On Widget
                                     addVerticalSpace(APPSTYLE_SpaceSmall),
                                     Visibility(
                                       visible: !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
-                                          .contains("noactivesubscription"),
+                                          .contains("noactivesubscription")&&  !sharedController.isUserDataFetching.value,
                                       child: FittedBox(
                                         fit:BoxFit.scaleDown,
                                         child: Text("ends_on_date".tr.replaceAll("datestring", sharedController.userData.value.subscriptionEndDate),
@@ -226,10 +265,9 @@ class HomePage_Core extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-
                                     Visibility(
                                       visible:  sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
-                                          .contains("noactivesubscription"),
+                                          .contains("noactivesubscription") &&  !sharedController.isUserDataFetching.value,
                                       child: FittedBox(
                                         fit:BoxFit.scaleDown,
                                         child: Text(
@@ -244,12 +282,28 @@ class HomePage_Core extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-
+                                    Visibility(
+                                      visible:  sharedController.isUserDataFetching.value,
+                                      child: Shimmer.fromColors(
+                                        baseColor: APPSTYLE_Grey20,
+                                        highlightColor: APPSTYLE_Grey40,
+                                        child: Container(
+                                          height: 20,
+                                          width: screenwidth * .4,
+                                          decoration:
+                                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                                              .copyWith(
+                                            border: null,
+                                            color: APPSTYLE_Grey20,
+                                            borderRadius: BorderRadius.circular(
+                                                APPSTYLE_BlurRadiusSmall),
+                                          ),),
+                                      ),),
                                     // Remaining Days Widget
                                     addVerticalSpace(APPSTYLE_SpaceSmall),
                                     Visibility(
                                       visible: !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim()
-                                          .contains("noactivesubscription"),
+                                          .contains("noactivesubscription") &&  !sharedController.isUserDataFetching.value,
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
@@ -299,6 +353,23 @@ class HomePage_Core extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                    Visibility(
+                                      visible: sharedController.isUserDataFetching.value,
+                                      child: Shimmer.fromColors(
+                                        baseColor: APPSTYLE_Grey20,
+                                        highlightColor: APPSTYLE_Grey40,
+                                        child: Container(
+                                          height: 20,
+                                          width: screenwidth * .5,
+                                          decoration:
+                                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                                              .copyWith(
+                                            border: null,
+                                            color: APPSTYLE_Grey20,
+                                            borderRadius: BorderRadius.circular(
+                                                APPSTYLE_BlurRadiusSmall),
+                                          ),),
+                                      ),),
                                   ],
                                 ),
                               )
@@ -307,17 +378,60 @@ class HomePage_Core extends StatelessWidget {
                         ),
                       ],
                     ),
-                    addVerticalSpace(APPSTYLE_SpaceLarge),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: screenwidth*.6,
-                            child: ElevatedButton(
+                    Visibility(
+                        visible: !sharedController.isUserDataFetching.value,
+                        child: addVerticalSpace(APPSTYLE_SpaceLarge)),
+                    Visibility(
+                      visible: !sharedController.isUserDataFetching.value,
+
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: screenwidth*.6,
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(APPSTYLE_BackgroundWhite),
+                                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                          const EdgeInsets.symmetric(
+                                              horizontal: APPSTYLE_SpaceMedium, vertical: APPSTYLE_SpaceExtraSmall)),
+                                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(1000)))
+                                  ),
+                                  child:   FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                        !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim().contains("noactivesubscription")?'renew_subscription'.tr:
+                                        sharedController.mySubscriptions.where((p0) => p0.status=="paid").isNotEmpty?"activate_subscription".tr:
+                                        sharedController.mySubscriptions.where((p0) => p0.status=="not_paid").isNotEmpty?"complete_payment".tr:"purchase_subscription".tr,
+                                        style: getLabelLargeStyle(context).copyWith(
+                                            color: APPSTYLE_PrimaryColor,fontWeight: APPSTYLE_FontWeightBold),
+                                        textAlign: TextAlign.center),
+                                  ),
+                                  onPressed: () {
+                                    Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute);
+                                  })),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                        visible: !sharedController.isUserDataFetching.value,
+
+                        child: addVerticalSpace(APPSTYLE_SpaceExtraSmall )),
+                    Visibility(
+                      visible: !sharedController.isUserDataFetching.value,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: screenwidth*.6,
+                              child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor:
-                                    MaterialStateProperty.all<Color>(APPSTYLE_BackgroundWhite),
                                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                                         const EdgeInsets.symmetric(
                                             horizontal: APPSTYLE_SpaceMedium, vertical: APPSTYLE_SpaceExtraSmall)),
@@ -326,55 +440,24 @@ class HomePage_Core extends StatelessWidget {
                                             borderRadius:
                                             BorderRadius.circular(1000)))
                                 ),
-                                child:   FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Text(
-                                      !sharedController.userData.value.subscriptionRemainingDays.toLowerCase().trim().contains("noactivesubscription")?'renew_subscription'.tr:
-                                      sharedController.mySubscriptions.where((p0) => p0.status=="paid").isNotEmpty?"activate_subscription".tr:
-                                      sharedController.mySubscriptions.where((p0) => p0.status=="not_paid").isNotEmpty?"complete_payment".tr:"purchase_subscription".tr,
-                                      style: getLabelLargeStyle(context).copyWith(
-                                          color: APPSTYLE_PrimaryColor,fontWeight: APPSTYLE_FontWeightBold),
-                                      textAlign: TextAlign.center),
-                                ),
-                                onPressed: () {
-                                  Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute);
-                                })),
-                      ],
-                    ),
-                    addVerticalSpace(APPSTYLE_SpaceExtraSmall ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: screenwidth*.6,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                      const EdgeInsets.symmetric(
-                                          horizontal: APPSTYLE_SpaceMedium, vertical: APPSTYLE_SpaceExtraSmall)),
-                                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(1000)))
-                              ),
-                                child:   FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child:sharedController.isAppointmentBooking.value
-                                      ? LoadingAnimationWidget.staggeredDotsWave(
-                                    color: APPSTYLE_BackgroundWhite,
-                                    size: 24,
-                                  ):  Text('book_an_appointment'.tr,
-                                      style: getLabelLargeStyle(context).copyWith(
-                                          color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
-                                      textAlign: TextAlign.center),
-                                ),
-                                onPressed: () {
-                                  if(!sharedController.isAppointmentBooking.value){
-                                    showLogoutConfirmDialogue(context);
-                                  }
-                                })),
-                      ],
+                                  child:   FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child:sharedController.isAppointmentBooking.value
+                                        ? LoadingAnimationWidget.staggeredDotsWave(
+                                      color: APPSTYLE_BackgroundWhite,
+                                      size: 24,
+                                    ):  Text('book_an_appointment'.tr,
+                                        style: getLabelLargeStyle(context).copyWith(
+                                            color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
+                                        textAlign: TextAlign.center),
+                                  ),
+                                  onPressed: () {
+                                    if(!sharedController.isAppointmentBooking.value){
+                                      showLogoutConfirmDialogue(context);
+                                    }
+                                  })),
+                        ],
+                      ),
                     ),
                   ],
                 ))
