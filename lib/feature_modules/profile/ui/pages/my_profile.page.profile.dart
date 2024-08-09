@@ -1,4 +1,5 @@
 
+import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/feature_modules/profile/ui/components/preposticon_button.component.shared.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
@@ -295,6 +296,25 @@ class MyProfilePage_Profile extends StatelessWidget {
                             'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
                       ),
                     ),
+
+                    addVerticalSpace(APPSTYLE_SpaceLarge),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 1,
+                        onPressed: () {
+                          showDeleteAccountConfirmDialogue(context);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "delete_account".tr,
+                        preIconData: Ionicons.person_remove_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -316,8 +336,59 @@ class MyProfilePage_Profile extends StatelessWidget {
     final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
 
     updateLogoutAction() async {
-      final sharedController = Get.find<SharedController>();
       sharedController.handleLogout();
+    }
+
+    updateAction() {
+      Navigator.pop(context);
+    }
+    List<Widget> actions = [
+
+      TextButton(
+          onPressed:updateAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonCancelTextWidget),
+
+      TextButton(
+          onPressed:updateLogoutAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonTextWidget),
+    ];
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            child: AlertDialog(
+              title: dialogTitleWidget,
+              content: dialogTextWidget,
+              actions: actions,
+            ),
+            onWillPop: () => Future.value(false));
+      },
+    );
+  }
+
+  void showDeleteAccountConfirmDialogue(BuildContext context ) async {
+
+    final dialogTitleWidget = Text('account_delete_title'.tr,style: getHeadlineMediumStyle(context).copyWith(
+        color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
+    final dialogTextWidget = Text(  'account_delete_content'.tr,style: getBodyMediumStyle(context),
+    );
+
+    final updateButtonTextWidget = Text('yes'.tr,style: TextStyle(color: APPSTYLE_PrimaryColor),);
+    final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
+
+    updateLogoutAction() async {
+      final profileController = Get.find<ProfileController>();
+      profileController.deleteAccount();
     }
 
     updateAction() {

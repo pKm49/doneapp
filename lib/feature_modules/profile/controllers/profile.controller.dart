@@ -1,3 +1,4 @@
+import 'package:doneapp/feature_modules/profile/models/referral_data.profile.model.dart';
 import 'package:doneapp/feature_modules/profile/services/http.profile.service.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
@@ -26,8 +27,10 @@ class ProfileController extends GetxController {
 
   var profilePictureUrl = ASSETS_DEFAULTPROFILEPIC.obs;
   var isFileSelected = false.obs;
+  var referralData = mapReferralData({}).obs;
 
   var isUserDataFetching = false.obs;
+  var isRefferalDataFetching = false.obs;
   var userData = mapUserData({}).obs;
   var isProfileUpdating = false.obs;
 
@@ -61,6 +64,7 @@ class ProfileController extends GetxController {
         profilePictureUrl.value = userData.value.profilePictureUrl;
       }
     } else {
+      showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
       showSnackbar(Get.context!, "login_message".tr, "error");
       Get.offAllNamed(AppRouteNames.loginRoute);
     }
@@ -111,4 +115,39 @@ class ProfileController extends GetxController {
       Get.offAllNamed(AppRouteNames.loginRoute);
     }
   }
+
+  getRefferalData() async {
+    if(! isRefferalDataFetching.value){
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? tMobile = prefs.getString('mobile');
+      if (tMobile != null && tMobile != '') {
+        isRefferalDataFetching.value = true;
+        var profileHttpService = ProfileHttpService();
+        referralData.value = await profileHttpService.getRefferalData(tMobile);
+        isRefferalDataFetching.value = false;
+      }else {
+        showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
+        showSnackbar(Get.context!, "login_message".tr, "error");
+        Get.offAllNamed(AppRouteNames.loginRoute);
+      }
+
+    }
+
+  }
+
+  Future<void> deleteAccount() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    final String? mobile = sharedPreferences.getString('mobile');
+
+    if (mobile != null && mobile != "") {
+      var profileHttpService = new ProfileHttpService();
+      bool isSuccess = await profileHttpService.deleteAccount(mobile);
+
+      if (isSuccess) {
+        showSnackbar(Get.context!, "account_delete_success_message".tr, "info");
+        showSnackbar(Get.context!, "our_rep_will_contact".tr, "info");
+      }
+    }
+  }
+
 }

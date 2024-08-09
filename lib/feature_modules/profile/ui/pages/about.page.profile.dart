@@ -5,6 +5,8 @@ import 'package:doneapp/shared_module/constants/app_route_names.constants.shared
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class AboutPage_Profile extends StatelessWidget {
   const AboutPage_Profile({super.key});
@@ -159,28 +162,44 @@ class AboutPage_Profile extends StatelessWidget {
                   padding: APPSTYLE_LargePaddingHorizontal,
                   child:Row(
                     children: [
-                      Container(
-                        decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
-                          color: APPSTYLE_Black
+                      InkWell(
+                      onTap: (){
+                        handleRequestSupportClick(context,false);
+                      },
+                        child: Container(
+                          decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
+                            color: APPSTYLE_Black
+                          ),
+                          padding: APPSTYLE_SmallPaddingAll,
+                          child: Icon(Ionicons.call,color: APPSTYLE_BackgroundWhite,),
                         ),
-                        padding: APPSTYLE_SmallPaddingAll,
-                        child: Icon(Ionicons.call,color: APPSTYLE_BackgroundWhite,),
                       ),
+                      // addHorizontalSpace(APPSTYLE_SpaceSmall),
+                      // InkWell(
+                      //   onTap: (){
+                      //     handleRequestSupportClick(context,false);
+                      //   },
+                      //   child: Container(
+                      //     decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
+                      //         color: APPSTYLE_PrimaryColor
+                      //     ),
+                      //     padding: APPSTYLE_SmallPaddingAll,
+                      //     child: Icon(Ionicons.mail,color: APPSTYLE_BackgroundWhite,),
+                      //   ),
+                      // ),
                       addHorizontalSpace(APPSTYLE_SpaceSmall),
-                      Container(
-                        decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
-                            color: APPSTYLE_PrimaryColor
+                      InkWell(
+                        onTap: (){
+                          handleRequestSupportClick(context,true);
+
+                        },
+                        child: Container(
+                          decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
+                              color: APPSTYLE_WhatsappGreen
+                          ),
+                          padding: APPSTYLE_SmallPaddingAll,
+                          child: Icon(Ionicons.logo_whatsapp,color: APPSTYLE_BackgroundWhite,),
                         ),
-                        padding: APPSTYLE_SmallPaddingAll,
-                        child: Icon(Ionicons.mail,color: APPSTYLE_BackgroundWhite,),
-                      ),
-                      addHorizontalSpace(APPSTYLE_SpaceSmall),
-                      Container(
-                        decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
-                            color: APPSTYLE_WhatsappGreen
-                        ),
-                        padding: APPSTYLE_SmallPaddingAll,
-                        child: Icon(Ionicons.logo_whatsapp,color: APPSTYLE_BackgroundWhite,),
                       )
                     ],
                   ),
@@ -234,5 +253,29 @@ class AboutPage_Profile extends StatelessWidget {
           )),
     );
   }
- 
+
+  Future<void> handleRequestSupportClick(
+      BuildContext buildContext, bool isWhatsapp) async {
+    final sharedController = Get.find<SharedController>();
+
+    final Uri callUrl =
+    Uri(scheme: 'tel', path: sharedController.supportNumber.value);
+    final whatsappUrl =
+    Uri.parse("https://wa.me/${sharedController.supportNumber.value}");
+    var canLaunch = false;
+    if (isWhatsapp) {
+      canLaunch = await UrlLauncher.canLaunchUrl(whatsappUrl);
+    } else {
+      canLaunch = await UrlLauncher.canLaunchUrl(callUrl);
+    }
+    if (canLaunch) {
+      if (isWhatsapp) {
+        UrlLauncher.launchUrl(whatsappUrl);
+      } else {
+        UrlLauncher.launchUrl(callUrl);
+      }
+    } else {
+      showSnackbar(buildContext, "not_able_to_connect".tr, "error");
+    }
+  }
 }

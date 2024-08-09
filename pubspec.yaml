@@ -63,6 +63,8 @@ dependencies:
   percent_indicator: ^4.2.3
   loading_animation_widget: ^1.2.1
   shimmer: ^3.0.0
+  share_plus: ^7.2.2
+  app_settings: ^5.1.1
 
 dev_dependencies:
   flutter_test:

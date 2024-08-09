@@ -5,5 +5,6 @@ const String ProfileHttpRequestEndpoint_GetIngredientCategories = "/api/get_ingr
 const String ProfileHttpRequestEndpoint_GetIngredients = "/api/get_ingredients";
 const String ProfileHttpRequestEndpoint_SearchAllergyDislike = "/api/search_allergy_dislike";
 const String ProfileHttpRequestEndpoint_DeleteAccount = "/api/delete_account";
+const String ProfileHttpRequestEndpoint_GetRefferalData = "/referral_code/";
 
 
