@@ -17,12 +17,16 @@
       "sign_up": "Sign Up",
       "welcome_to_diet_done": "Welcome to Diet Done!",
       "first_name_en_hint": "Enter your firstname in English",
+      "first_name_en_hint_short": "Firstname in English",
       "first_name_en": "First Name ( English )",
       "last_name_en_hint": "Enter your lastname in English",
+      "last_name_en_hint_short": "Lastname in English",
       "last_name_en": "Last Name ( English )",
       "first_name_ar_hint": "Enter your firstname in Arabic",
+      "first_name_ar_hint_short": "Firstname in Arabic",
       "first_name_ar": "First Name ( Arabic )",
       "last_name_ar_hint": "Enter your lastname in Arabic",
+      "last_name_ar_hint_short": "Lastname in Arabic",
       "last_name_ar": "Last Name ( Arabic )",
       "email": "E-mail",
       "enter_email": "Enter your E-mail",
@@ -192,8 +196,10 @@
       "not_able_to_connect": "Not able to connect now, Please try again later",
       "ends_on_date": "Ends On datestring",
       "appointment_booking_request_recieved_successfully":"Appointment Booking Request processed successfully",
-      "our_rep_will_contact":"Our representative will contact you soon."
-
+      "our_rep_will_contact":"Our representative will contact you soon.",
+      "login_message": "Please Login to continue",
+      "couldnt_load_profiledata": "Couldn't load profile data",
+      "profile_updated_successfully": "Profile Updated Successfully"
     }
   },
   {
@@ -214,12 +220,17 @@
       "sign_up": "Sign Up",
       "welcome_to_diet_done": "Welcome to Diet Done!",
       "first_name_en_hint": "Enter your firstname in English",
+      "first_name_en_hint_short": "Firstname in English",
       "first_name_en": "First Name ( English )",
       "last_name_en_hint": "Enter your lastname in English",
+      "last_name_en_hint_short": "Lastname in English",
+
       "last_name_en": "Last Name ( English )",
       "first_name_ar_hint": "Enter your firstname in Arabic",
+      "first_name_ar_hint_short": "Firstname in Arabic",
       "first_name_ar": "First Name ( Arabic )",
       "last_name_ar_hint": "Enter your lastname in Arabic",
+      "last_name_ar_hint_short": "Lastname in Arabic",
       "last_name_ar": "Last Name ( Arabic )",
       "enter_email": "أدخل عنوان بريدك الالكتروني",
       "email": "البريد الإلكتروني",
@@ -388,8 +399,10 @@
       "not_able_to_connect": "Not able to connect now, Please try again later",
       "ends_on_date": "Ends On datestring",
       "appointment_booking_request_recieved_successfully":"Appointment Booking Request processed successfully",
-      "our_rep_will_contact":"Our representative will contact you soon."
-
+      "our_rep_will_contact":"Our representative will contact you soon.",
+      "login_message": "الرجاء تسجيل الدخول للمتابعة",
+      "couldnt_load_profiledata": "Couldn't load profile data",
+      "profile_updated_successfully": "تم تحديث الملف الشخصي بنجاح"
     }
   }
 ]

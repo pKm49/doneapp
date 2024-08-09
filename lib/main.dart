@@ -1,5 +1,6 @@
 import 'package:doneapp/feature_modules/address/controllers/address.controller.dart';
 import 'package:doneapp/feature_modules/auth/controllers/register.controller.auth.dart';
+import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/app_routes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
@@ -67,7 +68,7 @@ class _MyAppState extends State<MyApp> {
     appThemeManager.addListener(themeListener);
     Get.put(SharedController());
     Get.put(AddressController());
-
+    Get.put(ProfileController());
 
     super.initState();
   }

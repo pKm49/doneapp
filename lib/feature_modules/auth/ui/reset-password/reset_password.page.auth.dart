@@ -48,7 +48,7 @@ class _ResetPasswordPage_authState extends State<ResetPasswordPage_auth> {
     double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar:AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: APPSTYLE_BackgroundWhite,

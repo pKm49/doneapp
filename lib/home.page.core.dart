@@ -77,7 +77,11 @@ class HomePage_Core extends StatelessWidget {
                             children: [
                               FittedBox(
 
-                                child: Text('hey_username'.tr.replaceAll('username', sharedController.userData.value.firstName+" "+sharedController.userData.value.lastName),
+                                child: Text((Localizations.localeOf(context)
+                      .languageCode
+                      .toString() ==
+                      'ar')? 'hey_username'.tr.replaceAll('username', sharedController.userData.value.firstNameArabic+" "+sharedController.userData.value.lastNameArabic)
+                                :'hey_username'.tr.replaceAll('username', sharedController.userData.value.firstName+" "+sharedController.userData.value.lastName),
                                   textAlign: TextAlign.start,
                                   style: getBodyMediumStyle(context).copyWith(
                                       color: APPSTYLE_BackgroundWhite,

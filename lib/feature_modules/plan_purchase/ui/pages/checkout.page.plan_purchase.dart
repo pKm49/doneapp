@@ -302,7 +302,7 @@ class _CheckoutPage_PlanPurchaseState
                       onPressed: () {
                         Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
                           ASSETS_SUCCESSMARK,"subscription_success".tr,"subscription_success_info".tr,
-                          'home'.tr,false
+                          'home'.tr,false,AppRouteNames.homeRoute,""
                         ])?.then((value) => Get.toNamed(AppRouteNames.homeRoute,arguments: [0]));
                       },
                       style: getElevatedButtonStyle(context),

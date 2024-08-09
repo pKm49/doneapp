@@ -12,223 +12,294 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MyProfilePage_Profile extends StatelessWidget {
-  const MyProfilePage_Profile({super.key});
+    MyProfilePage_Profile({super.key});
+  final sharedController = Get.find<SharedController>();
 
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
-        color: APPSTYLE_PrimaryColorBg,
-        child: Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top:screenheight*.15),
-              decoration: BoxDecoration(
-                border: Border.all(color: APPSTYLE_PrimaryColor, width: .2),
-                color: APPSTYLE_BackgroundWhite,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(APPSTYLE_BorderRadiusLarge),
-                    topRight: Radius.circular(APPSTYLE_BorderRadiusLarge)),
+      body: Obx(
+        ()=> Container(
+          color: APPSTYLE_PrimaryColorBg,
+          child: Stack(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top:screenheight*.15),
+                decoration: BoxDecoration(
+                  border: Border.all(color: APPSTYLE_PrimaryColor, width: .2),
+                  color: APPSTYLE_BackgroundWhite,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(APPSTYLE_BorderRadiusLarge),
+                      topRight: Radius.circular(APPSTYLE_BorderRadiusLarge)),
+                ),
               ),
-            ),
-            Container(
+              Container(
 
-              padding: APPSTYLE_LargePaddingAll.copyWith(
-                top: screenheight*.08
-              ),
-              child: ListView(
-                children: [
+                padding: APPSTYLE_LargePaddingAll.copyWith(
+                  top: screenheight*.08
+                ),
+                child: ListView(
+                  children: [
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      UpdateProfilePic(
-                        onClick: () {
-                          // openSourceSelector(context);
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+
+                        Visibility(
+                          visible: !sharedController.isUserDataFetching.value,
+
+                          child: UpdateProfilePic(
+                            onClick: () {
+                              Get.toNamed(AppRouteNames.updateProfileRoute);
+                            },
+                            borderColor: APPSTYLE_BackgroundWhite,
+                            profilePictureUrl: sharedController.userData.value.profilePictureUrl,
+                          ),
+                        ),
+                        Visibility(
+                          visible: sharedController.isUserDataFetching.value,
+                          child: Shimmer.fromColors(
+                            baseColor: APPSTYLE_Grey20,
+                            highlightColor: APPSTYLE_Grey40,
+                            child: Container(
+                              height: screenwidth * .3,
+                              width: screenwidth * .3,
+
+                              decoration:
+                              APPSTYLE_BorderedContainerExtraSmallDecoration
+                                  .copyWith(
+                                  borderRadius: BorderRadius.circular(1000),
+                                  border: Border.all(color: APPSTYLE_BackgroundWhite, width: 1),
+                                  color: APPSTYLE_Grey20
+                              ),),
+                          ),),
+                      ],
+                    ),
+                    addVerticalSpace(APPSTYLE_SpaceSmall),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Visibility(
+                          visible: sharedController.isUserDataFetching.value,
+                          child: Shimmer.fromColors(
+                            baseColor: APPSTYLE_Grey20,
+                            highlightColor: APPSTYLE_Grey40,
+                            child: Container(
+                              height: 30,
+                              width: screenwidth * .5,
+                              decoration:
+                              APPSTYLE_BorderedContainerExtraSmallDecoration
+                                  .copyWith(
+                                border: null,
+                                color: APPSTYLE_Grey20,
+                                borderRadius: BorderRadius.circular(
+                                    APPSTYLE_BlurRadiusSmall),
+                              ),),
+                          ),),
+                        Visibility(
+                          visible: !sharedController.isUserDataFetching.value,
+                          child: Text(
+                              (Localizations.localeOf(context)
+                                  .languageCode
+                                  .toString() ==
+                                  'ar')? "${sharedController.userData.value.firstNameArabic} ${sharedController.userData.value.lastNameArabic}"
+                                  :"${sharedController.userData.value.firstName} ${sharedController.userData.value.lastName}",
+                            style: getHeadlineLargeStyle(context)
+                                .copyWith(color: APPSTYLE_Grey80),
+                          )),
+
+                      ],
+                    ),
+                    addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Visibility(
+                          visible:  sharedController.isUserDataFetching.value,
+                          child: Shimmer.fromColors(
+                            baseColor: APPSTYLE_Grey20,
+                            highlightColor: APPSTYLE_Grey40,
+                            child: Container(
+                              height: 25,
+                              width: screenwidth * .25,
+                              decoration:
+                              APPSTYLE_BorderedContainerExtraSmallDecoration
+                                  .copyWith(
+                                border: null,
+                                color: APPSTYLE_Grey20,
+                                borderRadius: BorderRadius.circular(
+                                    APPSTYLE_BorderRadiusLarge),
+                              ),),
+                          ),),
+                        Visibility(
+                          visible:  !sharedController.isUserDataFetching.value,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusLarge),
+                                color: APPSTYLE_PrimaryColorBg
+                            ),
+                            padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(left: APPSTYLE_SpaceMedium,right: APPSTYLE_SpaceMedium),
+                            child: Text(
+                              sharedController.userData.value.customerCode,
+                              style: getLabelSmallStyle(context)
+                                  .copyWith(color: APPSTYLE_BackgroundWhite),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    addVerticalSpace(APPSTYLE_SpaceMedium),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 0,
+                        onPressed: () {
+                          Get.toNamed(AppRouteNames.updateProfileRoute);
                         },
-                        borderColor: APPSTYLE_BackgroundWhite,
-                        profilePictureUrl: "",
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "profile".tr,
+                        preIconData: Ionicons.person_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Kayna Alisa',
-                        style: getHeadlineLargeStyle(context)
-                            .copyWith(color: APPSTYLE_Grey80),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 0,
+                        onPressed: () {
+                           Get.toNamed(AppRouteNames.mySubscriptionsRoute);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "subscription".tr,
+                        preIconData: Ionicons.cash_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
                       ),
-                    ],
-                  ),
-                  addVerticalSpace(APPSTYLE_SpaceSmall),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 0,
+                        onPressed: () {
+                           Get.toNamed(AppRouteNames.addressListRoute);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "shipping_address".tr,
+                        preIconData: Ionicons.location_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 0,
+                        onPressed: () {
+                          Get.toNamed(AppRouteNames.allergyAuditRoute);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "allergies".tr,
+                        preIconData: Ionicons.alert_circle_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 0,
+                        onPressed: () {
+                          Get.toNamed(AppRouteNames.refferalProgramRoute);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "referral_points".tr,
+                        preIconData: Ionicons.ticket_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 0,
+                        onPressed: () {
+                            Get.toNamed(AppRouteNames.aboutPageRoute);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "about_diet_done".tr,
+                        preIconData: Ionicons.help_circle_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusLarge),
-                            color: APPSTYLE_PrimaryColorBg
-                        ),
-                        padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(left: APPSTYLE_SpaceMedium,right: APPSTYLE_SpaceMedium),
-                        child: Text(
-                          '80123123',
-                          style: getLabelSmallStyle(context)
-                              .copyWith(color: APPSTYLE_BackgroundWhite),
-                        ),
+                        specialColor: 0,
+                        onPressed: () {
+                           Get.toNamed(AppRouteNames.settingsPageRoute);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "settings".tr,
+                        preIconData: Ionicons.settings_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
                       ),
-                    ],
-                  ),
-                  addVerticalSpace(APPSTYLE_SpaceMedium),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-                      specialColor: 0,
-                      onPressed: () {
-                        Get.toNamed(AppRouteNames.updateProfileRoute);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "profile".tr,
-                      preIconData: Ionicons.person_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
                     ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-                      specialColor: 0,
-                      onPressed: () {
-                         Get.toNamed(AppRouteNames.mySubscriptionsRoute);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "subscription".tr,
-                      preIconData: Ionicons.cash_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 1,
+                        onPressed: () {
+                          showLogoutConfirmDialogue(context);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "logout".tr,
+                        preIconData: Ionicons.log_out_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-                      specialColor: 0,
-                      onPressed: () {
-                         Get.toNamed(AppRouteNames.addressListRoute);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "shipping_address".tr,
-                      preIconData: Ionicons.location_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-                      specialColor: 0,
-                      onPressed: () {
-                        Get.toNamed(AppRouteNames.allergyAuditRoute);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "allergies".tr,
-                      preIconData: Ionicons.alert_circle_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-                      specialColor: 0,
-                      onPressed: () {
-                        Get.toNamed(AppRouteNames.refferalProgramRoute);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "referral_points".tr,
-                      preIconData: Ionicons.ticket_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-                      specialColor: 0,
-                      onPressed: () {
-                          Get.toNamed(AppRouteNames.aboutPageRoute);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "about_diet_done".tr,
-                      preIconData: Ionicons.help_circle_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-
-                      specialColor: 0,
-                      onPressed: () {
-                         Get.toNamed(AppRouteNames.settingsPageRoute);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "settings".tr,
-                      preIconData: Ionicons.settings_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: PrePostIconButton(
-                      specialColor: 1,
-                      onPressed: () {
-                        showLogoutConfirmDialogue(context);
-                      },
-                      theme: 'dark',
-                      border: '',
-                      buttonTitle: "logout".tr,
-                      preIconData: Ionicons.log_out_outline,
-                      postIconData:Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

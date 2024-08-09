@@ -28,8 +28,7 @@ class RegisterNameEnglishPage_Auth extends StatefulWidget {
 
 class _RegisterNameEnglishPage_AuthState extends State<RegisterNameEnglishPage_Auth> {
 
-  late File profilePictureFile;
-  RegisterController registerController =  Get.put(RegisterController());
+   RegisterController registerController =  Get.put(RegisterController());
   final GlobalKey<FormState> registerEnglishNameFormKey = GlobalKey<FormState>();
 
   @override
@@ -241,8 +240,7 @@ class _RegisterNameEnglishPage_AuthState extends State<RegisterNameEnglishPage_A
       builder: (_) => PhotoSelector(
         photoSelected: (File? pictureFile) {
           if (pictureFile != null) {
-            profilePictureFile = pictureFile;
-            Uint8List imageBytes = profilePictureFile.readAsBytesSync();
+            Uint8List imageBytes = pictureFile.readAsBytesSync();
               registerController.updateProfilePicture(base64Encode(imageBytes));
 
           }

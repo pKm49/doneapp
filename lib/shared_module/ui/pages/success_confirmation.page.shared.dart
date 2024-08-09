@@ -3,6 +3,8 @@ import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_addressauthor_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
@@ -109,12 +111,17 @@ class _SuccessConfirmationPage_SharedState
                         style: getHeadlineMediumStyle(context).copyWith(
                             color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        //       showSnackbar(Get.context!, "password_reset".tr, "info");
                         if(toRoute == AppRouteNames.addressAuditRoute){
                           Get.toNamed(
                               AppRouteNames.addressAuditRoute,arguments: [VALIDADDRESSAUTHOR_MODES.complete_registration,mobile]);
+                        }else if(toRoute == AppRouteNames.loginRoute){
+                          showSnackbar(Get.context!, "login_message".tr, "info");
+                          final sharedController = Get.find<SharedController>();
+                          await sharedController.handleLogout();
                         }else{
-                          Get.toNamed(toRoute);
+                          Get.offAllNamed(toRoute);
                         }
 
                       })),

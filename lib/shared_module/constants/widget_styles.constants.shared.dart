@@ -187,10 +187,10 @@ var bottomBorderInputDecoration = InputDecoration(
     filled: true,
     fillColor: APPSTYLE_BackgroundWhite,
 
-    contentPadding: const EdgeInsets.symmetric(vertical: APPSTYLE_SpaceSmall,
-        horizontal: APPSTYLE_SpaceMedium),
-    labelStyle: TextStyle(color: APPSTYLE_Grey80),
-    hintStyle: TextStyle(color: APPSTYLE_Grey60),
+    contentPadding: const EdgeInsets.symmetric(vertical: APPSTYLE_SpaceExtraSmall,
+        horizontal: APPSTYLE_SpaceExtraSmall),
+    labelStyle: TextStyle(color: APPSTYLE_Grey80,fontSize: APPSTYLE_FontSize12),
+    hintStyle: TextStyle(color: APPSTYLE_Grey60,fontSize: APPSTYLE_FontSize12),
     border: UnderlineInputBorder(
         borderRadius: BorderRadius.circular(0),
         borderSide: BorderSide(width: .5,color: APPSTYLE_Grey20 )),

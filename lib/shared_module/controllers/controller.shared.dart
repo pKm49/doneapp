@@ -75,7 +75,8 @@ class SharedController extends GetxController {
         print("user data fetched");
         print("mySubscriptions data fetched");
         isUserDataFetching.value = false;
-
+        print(userData.value.id);
+        print(userData.value.profilePictureUrl);
         // Decide route based on user data id and subscription status.
         if (userData.value.id != -1) {
           saveDeviceToken();
@@ -115,6 +116,7 @@ class SharedController extends GetxController {
     isUserDataFetching.value = false;
     print("userData");
     print(userData.value.id);
+    print(userData.value.profilePictureUrl);
     if (userData.value.id != -1) {
       saveDeviceToken();
       if (targetRoute != "") {
@@ -128,7 +130,7 @@ class SharedController extends GetxController {
   }
 
   Future<void> handleLogout() async {
-    saveAuthTokenToSharedPreference("");
+    saveAuthTokenAndMobileToSharedPreference("","");
     userData.value = mapUserData({});
     notifications.value = [];
     Get.offAllNamed(AppRouteNames.loginRoute);
