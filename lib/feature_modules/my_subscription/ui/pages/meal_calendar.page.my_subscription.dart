@@ -30,7 +30,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
   void initState() {
     // TODO: implement initState
     super.initState();
-    mySubscriptionController.getSubscriptionDates();
+    mySubscriptionController.getSubscriptionDates(true);
   }
 
   @override

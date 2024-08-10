@@ -27,6 +27,7 @@ class MealSelectionPage_MySubscription extends StatefulWidget {
 class _MealSelectionPage_MySubscriptionState
     extends State<MealSelectionPage_MySubscription> {
   final mySubscriptionController = Get.find<MySubscriptionController>();
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -37,6 +38,8 @@ class _MealSelectionPage_MySubscriptionState
       mySubscriptionController.getMealsByDate(
           mySubscriptionController.selectedDate.value, false);
     }
+    scrollToDate();
+
   }
 
   @override
@@ -124,6 +127,7 @@ class _MealSelectionPage_MySubscriptionState
               Padding(
                 padding: APPSTYLE_LargePaddingHorizontal,
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
@@ -698,5 +702,16 @@ class _MealSelectionPage_MySubscriptionState
       return  percentage.round() * -1;
     }
     return percentage.round();
+  }
+
+
+  Future<void> scrollToDate() async {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(_scrollController.hasClients){
+        _scrollController.jumpTo(
+            mySubscriptionController.subscriptionDates.keys.toList().indexOf(mySubscriptionController.selectedDate.value)*46  );
+      }
+    });
   }
 }

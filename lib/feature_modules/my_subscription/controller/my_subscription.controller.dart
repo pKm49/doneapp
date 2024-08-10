@@ -32,7 +32,7 @@ class MySubscriptionController extends GetxController {
   var subscriptoinMealConfig = mapSubscriptoinMealConfig({}, "").obs ;
   var selectedMealConfig = mapSubscriptoinMealConfig({}, "").obs ;
 
-  getSubscriptionDates() async {
+  getSubscriptionDates(bool setDate) async {
     if(!isSubscriptionDatesLoading.value){
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? tMobile = prefs.getString('mobile');
@@ -43,7 +43,10 @@ class MySubscriptionController extends GetxController {
         subscriptionDates.value = await mySubsHttpService.getSubscriptionDates(tMobile);
         isSubscriptionDatesLoading.value = false;
         setCurrentMonth();
-        setSelectedDate();
+        if(setDate){
+          setSelectedDate();
+
+        }
         frozenDays.value = [];
       } else {
         showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
@@ -232,7 +235,7 @@ class MySubscriptionController extends GetxController {
 
   Future<void> getMealsByDate(  DateTime tSelectedDay,bool isNavigationRequired ) async {
 
-    if(tSelectedDay.month== currentMonth.value.month && isSubscriptionDay(tSelectedDay)
+    if(  isSubscriptionDay(tSelectedDay)
         && getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
         && getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.freezed && !isMealsFetching.value){
       selectedDate.value = tSelectedDay;
@@ -258,7 +261,11 @@ class MySubscriptionController extends GetxController {
       }
 
     }else{
-
+      print("else is happending");
+      print(getDayStatus(tSelectedDay));
+      print(!isMealsFetching.value);
+      print(isSubscriptionDay(tSelectedDay));
+      print(tSelectedDay.month== currentMonth.value.month);
     }
 
 
@@ -283,7 +290,7 @@ class MySubscriptionController extends GetxController {
 
           if(isSuccess){
             showSnackbar(Get.context!, "selection_saved".tr, "info");
-            getSubscriptionDates();
+            getSubscriptionDates(false);
 
           }
 
@@ -438,7 +445,7 @@ class MySubscriptionController extends GetxController {
           isFreezing.value = false;
           if(isSuccess){
             showSnackbar(Get.context!, "subscription_frozen".tr, "info");
-            getSubscriptionDates();
+            getSubscriptionDates(true);
           }
 
 

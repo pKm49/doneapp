@@ -30,7 +30,7 @@ class _FreezeSubscriptionPage_MySubscriptionState extends State<FreezeSubscripti
   void initState() {
     // TODO: implement initState
     super.initState();
-    mySubscriptionController.getSubscriptionDates();
+    mySubscriptionController.getSubscriptionDates(true);
   }
 
   @override
