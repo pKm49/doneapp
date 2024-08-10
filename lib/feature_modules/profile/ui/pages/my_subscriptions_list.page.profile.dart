@@ -122,8 +122,8 @@ class _MySubscriptionListPage_ProfileState
                                 spacing: 8,
                                 runSpacing: 8,
                                 alignment: WrapAlignment.start,
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                direction: Axis.horizontal,
+                                crossAxisAlignment:
+                                WrapCrossAlignment.start,
                                 children: List.generate(
                                   4,
                                       (index) => IntrinsicWidth(
@@ -132,7 +132,7 @@ class _MySubscriptionListPage_ProfileState
                                       highlightColor: APPSTYLE_Grey40,
                                       child: Container(
                                         height: 30,
-                                        width: screenwidth*.3,
+                                        width: screenwidth*.2,
                                         decoration:
                                         APPSTYLE_BorderedContainerExtraSmallDecoration
                                             .copyWith(

@@ -79,8 +79,8 @@ Address mapAddress(dynamic payload) {
       blockName: payload["block_name"] != null
           ? payload["block_name"].toString()
           : "",
-      apartmentNo: payload["apartmen_no"] != null
-          ? int.parse(payload["apartmen_no"].toString())
+      apartmentNo: payload["apartment_no"] != null
+          ? int.parse(payload["apartment_no"].toString())
           : -1,
 
 

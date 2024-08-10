@@ -6,6 +6,7 @@ import 'package:doneapp/feature_modules/plan_purchase/models/purchase_data.model
 import 'package:doneapp/feature_modules/plan_purchase/services/http.services.plan_purchase.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
@@ -15,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PlanPurchaseController extends GetxController {
   Rx<TextEditingController> couponCodeController = TextEditingController().obs;
+  final sharedController = Get.find<SharedController>();
 
   var subscriptionCategories = <SubscriptionPlanCategory>[].obs;
   var subscriptionDurations = <int>[].obs;
@@ -28,6 +30,7 @@ class PlanPurchaseController extends GetxController {
   var subTotal = (0.0).obs;
   var discount = (0.0).obs;
   var total = (0.0).obs;
+  var subscriptionId = (-1).obs;
   var isCouponChecking = false.obs;
   var isCouponCodeValid = false.obs;
   var isOrderCreating = false.obs;
@@ -149,12 +152,13 @@ class PlanPurchaseController extends GetxController {
       isOrderCreating.value = true;
       var planPurchaseHttpService = PlanPurchaseHttpService();
       List<dynamic> tSubscriptions = [];
-      tSubscriptions.add(PurchaseData(
-              planCategoryId: currentSubscription.value.id,
-              planId: currentSubscription.value.id )
-          .toJson());
-      PaymentData tPaymentData = await planPurchaseHttpService.createOrder(
-          mobile, tSubscriptions, couponCodeController.value.text);
+
+      PaymentData tPaymentData = await planPurchaseHttpService.createOrder( PurchaseData(
+          planCategoryId: currentCategory.value.id,
+          planId: currentSubscription.value.id,
+          startDate: selectedDate.value, promoCode: couponCodeController.value.text,
+          mobile: mobile
+      ) );
       paymentData.value = tPaymentData;
       print("payment data");
       print(paymentData.value.paymentUrl);
@@ -170,7 +174,7 @@ class PlanPurchaseController extends GetxController {
             'home'.tr,false,AppRouteNames.homeRoute,""
           ])?.then((value) => Get.toNamed(AppRouteNames.homeRoute,arguments: [0]));
         }else{
-          showSnackbar(Get.context!, "payment_capture_error".tr, "error");
+          showSnackbar(Get.context!, "customer_support_message".tr, "error");
         }
           print("payment capture error");
         isOrderCreating.value = false;
@@ -179,7 +183,7 @@ class PlanPurchaseController extends GetxController {
           paymentData.value.paymentUrl,
           paymentData.value.redirectUrl,
           paymentData.value.paymentCheckUrl
-        ])?.then((value) => checkOrderStatus());
+        ])?.then((value) => checkOrderStatus(mobile));
       }
     } else {
       showSnackbar(Get.context!, "login_message".tr, "error");
@@ -187,7 +191,7 @@ class PlanPurchaseController extends GetxController {
     }
   }
 
-  void checkOrderStatus() async {
+  void checkOrderStatus(String mobile) async {
     isOrderCreating.value = true;
     var planPurchaseHttpService = PlanPurchaseHttpService();
     bool isSuccess = await planPurchaseHttpService
@@ -198,11 +202,25 @@ class PlanPurchaseController extends GetxController {
       showSnackbar(Get.context!, "payment_capture_error".tr, "error");
     } else {
       showSnackbar(Get.context!, "payment_capture_success".tr, "info");
+      activatePlan(paymentData.value.subscriptionId );
+
       Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
         ASSETS_SUCCESSMARK,"subscription_success".tr,"subscription_success_info".tr,
         'home'.tr,false,AppRouteNames.homeRoute,""
-      ])?.then((value) => Get.toNamed(AppRouteNames.homeRoute,arguments: [0]));
+      ]) ;
     }
+  }
+
+  void activatePlan(int subscriptionId ) async {
+    if(subscriptionId != -1){
+      var planPurchaseHttpService = PlanPurchaseHttpService();
+      bool isSuccess = await planPurchaseHttpService
+          .activateSubscription(subscriptionId);
+      print("activatePlan");
+      print(isSuccess);
+      resetData();
+    }
+
   }
 
   paymentGatewayGoback(bool status) {
@@ -226,12 +244,9 @@ class PlanPurchaseController extends GetxController {
     isCouponChecking.value = false;
     isOrderCreating.value = false;
     paymentGatewayIsLoading.value = false;
-
+    isCouponCodeValid.value = false;
+    couponCodeController.value.text = "";
   }
-
-
-
-
 
   void setSelectedDate(DateTime date) {
 

@@ -42,7 +42,7 @@ class UserData {
         required this.subscriptionRemainingDays });
 
   Map toJson(){
-    return profilePictureUrl==null? {
+    return profilePictureUrl==""? {
       "first_name": firstName,
       "last_name": lastName,
       "first_name_arabic": firstNameArabic,

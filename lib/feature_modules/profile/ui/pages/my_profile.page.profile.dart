@@ -8,6 +8,7 @@ import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.d
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/shared_module/ui/components/confirm_dialogue.component.shared.dart';
 import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -303,7 +304,15 @@ class MyProfilePage_Profile extends StatelessWidget {
                       child: PrePostIconButton(
                         specialColor: 1,
                         onPressed: () {
-                          showDeleteAccountConfirmDialogue(context);
+                          showDialog(
+                            context: context,
+                            builder: (_) => ConfirmDialogue(
+                                onClick: () async {
+                                  Navigator.of(context).pop(true);
+                                },
+                                titleKey: 'confirm_logout'.tr + " ?",
+                                subtitleKey: 'confirm_logout_message'.tr),
+                          );
                         },
                         theme: 'dark',
                         border: '',
@@ -380,8 +389,7 @@ class MyProfilePage_Profile extends StatelessWidget {
 
     final dialogTitleWidget = Text('account_delete_title'.tr,style: getHeadlineMediumStyle(context).copyWith(
         color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
-    final dialogTextWidget = Text(  'account_delete_content'.tr,style: getBodyMediumStyle(context),
-    );
+    final dialogTextWidget = Text( 'account_delete_content'.tr,style: getBodyMediumStyle(context));
 
     final updateButtonTextWidget = Text('yes'.tr,style: TextStyle(color: APPSTYLE_PrimaryColor),);
     final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);

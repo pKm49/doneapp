@@ -176,4 +176,25 @@ class SharedHttpService {
     }
   }
 
+  Future<bool> activateSubscription(int subscriptionId) async {
+
+    try{
+      Map<String, dynamic> params = {};
+      params["subscription_id"]=subscriptionId;
+      AppHttpResponse response =
+      await postRequest(SharedHttpRequestEndpoint_ActivateSubscription, params);
+
+      print("activateSubscription");
+      print(response.statusCode.toString());
+      print(response.data.toString());
+      print(response.message.toString());
+      return response.statusCode == 200;
+
+    }catch  (e,st){
+      print(e);
+      print(st);
+      return false;
+    }
+  }
+
 }

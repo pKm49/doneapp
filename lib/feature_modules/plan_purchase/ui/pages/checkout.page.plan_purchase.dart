@@ -8,7 +8,9 @@ import 'package:doneapp/shared_module/constants/app_route_names.constants.shared
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/form_validator.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
@@ -18,6 +20,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class CheckoutPage_PlanPurchase extends StatefulWidget {
   const CheckoutPage_PlanPurchase({super.key});
@@ -237,7 +240,8 @@ class _CheckoutPage_PlanPurchaseState
                                               decoration:
                                               APPSTYLE_BorderedContainerDarkSmallDecoration
                                                   .copyWith(
-                                                  color:
+                                                  color:planPurchaseController.isCouponCodeValid.value?
+                                                      APPSTYLE_WhatsappGreen:
                                                   APPSTYLE_PrimaryColor),
                                               child: planPurchaseController.isCouponChecking.value?
                                               LoadingAnimationWidget.staggeredDotsWave(
@@ -334,8 +338,62 @@ class _CheckoutPage_PlanPurchaseState
                                 ],
                               ),
                             ),
+                            addVerticalSpace(APPSTYLE_SpaceMedium),
+                            Padding(
+                              padding: APPSTYLE_LargePaddingHorizontal,
+                              child: Text( 'customer_support'.tr,
+                                textAlign: TextAlign.start,
+                                style: getHeadlineMediumStyle(context)
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            addVerticalSpace(APPSTYLE_SpaceMedium),
+                            Padding(
+                              padding: APPSTYLE_LargePaddingHorizontal,
+                              child:Row(
+                                children: [
+                                  InkWell(
+                                    onTap: (){
+                                      handleRequestSupportClick(context,false);
+                                    },
+                                    child: Container(
+                                      decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
+                                          color: APPSTYLE_Black
+                                      ),
+                                      padding: APPSTYLE_SmallPaddingAll,
+                                      child: Icon(Ionicons.call,color: APPSTYLE_BackgroundWhite,),
+                                    ),
+                                  ),
+                                  // addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                  // InkWell(
+                                  //   onTap: (){
+                                  //     handleRequestSupportClick(context,false);
+                                  //   },
+                                  //   child: Container(
+                                  //     decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
+                                  //         color: APPSTYLE_PrimaryColor
+                                  //     ),
+                                  //     padding: APPSTYLE_SmallPaddingAll,
+                                  //     child: Icon(Ionicons.mail,color: APPSTYLE_BackgroundWhite,),
+                                  //   ),
+                                  // ),
+                                  addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                  InkWell(
+                                    onTap: (){
+                                      handleRequestSupportClick(context,true);
 
-
+                                    },
+                                    child: Container(
+                                      decoration: APPSTYLE_BorderedContainerLargeDecoration.copyWith(
+                                          color: APPSTYLE_WhatsappGreen
+                                      ),
+                                      padding: APPSTYLE_SmallPaddingAll,
+                                      child: Icon(Ionicons.logo_whatsapp,color: APPSTYLE_BackgroundWhite,),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                             addVerticalSpace(APPSTYLE_SpaceLarge*3),
 
 
@@ -349,10 +407,17 @@ class _CheckoutPage_PlanPurchaseState
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-
+                          if(!planPurchaseController.isOrderCreating.value &&
+                              !planPurchaseController.isCouponChecking.value){
+                            planPurchaseController.createOrder();
+                          }
                         },
                         style: getElevatedButtonStyle(context),
-                        child: Text(
+                        child: planPurchaseController.isOrderCreating.value
+                            ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: APPSTYLE_BackgroundWhite,
+                          size: 24,
+                        ):Text(
                           "checkout".tr,
                           style: getHeadlineMediumStyle(context).copyWith(
                               color: APPSTYLE_BackgroundWhite,
@@ -366,5 +431,31 @@ class _CheckoutPage_PlanPurchaseState
             ),
           ),
         ));
+  }
+
+
+  Future<void> handleRequestSupportClick(
+      BuildContext buildContext, bool isWhatsapp) async {
+    final sharedController = Get.find<SharedController>();
+
+    final Uri callUrl =
+    Uri(scheme: 'tel', path: sharedController.supportNumber.value);
+    final whatsappUrl =
+    Uri.parse("https://wa.me/${sharedController.supportNumber.value}");
+    var canLaunch = false;
+    if (isWhatsapp) {
+      canLaunch = await UrlLauncher.canLaunchUrl(whatsappUrl);
+    } else {
+      canLaunch = await UrlLauncher.canLaunchUrl(callUrl);
+    }
+    if (canLaunch) {
+      if (isWhatsapp) {
+        UrlLauncher.launchUrl(whatsappUrl);
+      } else {
+        UrlLauncher.launchUrl(callUrl);
+      }
+    } else {
+      showSnackbar(buildContext, "not_able_to_connect".tr, "error");
+    }
   }
 }

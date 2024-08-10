@@ -46,6 +46,17 @@ class AddressController extends GetxController {
 
   void setFromRoute(VALIDADDRESSAUTHOR_MODES tFrom) {
     addressAuthorMode.value = tFrom;
+    if(addressAuthorMode.value == VALIDADDRESSAUTHOR_MODES.complete_registration){
+      currentAddress.value = mapAddress({});
+      streetTextEditingController.value.text = "";
+      apartmentNumberTextEditingController.value.text =  "";
+      houseNumberTextEditingController.value.text =  "";
+      floorNumberTextEditingController.value.text =  "";
+      areaId.value = -1;
+      commentsTextEditingController.value.text = "";
+
+      blockId.value =-1;
+    }
   }
 
 

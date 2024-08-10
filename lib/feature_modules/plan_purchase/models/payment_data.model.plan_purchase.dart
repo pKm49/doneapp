@@ -1,23 +1,20 @@
-
 import 'package:doneapp/shared_module/models/my_subscription.model.shared.dart';
 
 class PaymentData {
-
+  final int subscriptionId;
   final String refId;
   final String orderId;
   final String paymentUrl;
   final String redirectUrl;
   final String paymentCheckUrl;
-  final MySubscription selectedSubscriptionPlan;
-  
+
   PaymentData({
+    required this.subscriptionId,
     required this.refId,
     required this.orderId,
     required this.paymentUrl,
     required this.redirectUrl,
     required this.paymentCheckUrl,
-    required this.selectedSubscriptionPlan,
-    
   });
 
   Map toJson() => {
@@ -31,9 +28,12 @@ class PaymentData {
 PaymentData mapPaymentData(dynamic payload) {
   print("mapPaymentData");
   print(payload);
-  MySubscription selectedSubscriptionPlan = mapMySubscription( {} );
+  int subscriptionId = -1;
+  MySubscription selectedSubscriptionPlan = mapMySubscription({});
   if (payload['subscription_details'] != null) {
-    selectedSubscriptionPlan = mapMySubscription(payload['subscription_details']);
+    if (payload['subscription_details']['subscription_id'] != null) {
+      subscriptionId = payload['subscription_details']['subscription_id'] ?? -1;
+    }
   }
 
   String redirectUrl = "";
@@ -52,11 +52,11 @@ PaymentData mapPaymentData(dynamic payload) {
   }
 
   return PaymentData(
+    subscriptionId: subscriptionId,
     refId: payload["payment_reference"] ?? "",
     orderId: payload["order_reference"] ?? "",
     redirectUrl: redirectUrl,
     paymentUrl: paymentUrl,
     paymentCheckUrl: payload["payment_status_url"] ?? "",
-    selectedSubscriptionPlan: selectedSubscriptionPlan,
   );
 }

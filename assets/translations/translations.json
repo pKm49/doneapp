@@ -239,7 +239,16 @@
       "seasonal_offer": "Seasonal Offer",
       "select_starting_date": "Select Starting Date",
       "coupon_code_not_valid": "Coupon Code not valid",
-      "coupon_code_valid": "Coupon Code applied successfully"
+      "coupon_code_valid": "Coupon Code applied successfully",
+      "please_wait": "Please Wait",
+      "cancel_booking": "Cancel Booking",
+      "cancel_confirm": "Are you sure you want to cancel your booking?",
+      "payment_capture_error": "Sorry, we couldn't capture payment. Please try again.",
+      "payment_capture_success": "Payment Successfully captured",
+      "plan_activated_successfully": "Plan Activated Successfully",
+      "customer_support": "Customer Support",
+      "customer_support_message": "Please Customer Support to proceed"
+
 
     }
   },
@@ -484,8 +493,15 @@
       "seasonal_offer": "Seasonal Offer",
       "select_starting_date": "Select Starting Date",
       "coupon_code_not_valid": "رمز القسيمة غير صالح",
-      "coupon_code_valid": "تم تطبيق رمز القسيمة بنجاح"
-
+      "coupon_code_valid": "تم تطبيق رمز القسيمة بنجاح",
+      "please_wait": "انتظر من فضلك",
+      "cancel_booking": "إلغاء الحجز",
+      "cancel_confirm": "هل تريد بالتأكيد إلغاء الحجز الخاص بك؟",
+      "payment_capture_error": "عذرًا، لم نتمكن من تسجيل الدفع. يُرجى المحاولة مرة أخرى",
+      "payment_capture_success": "تم تسجيل الدفع بنجاح، وجارٍ إنشاء تذكرتك",
+      "plan_activated_successfully": "Plan Activated Successfully",
+      "customer_support": "Customer Support",
+      "customer_support_message": "Please Customer Support to proceed"
     }
   }
 ]

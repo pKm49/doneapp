@@ -31,6 +31,7 @@ class SharedController extends GetxController {
 
   //  Mobile Verification
   var isOtpVerifying = false.obs;
+  var isPlanActivating = false.obs;
   var isOtpSending = false.obs;
   var isAppointmentBooking = false.obs;
 
@@ -102,6 +103,35 @@ class SharedController extends GetxController {
     }
   }
 
+  Future<void> refetchUserData() async {
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? tMobile = prefs.getString('mobile');
+
+    if (tMobile != null && tMobile != '') {
+      mobile.value = tMobile;
+
+    try{
+      var sharedHttpService = SharedHttpService();
+      isUserDataFetching.value = true;
+      mobile.value = tMobile;
+      print("ref fetchUserData");
+      print(tMobile);
+      userData.value = await sharedHttpService.getProfileData(tMobile);
+      mySubscriptions.value =
+          await sharedHttpService.getMySubscriptions(mobile.value);
+      isUserDataFetching.value = false;
+
+
+    }catch(e,st){
+      print("ref fetchUserData error");
+      print(e);
+      print(st);
+      isUserDataFetching.value = false ;
+    }
+
+    }
+  }
+
   updateUserData(UserData tUserData) {
     userData.value = tUserData;
   }
@@ -114,28 +144,37 @@ class SharedController extends GetxController {
   }
 
   fetchUserData(String targetRoute, String tMobile) async {
-    var sharedHttpService = SharedHttpService();
-    isUserDataFetching.value = true;
-    mobile.value = tMobile;
-    print("fetchUserData");
-    print(tMobile);
-    userData.value = await sharedHttpService.getProfileData(tMobile);
-    mySubscriptions.value =
-        await sharedHttpService.getMySubscriptions(mobile.value);
-    isUserDataFetching.value = false;
-    print("userData");
-    print(userData.value.id);
-    print(userData.value.profilePictureUrl);
-    if (userData.value.id != -1) {
-      saveDeviceToken();
-      if (targetRoute != "") {
-        Get.offAllNamed(targetRoute);
+    try{
+      var sharedHttpService = SharedHttpService();
+      isUserDataFetching.value = true;
+      mobile.value = tMobile;
+      print("fetchUserData");
+      print(tMobile);
+      userData.value = await sharedHttpService.getProfileData(tMobile);
+      mySubscriptions.value =
+      await sharedHttpService.getMySubscriptions(mobile.value);
+      isUserDataFetching.value = false;
+      print("userData");
+      print(userData.value.id);
+      print(userData.value.profilePictureUrl);
+      if (userData.value.id != -1) {
+        saveDeviceToken();
+        if (targetRoute != "") {
+          Get.offAllNamed(targetRoute);
+        }
+      } else {
+        if (targetRoute != "") {
+          showSnackbar(Get.context!, "something_wrong".tr, "error");
+        }
       }
-    } else {
-      if (targetRoute != "") {
-        showSnackbar(Get.context!, "something_wrong".tr, "error");
-      }
+    }catch(e,st){
+      print("fetchUserData error");
+      print(e);
+      print(st);
+      Future.delayed(const Duration(milliseconds: 10));
+      refetchUserData();
     }
+
   }
 
   Future<void> handleLogout() async {
@@ -201,24 +240,24 @@ class SharedController extends GetxController {
     if(mobileTextEditingController.value.text.toString().length<7){
       showSnackbar(Get.context!, "enter_valid_mobile".tr, "error");
     }else{
-      showSnackbar(Get.context!, "otp_sent".tr, "info");
-      Get.toNamed(AppRouteNames.otpVerificationOtpInputRoute,
-          arguments: [
-            isResetPassword? VALIDPHONEVERIFICATION_MODES.reset_password:
-            VALIDPHONEVERIFICATION_MODES.register]);
-      // isOtpSending.value = true;
-      // var sharedHttpService = new SharedHttpService();
-      // bool isSuccess = await sharedHttpService.sendOtp(
-      //     SendOTPCredential(mobile: "+965${mobileTextEditingController.value.text}", isResetPassword: isResetPassword));
-      // isOtpSending.value = false;
-      //
-      // if(isSuccess){
-      //   showSnackbar(Get.context!, "otp_sent".tr, "info");
-      //   Get.toNamed(AppRouteNames.otpVerificationOtpInputRoute,
-      //       arguments: [
-      //         isResetPassword? VALIDPHONEVERIFICATION_MODES.reset_password:
-      //         VALIDPHONEVERIFICATION_MODES.register]);
-      // }
+      // showSnackbar(Get.context!, "otp_sent".tr, "info");
+      // Get.toNamed(AppRouteNames.otpVerificationOtpInputRoute,
+      //     arguments: [
+      //       isResetPassword? VALIDPHONEVERIFICATION_MODES.reset_password:
+      //       VALIDPHONEVERIFICATION_MODES.register]);
+      isOtpSending.value = true;
+      var sharedHttpService = new SharedHttpService();
+      bool isSuccess = await sharedHttpService.sendOtp(
+          SendOTPCredential(mobile: "+965${mobileTextEditingController.value.text}", isResetPassword: isResetPassword));
+      isOtpSending.value = false;
+
+      if(isSuccess){
+        showSnackbar(Get.context!, "otp_sent".tr, "info");
+        Get.toNamed(AppRouteNames.otpVerificationOtpInputRoute,
+            arguments: [
+              isResetPassword? VALIDPHONEVERIFICATION_MODES.reset_password:
+              VALIDPHONEVERIFICATION_MODES.register]);
+      }
     }
   }
 
@@ -226,41 +265,44 @@ class SharedController extends GetxController {
     if(otp.length!=6){
       showSnackbar(Get.context!, "enter_valid_otp".tr, "error");
     }else{
-      showSnackbar(Get.context!, "otp_verified_success".tr, "info");
-      if(isResetPassword){
-        Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,
-            arguments: [mobileTextEditingController.value.text]);
-      }else{
-        Get.offNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
-          ASSETS_SUCCESSMARK,
-          "otp_verified".tr,
-          "otp_verified_message".tr,
-          'continue'.tr,
-          true,
-          AppRouteNames.addressAuditRoute,
-          mobileTextEditingController.value.text
-        ]) ;
-      }
-      // isOtpVerifying.value = true;
-      // var sharedHttpService = new SharedHttpService();
-      // bool isVerificationSuccess = await sharedHttpService.verifyOtp( "+965${mobileTextEditingController.value.text}",otp);
-      // isOtpVerifying.value = false;
-      //
-      // if(isVerificationSuccess){
-      //   showSnackbar(Get.context!, "otp_verified".tr, "info");
-      //   if(isResetPassword){
-      //     Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [mobileTextEditingController.value.text]);
-      //   }else{
-      //     Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
-      //       ASSETS_SUCCESSMARK,
-      //       "otp_verified".tr,
-      //       "otp_verified_message".tr,
-      //       'continue'.tr,
-      //       true,
-      //       AppRouteNames.addressAuditRoute
-      //     ]) ;
-      //   }
+      // showSnackbar(Get.context!, "otp_verified_success".tr, "info");
+      // if(isResetPassword){
+      //   Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,
+      //       arguments: [mobileTextEditingController.value.text]);
+      // }else{
+      //   Get.offNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
+      //     ASSETS_SUCCESSMARK,
+      //     "otp_verified".tr,
+      //     "otp_verified_message".tr,
+      //     'continue'.tr,
+      //     true,
+      //     AppRouteNames.addressAuditRoute,
+      //     mobileTextEditingController.value.text
+      //   ]) ;
       // }
+
+      isOtpVerifying.value = true;
+      var sharedHttpService = new SharedHttpService();
+      bool isVerificationSuccess = await sharedHttpService.verifyOtp( "+965${mobileTextEditingController.value.text}",otp);
+      isOtpVerifying.value = false;
+
+      if(isVerificationSuccess){
+        showSnackbar(Get.context!, "otp_verified".tr, "info");
+        mobileTextEditingController.value.text="";
+        if(isResetPassword){
+          Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [mobileTextEditingController.value.text]);
+        }else{
+          Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
+            ASSETS_SUCCESSMARK,
+            "otp_verified".tr,
+            "otp_verified_message".tr,
+            'continue'.tr,
+            true,
+            AppRouteNames.addressAuditRoute,
+            mobileTextEditingController.value.text
+          ]) ;
+        }
+      }
 
     }
 
@@ -286,4 +328,28 @@ class SharedController extends GetxController {
       showSnackbar(Get.context!, "appointment_booking_request_recieved_successfully".tr, "info");
       showSnackbar(Get.context!, "our_rep_will_contact".tr, "info");}
   }
+
+  void activatePlan(int subscriptionId) async {
+    if(!isPlanActivating.value){
+      if(subscriptionId != -1){
+        isPlanActivating.value = true;
+        var sharedHttpService = SharedHttpService();
+        bool isSuccess = await sharedHttpService
+            .activateSubscription(subscriptionId);
+        isPlanActivating.value = false;
+        if(isSuccess){
+          showSnackbar(Get.context!, "plan_activated_successfully".tr, "info");
+          fetchUserData("", userData.value.mobile);
+        }else{
+          showSnackbar(Get.context!, "something_wrong".tr, "error");
+        }
+        print("activatePlan");
+        print(isSuccess);
+      }
+    }
+
+
+  }
+
+
 }

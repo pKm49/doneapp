@@ -111,6 +111,7 @@ class ProfileController extends GetxController {
       if (message == "") {
         final sharedController = Get.find<SharedController>();
         sharedController.fetchUserData("", mobile);
+        Get.back();
         showSnackbar(Get.context!, "profile_updated_successfully".tr, "info");
 
       } else {

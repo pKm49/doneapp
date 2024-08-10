@@ -4,6 +4,7 @@ import 'package:doneapp/feature_modules/plan_purchase/models/discount_data.model
 import 'package:doneapp/feature_modules/plan_purchase/models/payment_data.model.plan_purchase.dart';
 import 'package:doneapp/feature_modules/plan_purchase/models/plan.model.plan_purchase.dart';
 import 'package:doneapp/feature_modules/plan_purchase/models/plan_category.model.plan_purchase.dart';
+import 'package:doneapp/feature_modules/plan_purchase/models/purchase_data.model.plan_purchase.dart';
 import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
 import 'package:doneapp/shared_module/services/http-services/http_request_handler.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
@@ -86,14 +87,12 @@ class PlanPurchaseHttpService {
     }
   }
 
-  Future<PaymentData> createOrder(String mobile, List<dynamic> subscriptions, String couponCode) async {
+  Future<PaymentData> createOrder(PurchaseData purchaseData) async {
 
 
     try{
       AppHttpResponse response =
-      await postRequest(SubscriptionsHttpRequestEndpoint_CreateOrder, {
-        "params": {"mobile": mobile, "subscriptions": subscriptions,"coupon_code":couponCode}
-      });
+      await postRequest(SubscriptionsHttpRequestEndpoint_CreateOrder, purchaseData.toJson());
 
       print("createOrder");
       print(response.statusCode.toString());
@@ -136,6 +135,27 @@ class PlanPurchaseHttpService {
        }
 
       return false;
+
+    }catch  (e,st){
+      print(e);
+      print(st);
+      return false;
+    }
+  }
+
+  Future<bool> activateSubscription(int subscriptionId) async {
+
+    try{
+      Map<String, dynamic> params = {};
+      params["subscription_id"]=subscriptionId;
+      AppHttpResponse response =
+      await postRequest(SubscriptionsHttpRequestEndpoint_ActivateSubscription, params);
+
+      print("activateSubscription");
+      print(response.statusCode.toString());
+      print(response.data.toString());
+      print(response.message.toString());
+      return response.statusCode == 200;
 
     }catch  (e,st){
       print(e);

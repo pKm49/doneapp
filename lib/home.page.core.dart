@@ -16,10 +16,22 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
-class HomePage_Core extends StatelessWidget {
+class HomePage_Core extends StatefulWidget {
   HomePage_Core({super.key});
 
+  @override
+  State<HomePage_Core> createState() => _HomePage_CoreState();
+}
+
+class _HomePage_CoreState extends State<HomePage_Core> {
   final sharedController = Get.find<SharedController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sharedController.fetchUserData("", sharedController.userData.value.mobile);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -552,8 +564,21 @@ class HomePage_Core extends StatelessWidget {
                                         textAlign: TextAlign.center),
                                   ),
                                   onPressed: () {
-                                    Get.toNamed(AppRouteNames
-                                        .planPurchaseSubscriptionPlansCategoryListRoute);
+                                    if(sharedController.mySubscriptions
+                                        .where((p0) =>
+                                    p0.status == "paid").toList()
+                                        .isNotEmpty){
+                                      if (!sharedController
+                                          .isPlanActivating.value) {
+                                        sharedController.activatePlan(sharedController.mySubscriptions
+                                            .where((p0) =>
+                                        p0.status == "paid").toList()[0].id);
+                                      }
+                                    }else{
+                                      Get.toNamed(AppRouteNames
+                                          .planPurchaseSubscriptionPlansCategoryListRoute);
+                                    }
+
                                   })),
                         ],
                       ),

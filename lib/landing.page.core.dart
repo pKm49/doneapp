@@ -32,19 +32,10 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
 
   List<Widget> _tabList = [
     HomePage_Core(),
+    MealCalendarPage_MySubscription(),
+    MyProfilePage_Profile()
   ];
-  List<BottomNavigationBarItem> bottomNavigationBarItemsTwo = [
-    BottomNavigationBarItem(
-      icon: Icon(Ionicons.home_outline,size: APPSTYLE_FontSize24),
-      activeIcon: Icon(Ionicons.home,size: APPSTYLE_FontSize24 ),
-      label: "",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Ionicons.person_outline,size: APPSTYLE_FontSize24),
-      activeIcon: Icon(Ionicons.person,size: APPSTYLE_FontSize24),
-      label: "",
-    ),
-  ];
+
 
   List<BottomNavigationBarItem> bottomNavigationBarItemsThree = [
     const BottomNavigationBarItem(
@@ -72,19 +63,7 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
     profileController.getIngredients();
     profileController.getAllergies();
     tabHistory.add(0);
-    bool isValidSubscriptionPresent = false;
 
-    List<MySubscription> latestSubs = sharedController.mySubscriptions.where((p0) =>( p0.status=='in_progress')).toList();
-    if(latestSubs.isNotEmpty){
-      isValidSubscriptionPresent = true;
-    }
-
-    if(isValidSubscriptionPresent){
-      _tabList.add(MealCalendarPage_MySubscription());
-      }
-    // _tabList.add(MealCalendarPage_MySubscription());
-
-    _tabList.add(MyProfilePage_Profile());
 
     _tabController = TabController(length: _tabList.length, vsync: this);
     _tabController.animateTo(_currentIndex);
@@ -151,7 +130,7 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
 
                 },
                 // items:bottomNavigationBarItemsThree
-                items:_tabList.length==2?bottomNavigationBarItemsTwo :bottomNavigationBarItemsThree
+                items: bottomNavigationBarItemsThree
             )
         )
     );
