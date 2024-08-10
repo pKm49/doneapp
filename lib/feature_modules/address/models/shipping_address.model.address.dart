@@ -33,7 +33,7 @@ class Address {
     required this.apartmentNo,
   });
 
-  Map toJson(String mobile) => {
+  Map toJsonForPatch(String mobile) => {
         'mobile': mobile,
         'address_id': id,
         'name': name,
@@ -45,6 +45,18 @@ class Address {
         'apartment_no': apartmentNo==-1?'':apartmentNo,
 
     'area_id': areaId,
+        'block_id': blockId,
+      };
+  Map toJsonForPost(String mobile) => {
+        'mobile': mobile,
+        'name': name,
+        'jedha': jedha,
+        'comments': comments,
+        'street': street,
+        'house_number': houseNumber==-1?'':houseNumber,
+        'floor_number': floorNumber==-1?'':floorNumber,
+        'apartment_no': apartmentNo==-1?'':apartmentNo,
+        'area_id': areaId,
         'block_id': blockId,
       };
 }

@@ -56,499 +56,500 @@ class _FreezeSubscriptionPage_MySubscriptionState extends State<FreezeSubscripti
         ],
       ),
       body: SafeArea(child: Container(
-        child: Column(
-          children: [
-            CustomCurveShapeComponent_Shared(
-              color: APPSTYLE_PrimaryColorBg,
-              title: "freeze_sub".tr ,
-            ),
-            Expanded(
-              child: Obx(
-                    ()=>Column(
-                  children: [
-                    Visibility(
-                      visible:  mySubscriptionController.isSubscriptionDatesLoading.value,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Shimmer.fromColors(
-                            baseColor: APPSTYLE_Grey20,
-                            highlightColor: APPSTYLE_Grey40,
-                            child:Container(
-                              decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
-                                  boxShadow:  [
-                                    const BoxShadow(
-                                      color: APPSTYLE_Grey80Shadow24,
-                                      offset: Offset(1.0, 1.0),
-                                      blurRadius: 2,
-                                    ),
-                                  ],
-                                  border: Border.all(
-                                      color: Colors.transparent, width: .2),
-                                  color: APPSTYLE_Grey20),
-                              margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
-                              padding: APPSTYLE_MediumPaddingAll,
-                              height: 350,
-                              width: screenwidth-(APPSTYLE_SpaceLarge*2),
+        child:Obx(
+              ()=> Column(
+            children: [
+              CustomCurveShapeComponent_Shared(
+                color: APPSTYLE_PrimaryColorBg,
+                title: "freeze_sub".tr ,
+              ),
+              Expanded(
+                child: Column(
+                    children: [
+                      Visibility(
+                        visible:  mySubscriptionController.isSubscriptionDatesLoading.value,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: APPSTYLE_Grey20,
+                              highlightColor: APPSTYLE_Grey40,
+                              child:Container(
+                                decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
+                                    boxShadow:  [
+                                      const BoxShadow(
+                                        color: APPSTYLE_Grey80Shadow24,
+                                        offset: Offset(1.0, 1.0),
+                                        blurRadius: 2,
+                                      ),
+                                    ],
+                                    border: Border.all(
+                                        color: Colors.transparent, width: .2),
+                                    color: APPSTYLE_Grey20),
+                                margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
+                                padding: APPSTYLE_MediumPaddingAll,
+                                height: 350,
+                                width: screenwidth-(APPSTYLE_SpaceLarge*2),
+                              ),
                             ),
-                          ),
 
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Visibility(
-                      visible: mySubscriptionController.subscriptionDates.isNotEmpty &&
-                          !mySubscriptionController.isSubscriptionDatesLoading.value,
-                      child: Expanded(
-                        child: Container(
-                          decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
-                              boxShadow:  [
-                                const BoxShadow(
-                                  color: APPSTYLE_Grey80Shadow24,
-                                  offset: Offset(1.0, 1.0),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                              border: Border.all(
-                                  color: Colors.transparent, width: .2),
-                              color: APPSTYLE_Grey20),
-                          margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
-                          padding: APPSTYLE_MediumPaddingAll  ,
-                          width: screenwidth-(APPSTYLE_SpaceLarge*2),
-                          child: ListView(
-                            children: [
-
-                              // Month change arrows and current month title
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      mySubscriptionController.previousMonth();
-
-                                    },
-                                    child: Container(
-                                        padding: APPSTYLE_ExtraSmallPaddingAll,
-                                        decoration:
-                                        APPSTYLE_BorderedContainerExtraSmallDecoration
-                                            .copyWith(color: APPSTYLE_BackgroundWhite),
-                                        child: Icon(Ionicons.chevron_back,
-                                            color: Colors.black)),
-                                  ),
-                                  Expanded(
-                                      child: Container(
-                                        child: Text(
-                                          getFormattedCurrentMonth( mySubscriptionController.currentMonth.value ),
-                                          textAlign: TextAlign.center,
-                                          style: getHeadlineMediumStyle(context)
-                                              .copyWith(
-                                              color: APPSTYLE_PrimaryColorBg,
-                                              fontWeight: APPSTYLE_FontWeightBold),
-                                        ),
-                                      )),
-                                  InkWell(
-                                    onTap: () {
-                                      mySubscriptionController.nextMonth();
-                                    },
-                                    child: Container(
-                                        padding: APPSTYLE_ExtraSmallPaddingAll,
-                                        decoration:
-                                        APPSTYLE_BorderedContainerExtraSmallDecoration
-                                            .copyWith(color: APPSTYLE_BackgroundWhite),
-                                        child: Icon(Ionicons.chevron_forward,
-                                            color: Colors.black)),
+                      Visibility(
+                        visible: mySubscriptionController.subscriptionDates.isNotEmpty &&
+                            !mySubscriptionController.isSubscriptionDatesLoading.value,
+                        child: Expanded(
+                          child: Container(
+                            decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
+                                boxShadow:  [
+                                  const BoxShadow(
+                                    color: APPSTYLE_Grey80Shadow24,
+                                    offset: Offset(1.0, 1.0),
+                                    blurRadius: 2,
                                   ),
                                 ],
-                              ),
-                              addVerticalSpace(APPSTYLE_SpaceLarge),
-                              // week day names
-                              Container(
-                                width: screenwidth,
-                                height:  35,
-                                child: Row(
+                                border: Border.all(
+                                    color: Colors.transparent, width: .2),
+                                color: APPSTYLE_Grey20),
+                            margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
+                            padding: APPSTYLE_MediumPaddingAll  ,
+                            width: screenwidth-(APPSTYLE_SpaceLarge*2),
+                            child: ListView(
+                              children: [
+
+                                // Month change arrows and current month title
+                                Row(
                                   children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text( 'sun'.tr,
-                                            textAlign: TextAlign.center,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(color: APPSTYLE_Grey80)),
-                                      ),
+                                    InkWell(
+                                      onTap: () {
+                                        mySubscriptionController.previousMonth();
+
+                                      },
+                                      child: Container(
+                                          padding: APPSTYLE_ExtraSmallPaddingAll,
+                                          decoration:
+                                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                                              .copyWith(color: APPSTYLE_BackgroundWhite),
+                                          child: Icon(Ionicons.chevron_back,
+                                              color: Colors.black)),
                                     ),
                                     Expanded(
-                                      flex: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text( 'mon'.tr,
+                                        child: Container(
+                                          child: Text(
+                                            getFormattedCurrentMonth( mySubscriptionController.currentMonth.value ),
                                             textAlign: TextAlign.center,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(color: APPSTYLE_Grey80)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text( 'tue'.tr,
-                                            textAlign: TextAlign.center,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(color: APPSTYLE_Grey80)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text( 'wed'.tr,
-                                            textAlign: TextAlign.center,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(color: APPSTYLE_Grey80)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text( 'thu'.tr,
-                                            textAlign: TextAlign.center,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(color: APPSTYLE_Grey80)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text( 'fri'.tr,
-                                            textAlign: TextAlign.center,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(color: APPSTYLE_Grey80)),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text( 'sat'.tr,
-                                            textAlign: TextAlign.center,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(color: APPSTYLE_Grey80)),
-                                      ),
+                                            style: getHeadlineMediumStyle(context)
+                                                .copyWith(
+                                                color: APPSTYLE_PrimaryColorBg,
+                                                fontWeight: APPSTYLE_FontWeightBold),
+                                          ),
+                                        )),
+                                    InkWell(
+                                      onTap: () {
+                                        mySubscriptionController.nextMonth();
+                                      },
+                                      child: Container(
+                                          padding: APPSTYLE_ExtraSmallPaddingAll,
+                                          decoration:
+                                          APPSTYLE_BorderedContainerExtraSmallDecoration
+                                              .copyWith(color: APPSTYLE_BackgroundWhite),
+                                          child: Icon(Ionicons.chevron_forward,
+                                              color: Colors.black)),
                                     ),
                                   ],
                                 ),
-                              ),
-                              addVerticalSpace(APPSTYLE_SpaceSmall),
-
-
-                              //calendar starts here
-
-                              Container(
-                                width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
-                                child: Row(
-                                  children: [
-                                    for(var i=0;i<mySubscriptionController.firstWeekDays.length;i++)
+                                addVerticalSpace(APPSTYLE_SpaceLarge),
+                                // week day names
+                                Container(
+                                  width: screenwidth,
+                                  height:  35,
+                                  child: Row(
+                                    children: [
                                       Expanded(
                                         flex: 1,
-                                        child: InkWell(
-                                          onTap: () {
-                                            mySubscriptionController.addDayToFreeze(mySubscriptionController.firstWeekDays[i]);
-
-                                          },
-                                          child: MealCalendarDateComponent_MySubscription(
-                                              isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.firstWeekDays[i]),
-                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.firstWeekDays[i]),
-
-                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.firstWeekDays[i]),
-
-                                              borderColor: Colors.transparent,
-                                              isMonthDay:mySubscriptionController.firstWeekDays[i].month==
-                                                  mySubscriptionController.currentMonth.value.month,
-                                              dateText:
-                                              mySubscriptionController.firstWeekDays[i].day<10?
-                                              '0${mySubscriptionController.firstWeekDays[i].day}':mySubscriptionController.firstWeekDays[i].day.toString()
-                                          ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text( 'sun'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_Grey80)),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                              Container(
-                                width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                child: Row(
-                                  children: [
-                                    for(var i=0;i<mySubscriptionController.secondWeekDays.length;i++)
                                       Expanded(
                                         flex: 1,
-                                        child: InkWell(
-                                          onTap: () {
-                                            mySubscriptionController.addDayToFreeze(mySubscriptionController.secondWeekDays[i]);
-
-                                          },
-                                          child: MealCalendarDateComponent_MySubscription(
-                                              isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.secondWeekDays[i]),
-                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.secondWeekDays[i]),
-
-                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.secondWeekDays[i]),
-                                              borderColor: Colors.transparent,
-                                              isMonthDay:mySubscriptionController.secondWeekDays[i].month==
-                                                  mySubscriptionController.currentMonth.value.month,
-                                              dateText:
-                                              mySubscriptionController.secondWeekDays[i].day<10?
-                                              '0${mySubscriptionController.secondWeekDays[i].day}':mySubscriptionController.secondWeekDays[i].day.toString()
-                                          ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text( 'mon'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_Grey80)),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                              Container(
-                                width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                child: Row(
-                                  children: [
-                                    for(var i=0;i<mySubscriptionController.thirdWeekDays.length;i++)
                                       Expanded(
                                         flex: 1,
-                                        child: InkWell(
-                                          onTap: () {
-                                            mySubscriptionController.addDayToFreeze(mySubscriptionController.thirdWeekDays[i]);
-
-                                          },
-                                          child: MealCalendarDateComponent_MySubscription(
-                                              isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.thirdWeekDays[i]),
-                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.thirdWeekDays[i]),
-
-                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.thirdWeekDays[i]),
-                                              borderColor: Colors.transparent,
-                                              isMonthDay:mySubscriptionController.thirdWeekDays[i].month==
-                                                  mySubscriptionController.currentMonth.value.month,
-                                              dateText:
-                                              mySubscriptionController.thirdWeekDays[i].day<10?
-                                              '0${mySubscriptionController.thirdWeekDays[i].day}':mySubscriptionController.thirdWeekDays[i].day.toString()
-                                          ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text( 'tue'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_Grey80)),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                              Container(
-                                width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                child: Row(
-                                  children: [
-                                    for(var i=0;i<mySubscriptionController.fourthWeekDays.length;i++)
                                       Expanded(
                                         flex: 1,
-                                        child: InkWell(
-                                          onTap: () {
-                                            mySubscriptionController.addDayToFreeze(mySubscriptionController.fourthWeekDays[i]);
-
-                                          },
-                                          child: MealCalendarDateComponent_MySubscription(
-                                              isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.fourthWeekDays[i]),
-                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.fourthWeekDays[i]),
-
-                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.fourthWeekDays[i]),
-                                              borderColor: Colors.transparent,
-                                              isMonthDay:mySubscriptionController.fourthWeekDays[i].month==
-                                                  mySubscriptionController.currentMonth.value.month,
-                                              dateText:
-                                              mySubscriptionController.fourthWeekDays[i].day<10?
-                                              '0${mySubscriptionController.fourthWeekDays[i].day}':mySubscriptionController.fourthWeekDays[i].day.toString()
-                                          ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text( 'wed'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_Grey80)),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                              Container(
-                                width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
-
-                                child: Row(
-                                  children: [
-                                    for(var i=0;i<mySubscriptionController.fifthWeekDays.length;i++)
                                       Expanded(
                                         flex: 1,
-                                        child: InkWell(
-                                          onTap: () {
-                                            mySubscriptionController.addDayToFreeze(mySubscriptionController.fifthWeekDays[i]);
-
-                                          },
-                                          child:MealCalendarDateComponent_MySubscription (
-                                              isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.fifthWeekDays[i]),
-                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.fifthWeekDays[i]),
-
-                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.fifthWeekDays[i]),
-                                              borderColor: Colors.transparent,
-                                              isMonthDay:mySubscriptionController.fifthWeekDays[i].month==
-                                                  mySubscriptionController.currentMonth.value.month,
-                                              dateText:
-                                              mySubscriptionController.fifthWeekDays[i].day<10?
-                                              '0${mySubscriptionController.fifthWeekDays[i].day}':mySubscriptionController.fifthWeekDays[i].day.toString()
-                                          ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text( 'thu'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_Grey80)),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                              Container(
-                                width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
-                                child: Row(
-                                  children: [
-                                    for(var i=0;i<mySubscriptionController.sixthWeekDays.length;i++)
                                       Expanded(
                                         flex: 1,
-                                        child: InkWell(
-                                          onTap: () {
-                                            mySubscriptionController.addDayToFreeze(mySubscriptionController.sixthWeekDays[i]);
-                                          },
-                                          child:MealCalendarDateComponent_MySubscription (
-                                              isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.sixthWeekDays[i]),
-                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.sixthWeekDays[i]),
-                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.sixthWeekDays[i]),
-                                              borderColor: Colors.transparent,
-                                              isMonthDay:mySubscriptionController.sixthWeekDays[i].month==
-                                                  mySubscriptionController.currentMonth.value.month,
-                                              dateText:
-                                              mySubscriptionController.sixthWeekDays[i].day<10?
-                                              '0${mySubscriptionController.sixthWeekDays[i].day}':mySubscriptionController.sixthWeekDays[i].day.toString()
-                                          ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text( 'fri'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_Grey80)),
                                         ),
                                       ),
-                                  ],
+                                      Expanded(
+                                        flex: 1,
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text( 'sat'.tr,
+                                              textAlign: TextAlign.center,
+                                              style: getBodyMediumStyle(context)
+                                                  .copyWith(color: APPSTYLE_Grey80)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                                addVerticalSpace(APPSTYLE_SpaceSmall),
+
+
+                                //calendar starts here
+
+                                Container(
+                                  width: screenwidth,
+                                  height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                  child: Row(
+                                    children: [
+                                      for(var i=0;i<mySubscriptionController.firstWeekDays.length;i++)
+                                        Expanded(
+                                          flex: 1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              mySubscriptionController.addDayToFreeze(mySubscriptionController.firstWeekDays[i]);
+
+                                            },
+                                            child: MealCalendarDateComponent_MySubscription(
+                                                isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.firstWeekDays[i]),
+                                                status:mySubscriptionController.getDayStatus(mySubscriptionController.firstWeekDays[i]),
+
+                                                isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.firstWeekDays[i]),
+
+                                                borderColor: Colors.transparent,
+                                                isMonthDay:mySubscriptionController.firstWeekDays[i].month==
+                                                    mySubscriptionController.currentMonth.value.month,
+                                                dateText:
+                                                mySubscriptionController.firstWeekDays[i].day<10?
+                                                '0${mySubscriptionController.firstWeekDays[i].day}':mySubscriptionController.firstWeekDays[i].day.toString()
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                Container(
+                                  width: screenwidth,
+                                  height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                  child: Row(
+                                    children: [
+                                      for(var i=0;i<mySubscriptionController.secondWeekDays.length;i++)
+                                        Expanded(
+                                          flex: 1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              mySubscriptionController.addDayToFreeze(mySubscriptionController.secondWeekDays[i]);
+
+                                            },
+                                            child: MealCalendarDateComponent_MySubscription(
+                                                isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.secondWeekDays[i]),
+                                                status:mySubscriptionController.getDayStatus(mySubscriptionController.secondWeekDays[i]),
+
+                                                isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.secondWeekDays[i]),
+                                                borderColor: Colors.transparent,
+                                                isMonthDay:mySubscriptionController.secondWeekDays[i].month==
+                                                    mySubscriptionController.currentMonth.value.month,
+                                                dateText:
+                                                mySubscriptionController.secondWeekDays[i].day<10?
+                                                '0${mySubscriptionController.secondWeekDays[i].day}':mySubscriptionController.secondWeekDays[i].day.toString()
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                Container(
+                                  width: screenwidth,
+                                  height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                  child: Row(
+                                    children: [
+                                      for(var i=0;i<mySubscriptionController.thirdWeekDays.length;i++)
+                                        Expanded(
+                                          flex: 1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              mySubscriptionController.addDayToFreeze(mySubscriptionController.thirdWeekDays[i]);
+
+                                            },
+                                            child: MealCalendarDateComponent_MySubscription(
+                                                isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.thirdWeekDays[i]),
+                                                status:mySubscriptionController.getDayStatus(mySubscriptionController.thirdWeekDays[i]),
+
+                                                isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.thirdWeekDays[i]),
+                                                borderColor: Colors.transparent,
+                                                isMonthDay:mySubscriptionController.thirdWeekDays[i].month==
+                                                    mySubscriptionController.currentMonth.value.month,
+                                                dateText:
+                                                mySubscriptionController.thirdWeekDays[i].day<10?
+                                                '0${mySubscriptionController.thirdWeekDays[i].day}':mySubscriptionController.thirdWeekDays[i].day.toString()
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                Container(
+                                  width: screenwidth,
+                                  height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                  child: Row(
+                                    children: [
+                                      for(var i=0;i<mySubscriptionController.fourthWeekDays.length;i++)
+                                        Expanded(
+                                          flex: 1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              mySubscriptionController.addDayToFreeze(mySubscriptionController.fourthWeekDays[i]);
+
+                                            },
+                                            child: MealCalendarDateComponent_MySubscription(
+                                                isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.fourthWeekDays[i]),
+                                                status:mySubscriptionController.getDayStatus(mySubscriptionController.fourthWeekDays[i]),
+
+                                                isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.fourthWeekDays[i]),
+                                                borderColor: Colors.transparent,
+                                                isMonthDay:mySubscriptionController.fourthWeekDays[i].month==
+                                                    mySubscriptionController.currentMonth.value.month,
+                                                dateText:
+                                                mySubscriptionController.fourthWeekDays[i].day<10?
+                                                '0${mySubscriptionController.fourthWeekDays[i].day}':mySubscriptionController.fourthWeekDays[i].day.toString()
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                Container(
+                                  width: screenwidth,
+                                  height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                  child: Row(
+                                    children: [
+                                      for(var i=0;i<mySubscriptionController.fifthWeekDays.length;i++)
+                                        Expanded(
+                                          flex: 1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              mySubscriptionController.addDayToFreeze(mySubscriptionController.fifthWeekDays[i]);
+
+                                            },
+                                            child:MealCalendarDateComponent_MySubscription (
+                                                isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.fifthWeekDays[i]),
+                                                status:mySubscriptionController.getDayStatus(mySubscriptionController.fifthWeekDays[i]),
+
+                                                isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.fifthWeekDays[i]),
+                                                borderColor: Colors.transparent,
+                                                isMonthDay:mySubscriptionController.fifthWeekDays[i].month==
+                                                    mySubscriptionController.currentMonth.value.month,
+                                                dateText:
+                                                mySubscriptionController.fifthWeekDays[i].day<10?
+                                                '0${mySubscriptionController.fifthWeekDays[i].day}':mySubscriptionController.fifthWeekDays[i].day.toString()
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                Container(
+                                  width: screenwidth,
+                                  height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                  child: Row(
+                                    children: [
+                                      for(var i=0;i<mySubscriptionController.sixthWeekDays.length;i++)
+                                        Expanded(
+                                          flex: 1,
+                                          child: InkWell(
+                                            onTap: () {
+                                              mySubscriptionController.addDayToFreeze(mySubscriptionController.sixthWeekDays[i]);
+                                            },
+                                            child:MealCalendarDateComponent_MySubscription (
+                                                isSelected:mySubscriptionController.isAlreadySelectedForFreezing(mySubscriptionController.sixthWeekDays[i]),
+                                                status:mySubscriptionController.getDayStatus(mySubscriptionController.sixthWeekDays[i]),
+                                                isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.sixthWeekDays[i]),
+                                                borderColor: Colors.transparent,
+                                                isMonthDay:mySubscriptionController.sixthWeekDays[i].month==
+                                                    mySubscriptionController.currentMonth.value.month,
+                                                dateText:
+                                                mySubscriptionController.sixthWeekDays[i].day<10?
+                                                '0${mySubscriptionController.sixthWeekDays[i].day}':mySubscriptionController.sixthWeekDays[i].day.toString()
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
 
 
 
-                    // No subs message
+                      // No subs message
 
-                    Visibility(
-                      visible: mySubscriptionController.subscriptionDates.isEmpty &&
-                          !mySubscriptionController.isSubscriptionDatesLoading.value,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(1000),
-                              color: APPSTYLE_Grey20,
-                            ),
-                            width: screenwidth * .3,
-                            height: screenwidth * .3,
-                            child: Center(
-                              child: Icon(Ionicons.cash_outline,
-                                  size: screenwidth * .15,
-                                  color: APPSTYLE_PrimaryColorBg),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Visibility(
+                      Visibility(
                         visible: mySubscriptionController.subscriptionDates.isEmpty &&
-                            !mySubscriptionController.isSubscriptionDatesLoading.value,child: addVerticalSpace(APPSTYLE_SpaceLarge)),
-                    Visibility(
-                      visible: mySubscriptionController.subscriptionDates.isEmpty &&
-                          !mySubscriptionController.isSubscriptionDatesLoading.value,
-                      child: Text("no_active_subscription".tr,
-                          textAlign: TextAlign.center,
-                          style: getHeadlineMediumStyle(context)),
-                    ),
-                    Visibility(
-                        visible: mySubscriptionController.subscriptionDates.isEmpty &&
-                            !mySubscriptionController.isSubscriptionDatesLoading.value,child: addVerticalSpace(APPSTYLE_SpaceLarge)),
-                    Visibility(
-                      visible: mySubscriptionController.subscriptionDates.isEmpty &&
-                          !mySubscriptionController.isSubscriptionDatesLoading.value,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              width: screenwidth * .6,
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      padding: MaterialStateProperty.all<
-                                          EdgeInsetsGeometry>(
-                                          const EdgeInsets.symmetric(
-                                              horizontal: APPSTYLE_SpaceMedium,
-                                              vertical:
-                                              APPSTYLE_SpaceExtraSmall)),
-                                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(1000)))),
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(  "purchase_subscription"
-                                        .tr,
-                                        style: getLabelLargeStyle(context)
-                                            .copyWith(
-                                            color:
-                                            APPSTYLE_BackgroundWhite,
-                                            fontWeight:
-                                            APPSTYLE_FontWeightBold),
-                                        textAlign: TextAlign.center),
-                                  ),
-                                  onPressed: () {
-                                    Get.toNamed(AppRouteNames
-                                        .planPurchaseSubscriptionPlansCategoryListRoute);
-                                  })),
-                        ],
+                            !mySubscriptionController.isSubscriptionDatesLoading.value,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(1000),
+                                color: APPSTYLE_Grey20,
+                              ),
+                              width: screenwidth * .3,
+                              height: screenwidth * .3,
+                              child: Center(
+                                child: Icon(Ionicons.cash_outline,
+                                    size: screenwidth * .15,
+                                    color: APPSTYLE_PrimaryColorBg),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Visibility(
+                          visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                              !mySubscriptionController.isSubscriptionDatesLoading.value,child: addVerticalSpace(APPSTYLE_SpaceLarge)),
+                      Visibility(
+                        visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                            !mySubscriptionController.isSubscriptionDatesLoading.value,
+                        child: Text("no_active_subscription".tr,
+                            textAlign: TextAlign.center,
+                            style: getHeadlineMediumStyle(context)),
+                      ),
+                      Visibility(
+                          visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                              !mySubscriptionController.isSubscriptionDatesLoading.value,child: addVerticalSpace(APPSTYLE_SpaceLarge)),
+                      Visibility(
+                        visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                            !mySubscriptionController.isSubscriptionDatesLoading.value,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: screenwidth * .6,
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        padding: MaterialStateProperty.all<
+                                            EdgeInsetsGeometry>(
+                                            const EdgeInsets.symmetric(
+                                                horizontal: APPSTYLE_SpaceMedium,
+                                                vertical:
+                                                APPSTYLE_SpaceExtraSmall)),
+                                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(1000)))),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(  "purchase_subscription"
+                                          .tr,
+                                          style: getLabelLargeStyle(context)
+                                              .copyWith(
+                                              color:
+                                              APPSTYLE_BackgroundWhite,
+                                              fontWeight:
+                                              APPSTYLE_FontWeightBold),
+                                          textAlign: TextAlign.center),
+                                    ),
+                                    onPressed: () {
+                                      Get.toNamed(AppRouteNames
+                                          .planPurchaseSubscriptionPlansCategoryListRoute);
+                                    })),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: APPSTYLE_SpaceLarge,vertical: APPSTYLE_SpaceSmall),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                        if(!mySubscriptionController
+                            .isFreezing.value){
+                          mySubscriptionController.freezeSubscription();
+                        }
+                    },
+                    style: getElevatedButtonStyle(context),
+                    child:  mySubscriptionController
+                        .isFreezing.value
+                        ? LoadingAnimationWidget.staggeredDotsWave(
+                      color: APPSTYLE_BackgroundWhite,
+                      size: 24,
+                    )
+                        : Text("freeze".tr,
+                        style: getHeadlineMediumStyle(context).copyWith(
+                            color: APPSTYLE_BackgroundWhite,
+                            fontWeight: APPSTYLE_FontWeightBold),
+                        textAlign: TextAlign.center),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: APPSTYLE_SpaceLarge,vertical: APPSTYLE_SpaceSmall),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                      if(!mySubscriptionController
-                          .isFreezing.value){
-                        mySubscriptionController.freezeSubscription();
-                      }
-                  },
-                  style: getElevatedButtonStyle(context),
-                  child:  mySubscriptionController
-                      .isFreezing.value
-                      ? LoadingAnimationWidget.staggeredDotsWave(
-                    color: APPSTYLE_BackgroundWhite,
-                    size: 24,
-                  )
-                      : Text("freeze".tr,
-                      style: getHeadlineMediumStyle(context).copyWith(
-                          color: APPSTYLE_BackgroundWhite,
-                          fontWeight: APPSTYLE_FontWeightBold),
-                      textAlign: TextAlign.center),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       )),
     );

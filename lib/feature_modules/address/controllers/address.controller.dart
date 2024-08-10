@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
 import 'package:doneapp/feature_modules/address/services/http.services.address.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
@@ -19,7 +21,8 @@ class AddressController extends GetxController {
   Rx<TextEditingController> jedhaTextEditingController = TextEditingController().obs;
 
   var addressAuthorMode = VALIDADDRESSAUTHOR_MODES.complete_registration.obs;
-
+  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
   var areaCount = 0.obs;
   var blockCount = 0.obs;
   var areaName = "".obs;
@@ -51,6 +54,7 @@ class AddressController extends GetxController {
       streetTextEditingController.value.text = "";
       apartmentNumberTextEditingController.value.text =  "";
       houseNumberTextEditingController.value.text =  "";
+      jedhaTextEditingController.value.text =  "";
       floorNumberTextEditingController.value.text =  "";
       areaId.value = -1;
       commentsTextEditingController.value.text = "";
@@ -134,6 +138,7 @@ class AddressController extends GetxController {
       currentAddress.value = tAddressList[0];
       streetTextEditingController.value.text = currentAddress.value.street;
       commentsTextEditingController.value.text = currentAddress.value.comments;
+      jedhaTextEditingController.value.text = currentAddress.value.jedha;
       apartmentNumberTextEditingController.value.text =currentAddress.value.apartmentNo==-1?"": currentAddress.value.apartmentNo.toString();
       houseNumberTextEditingController.value.text = currentAddress.value.houseNumber==-1?"":currentAddress.value.houseNumber.toString();
       floorNumberTextEditingController.value.text = currentAddress.value.floorNumber==-1?"":currentAddress.value.floorNumber.toString();
@@ -148,6 +153,7 @@ class AddressController extends GetxController {
       floorNumberTextEditingController.value.text =  "";
       areaId.value = -1;
       commentsTextEditingController.value.text = "";
+      jedhaTextEditingController.value.text =  "";
 
       blockId.value =-1;
     }
@@ -172,7 +178,7 @@ class AddressController extends GetxController {
             bool isSuccess =
             await addressHttpService.auditAddress( Address(
                 id: currentAddress.value.id,
-                name: "",
+                name: getRandomString(5),
                 comments: commentsTextEditingController.value.text,
                 apartmentNo:apartmentNumberTextEditingController.value.text.toString().trim() !=""?
                 int.parse(apartmentNumberTextEditingController.value.text.toString().trim()):-1,
@@ -208,5 +214,8 @@ class AddressController extends GetxController {
 
 
 
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
 }

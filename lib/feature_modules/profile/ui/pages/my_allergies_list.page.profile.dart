@@ -213,47 +213,49 @@ class _MyAllergiesListPage_ProfileState
                         decoration:
                             APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
                                 color: APPSTYLE_Grey20),
-                        child: Wrap(
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          children: [
-                            for (var i = 0;
-                                i < profileController.allergies.length;
-                                i++)
-                              InkWell(
-                                onTap: () {
-                                  profileController.updateAllergyValues(
-                                      profileController.allergies[i]);
-                                },
-                                child: Container(
-                                  decoration:
-                                      APPSTYLE_BorderedContainerSmallDecoration,
-                                  margin: EdgeInsets.only(
-                                      right: APPSTYLE_SpaceSmall,
-                                      bottom: APPSTYLE_SpaceSmall),
-                                  padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(
-                                      right: APPSTYLE_SpaceSmall,
-                                      left: APPSTYLE_SpaceSmall),
-                                  child: Wrap(
-                                    children: [
-                                      Text(
-                                          Localizations.localeOf(context)
-                                                      .languageCode
-                                                      .toString() ==
-                                                  'ar'
-                                              ? profileController
-                                                  .allergies[i].arabicName
-                                              : profileController
-                                                  .allergies[i].name,
-                                          style: getLabelLargeStyle(context)),
-                                      addHorizontalSpace(APPSTYLE_SpaceSmall),
-                                      Icon(Ionicons.close,
-                                          size: APPSTYLE_FontSize14)
-                                    ],
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            alignment: WrapAlignment.start,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            children: [
+                              for (var i = 0;
+                                  i < profileController.allergies.length;
+                                  i++)
+                                InkWell(
+                                  onTap: () {
+                                    profileController.updateAllergyValues(
+                                        profileController.allergies[i]);
+                                  },
+                                  child: Container(
+                                    decoration:
+                                        APPSTYLE_BorderedContainerSmallDecoration,
+                                    margin: EdgeInsets.only(
+                                        right: APPSTYLE_SpaceSmall,
+                                        bottom: APPSTYLE_SpaceSmall),
+                                    padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(
+                                        right: APPSTYLE_SpaceSmall,
+                                        left: APPSTYLE_SpaceSmall),
+                                    child: Wrap(
+                                      children: [
+                                        Text(
+                                            Localizations.localeOf(context)
+                                                        .languageCode
+                                                        .toString() ==
+                                                    'ar'
+                                                ? profileController
+                                                    .allergies[i].arabicName
+                                                : profileController
+                                                    .allergies[i].name,
+                                            style: getLabelLargeStyle(context)),
+                                        addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                        Icon(Ionicons.close,
+                                            size: APPSTYLE_FontSize14)
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )
-                          ],
+                                )
+                            ],
+                          ),
                         ),
                       ),
                     ),

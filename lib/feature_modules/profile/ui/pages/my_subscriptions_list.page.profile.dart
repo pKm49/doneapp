@@ -218,9 +218,9 @@ class _MySubscriptionListPage_ProfileState
                                         color:  sharedController.mySubscriptions[index].status=="in_progress"?APPSTYLE_WhatsappGreen:
                                         sharedController.mySubscriptions[index].status=="paid"?APPSTYLE_Black:APPSTYLE_PrimaryColor,
                                       ),
-                                      padding: APPSTYLE_ExtraSmallPaddingAll,
+                                      padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(left: APPSTYLE_SpaceSmall,right: APPSTYLE_SpaceSmall),
                                       child: Text(sharedController.mySubscriptions[index].status.split("_").join(" ").toString().toUpperCase(),
-                                      style: getBodyMediumStyle(context).copyWith(color: APPSTYLE_BackgroundWhite) ),
+                                      style: getLabelLargeStyle(context).copyWith(color: APPSTYLE_BackgroundWhite) ),
                                     ),
                                   ],
                                 ),

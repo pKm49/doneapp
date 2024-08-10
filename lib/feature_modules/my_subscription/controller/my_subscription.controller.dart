@@ -284,6 +284,8 @@ class MySubscriptionController extends GetxController {
 
           if(isSuccess){
             showSnackbar(Get.context!, "selection_saved".tr, "info");
+            getSubscriptionDates();
+
           }
 
           isDayMealSaving.value = false;
