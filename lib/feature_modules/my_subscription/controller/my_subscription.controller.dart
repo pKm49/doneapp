@@ -106,6 +106,7 @@ class MySubscriptionController extends GetxController {
     }
 
   }
+
   void previousMonth() {
     var newDate = DateTime(currentMonth.value.year, currentMonth.value.month - 1, currentMonth.value.day);
     currentMonth.value = newDate;
@@ -119,6 +120,7 @@ class MySubscriptionController extends GetxController {
     setCurrentMonthWeekDays();
 
   }
+
   doesContainDate(List<DateTime> dateLists ,DateTime fourthWeekDay){
     bool doesContain = false;
     for(var i=0; i<dateLists.length; i++){

@@ -238,7 +238,7 @@ generateSuccessResponse(dynamic httpResponseBody, int requestStatusCode) {
             ? result['data']
             :(result  != null && result['payload']  != null)
             ? result['payload']
-            : result.toString().contains('Error')?null: result);
+            : result.toString().contains('Error')?null: null);
     return poundHttpResponse;
   }
 

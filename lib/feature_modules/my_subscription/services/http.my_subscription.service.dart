@@ -17,6 +17,8 @@ class MySubsHttpService {
       print("getSubscriptionDates");
       print(response.statusCode);
       print(response.data);
+      print(response.data is Map);
+      print(response.data != null);
       Map<DateTime, String> tDates = {};
       if(response.data != null && response.data is Map){
         response.data.forEach((key, value) {

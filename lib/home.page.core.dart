@@ -229,7 +229,7 @@ class HomePage_Core extends StatelessWidget {
                                         visible: !sharedController.userData
                                                 .value.subscriptionRemainingDays
                                                 .toLowerCase()
-                                                .trim()
+                                                .replaceAll(' ', '')
                                                 .contains(
                                                     "noactivesubscription") &&
                                             !sharedController
@@ -263,7 +263,7 @@ class HomePage_Core extends StatelessWidget {
                                         visible: sharedController.userData.value
                                                 .subscriptionRemainingDays
                                                 .toLowerCase()
-                                                .trim()
+                                                .replaceAll(' ', '')
                                                 .contains(
                                                     "noactivesubscription") &&
                                             !sharedController
@@ -307,11 +307,12 @@ class HomePage_Core extends StatelessWidget {
 
                                       // Ends On Widget
                                       addVerticalSpace(APPSTYLE_SpaceSmall),
+
                                       Visibility(
                                         visible: !sharedController.userData
                                                 .value.subscriptionRemainingDays
                                                 .toLowerCase()
-                                                .trim()
+                                                .replaceAll(' ', '')
                                                 .contains(
                                                     "noactivesubscription") &&
                                             !sharedController
@@ -335,35 +336,33 @@ class HomePage_Core extends StatelessWidget {
                                         visible: sharedController.userData.value
                                                 .subscriptionRemainingDays
                                                 .toLowerCase()
-                                                .trim()
+                                                .replaceAll(' ', '')
                                                 .contains(
                                                     "noactivesubscription") &&
                                             !sharedController
                                                 .isUserDataFetching.value,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text(
-                                            sharedController.mySubscriptions
-                                                    .where((p0) =>
-                                                        p0.status == "paid")
-                                                    .isNotEmpty
-                                                ? "subscription_inactive_message"
-                                                    .tr
-                                                : sharedController
-                                                        .mySubscriptions
-                                                        .where((p0) =>
-                                                            p0.status ==
-                                                            "not_paid")
-                                                        .isNotEmpty
-                                                    ? "subscription_payment_complete_message"
-                                                        .tr
-                                                    : "subscription_purchase_message"
-                                                        .tr,
-                                            textAlign: TextAlign.start,
-                                            style: getBodyMediumStyle(context)
-                                                .copyWith(
-                                              color: APPSTYLE_BackgroundWhite,
-                                            ),
+                                        child: Text(
+                                          sharedController.mySubscriptions
+                                                  .where((p0) =>
+                                                      p0.status == "paid")
+                                                  .isNotEmpty
+                                              ? "subscription_inactive_message"
+                                                  .tr
+                                              : sharedController
+                                                      .mySubscriptions
+                                                      .where((p0) =>
+                                                          p0.status ==
+                                                          "not_paid")
+                                                      .isNotEmpty
+                                                  ? "subscription_payment_complete_message"
+                                                      .tr
+                                                  : "subscription_purchase_message"
+                                                      .tr,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 3,
+                                          style: getBodyMediumStyle(context)
+                                              .copyWith(
+                                            color: APPSTYLE_BackgroundWhite,
                                           ),
                                         ),
                                       ),
@@ -394,7 +393,7 @@ class HomePage_Core extends StatelessWidget {
                                         visible: !sharedController.userData
                                                 .value.subscriptionRemainingDays
                                                 .toLowerCase()
-                                                .trim()
+                                                .replaceAll(' ', '')
                                                 .contains(
                                                     "noactivesubscription") &&
                                             !sharedController
@@ -423,7 +422,7 @@ class HomePage_Core extends StatelessWidget {
                                                   .value
                                                   .subscriptionRemainingDays
                                                   .toLowerCase()
-                                                  .trim()
+                                                  .replaceAll(' ', '')
                                                   .contains(
                                                       "noactivesubscription"),
                                               child: Container(
@@ -527,7 +526,7 @@ class HomePage_Core extends StatelessWidget {
                                         !sharedController.userData.value
                                                 .subscriptionRemainingDays
                                                 .toLowerCase()
-                                                .trim()
+                                                .replaceAll(' ', '')
                                                 .contains(
                                                     "noactivesubscription")
                                             ? 'renew_subscription'.tr
@@ -605,7 +604,7 @@ class HomePage_Core extends StatelessWidget {
                                   onPressed: () {
                                     if (!sharedController
                                         .isAppointmentBooking.value) {
-                                      showLogoutConfirmDialogue(context);
+                                      showBookingConfirmDialogue(context);
                                     }
                                   })),
                         ],
@@ -634,7 +633,7 @@ class HomePage_Core extends StatelessWidget {
     }
   }
 
-  void showLogoutConfirmDialogue(BuildContext context) async {
+  void showBookingConfirmDialogue(BuildContext context) async {
     final dialogTitleWidget = Text('confirm_appointment'.tr,
         style: getHeadlineMediumStyle(context).copyWith(
             color: APPSTYLE_Grey80, fontWeight: APPSTYLE_FontWeightBold));

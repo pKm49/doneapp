@@ -150,8 +150,8 @@ class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProvid
 
 
                 },
-                items:bottomNavigationBarItemsThree
-                // items:_tabList.length==2?bottomNavigationBarItemsTwo :bottomNavigationBarItemsThree
+                // items:bottomNavigationBarItemsThree
+                items:_tabList.length==2?bottomNavigationBarItemsTwo :bottomNavigationBarItemsThree
             )
         )
     );

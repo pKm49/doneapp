@@ -1,11 +1,16 @@
+import 'package:doneapp/feature_modules/plan_purchase/models/plan.model.plan_purchase.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
   bool isSelected;
-    SubscriptionPlanCardComponent_PlanPurchase({super.key,required this.isSelected});
+  SubscriptionPlan subscriptionPlan;
+    SubscriptionPlanCardComponent_PlanPurchase({super.key,required this.isSelected,
+    required this.subscriptionPlan });
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +26,10 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
           border: Border.all(
               color:isSelected? APPSTYLE_PrimaryColor:Colors.transparent, width: 2)),
       height: screenheight * .25,
+      width: screenwidth,
       padding: APPSTYLE_ExtraSmallPaddingAll,
-      margin: EdgeInsets.only(bottom: APPSTYLE_SpaceSmall,left: APPSTYLE_SpaceLarge,right: APPSTYLE_SpaceLarge),
+      margin: EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall,
+          top: APPSTYLE_SpaceExtraSmall,left: APPSTYLE_SpaceLarge,right: APPSTYLE_SpaceLarge),
       child: Container(
         decoration: APPSTYLE_BorderedContainerSmallDecoration
             .copyWith(
@@ -30,34 +37,61 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
           boxShadow: APPSTYLE_ContainerShadow
         ),
         padding: APPSTYLE_MediumPaddingAll,
+        height: (screenheight * .25)-(APPSTYLE_SpaceExtraSmall*2),
+        width: screenwidth,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "No Friday",
-                  style: getHeadlineLargeStyle(context)
-                      .copyWith(
-                      color:
-                      APPSTYLE_BackgroundWhite),
-                ),
-                Text(
-                  "139.0 KWD",
-                  style: getHeadlineLargeStyle(context)
-                      .copyWith(
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: APPSTYLE_BackgroundWhite,
-                      decorationStyle: TextDecorationStyle.solid,
-                      color:
-                      APPSTYLE_BackgroundWhite),
-                ),
+            Container(
+              child: Row(
+                mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: FittedBox(
+                      alignment: Localizations.localeOf(context)
+                          .languageCode
+                          .toString() ==
+                          'ar'?  Alignment.centerRight:Alignment.centerLeft,
+                      fit: BoxFit.scaleDown,
+                      child: Text( subscriptionPlan.name,
+                        style: getHeadlineLargeStyle(context)
+                            .copyWith(
+                            color:
+                            APPSTYLE_BackgroundWhite),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: subscriptionPlan.strikePrice!=0.0,
+                    child: Expanded(
+                      flex: 1,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'?   Alignment.centerLeft:Alignment.centerRight,
 
-              ],
+                        child: Text( "${subscriptionPlan.strikePrice} KWD",
+                          style: getHeadlineLargeStyle(context)
+                              .copyWith(
+                              fontSize: APPSTYLE_FontSize20,
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: APPSTYLE_BackgroundWhite,
+                              decorationStyle: TextDecorationStyle.solid,
+                              color:
+                              APPSTYLE_BackgroundWhite),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment:
@@ -68,10 +102,10 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
 
 
                 Text(
-                  "119.0 KWD",
+                  "${subscriptionPlan.price} KWD",
                   style: getHeadlineLargeStyle(context)
                       .copyWith(
-                      fontSize: APPSTYLE_FontSize24*1.5,
+                      fontSize: APPSTYLE_FontSize24*1.3,
                       color:
                       APPSTYLE_BackgroundWhite),
                 ),
@@ -84,7 +118,7 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
               CrossAxisAlignment.start,
               children: [
                 Text(
-                  "100.0 Protein",
+                  '${subscriptionPlan.protein} ${"protein".tr}',
                   style: getBodyMediumStyle(context)
                       .copyWith(
                       color:
@@ -99,7 +133,7 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
                   ),
                   padding: APPSTYLE_MediumPaddingHorizontal,
                   child: Text(
-                    "Monthly",
+                    subscriptionPlan.durationType,
                     style: getBodyMediumStyle(context)
                         .copyWith(
                         color:
@@ -116,7 +150,7 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
               CrossAxisAlignment.start,
               children: [
                 Text(
-                  "100.0 Carb",
+                  '${subscriptionPlan.carbohydrates} ${"carbs".tr}',
                   style: getBodyMediumStyle(context)
                       .copyWith(
                       color:
@@ -131,7 +165,7 @@ class SubscriptionPlanCardComponent_PlanPurchase extends StatelessWidget {
                   ),
                   padding: APPSTYLE_MediumPaddingHorizontal,
                   child: Text(
-                    "Seasonal Offer",
+                    "seasonal_offer".tr,
                     style: getBodyMediumStyle(context)
                         .copyWith(
                         color:

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:doneapp/feature_modules/plan_purchase/models/plan_category.model.plan_purchase.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
@@ -9,17 +10,26 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget {
-  const SubscriptionPlanCategoryCardComponent_PlanPurchase({super.key});
+  SubscriptionPlanCategory subscriptionPlanCategory;
+    SubscriptionPlanCategoryCardComponent_PlanPurchase({super.key, required this.subscriptionPlanCategory});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: APPSTYLE_SmallPaddingAll,
+      margin: APPSTYLE_SmallPaddingAll,
       decoration:
-      APPSTYLE_BorderedContainerSmallDecoration
+      APPSTYLE_ShadowedContainerSmallDecoration
           .copyWith(
+          boxShadow:[
+            const BoxShadow(
+              color: APPSTYLE_Grey60,
+              offset: Offset(0, 4.0),
+              blurRadius: APPSTYLE_BlurRadiusSmall,
+            ),
+          ],
         image: DecorationImage(
-          image: AssetImage(ASSETS_WELCOME_LOGIN_BG),
+          image:getImage(subscriptionPlanCategory.imageUrl),
           fit: BoxFit.cover,
         ),
       ),
@@ -52,12 +62,20 @@ class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Low Carb",
+                            Text(Localizations.localeOf(context)
+                                .languageCode
+                                .toString() ==
+                                'ar'?subscriptionPlanCategory.arabicName
+                                :subscriptionPlanCategory.name,
                               style: getHeadlineMediumStyle(context).copyWith(
                                   color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold
                               ),),
                             addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                            Text("150 p 50C + Snack + Salad",
+                            Text(Localizations.localeOf(context)
+                                .languageCode
+                                .toString() ==
+                                'ar'?subscriptionPlanCategory.arabicDescription
+                                :subscriptionPlanCategory.description,
                               style: getLabelSmallStyle(context).copyWith(
                                   color: APPSTYLE_BackgroundWhite
                               ),)
@@ -65,7 +83,10 @@ class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget
                         ),
                       ),
                       addHorizontalSpace(APPSTYLE_SpaceSmall),
-                      Icon(Ionicons.arrow_forward_circle,color: APPSTYLE_BackgroundWhite)
+                      Icon(Localizations.localeOf(context)
+                          .languageCode
+                          .toString() ==
+                          'ar'? Ionicons.arrow_back_circle:Ionicons.arrow_forward_circle,color: APPSTYLE_BackgroundWhite)
                     ],
                   ),
                 ),
@@ -77,39 +98,33 @@ class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget
               child:Align(
                 alignment: Alignment.bottomCenter,
 
-                child: ListView(
+                child: ListView.builder(
                   shrinkWrap: true,
-
-                  children: [
-                    Text("1-Breakfast",
-                      style: getBodyMediumStyle(context).copyWith(
-                          color: APPSTYLE_BackgroundWhite,
-                          fontWeight: APPSTYLE_FontWeightBold
-                      ),),
-                    addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                    Text("2-Main Course",
-                      style: getBodyMediumStyle(context).copyWith(
-                          color: APPSTYLE_BackgroundWhite,
-                          fontWeight: APPSTYLE_FontWeightBold
-                      ),),
-                    addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                    Text("2-Salad",
-                      style: getBodyMediumStyle(context).copyWith(
-                          color: APPSTYLE_BackgroundWhite,
-                          fontWeight: APPSTYLE_FontWeightBold
-                      ),),
-                    addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                    Text("2-Snack & Soup",
-                      style: getBodyMediumStyle(context).copyWith(
-                          color: APPSTYLE_BackgroundWhite,
-                          fontWeight: APPSTYLE_FontWeightBold
-                      ),),
-                    addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                  ],
-                ),
+                    itemCount: Localizations.localeOf(context)
+                        .languageCode
+                        .toString() ==
+                        'ar'?subscriptionPlanCategory.mealsConfigArabic.length
+                        :subscriptionPlanCategory.mealsConfig.length,
+                    itemBuilder: (context, index) {
+                      return  Text(Localizations.localeOf(context)
+                          .languageCode
+                          .toString() ==
+                          'ar'?subscriptionPlanCategory.mealsConfigArabic[index]
+                          :subscriptionPlanCategory.mealsConfig[index],
+                        style: getBodyMediumStyle(context).copyWith(
+                            color: APPSTYLE_BackgroundWhite,
+                            fontWeight: APPSTYLE_FontWeightBold
+                        ),);
+                    }),
               ))
         ],
       ),
     );
+  }
+
+  getImage(String imageUrl) {
+    return imageUrl == ASSETS_WELCOME_LOGIN_BG?
+    AssetImage(ASSETS_WELCOME_LOGIN_BG)
+        :NetworkImage(imageUrl);
   }
 }

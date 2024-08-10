@@ -1,6 +1,7 @@
 import 'package:doneapp/feature_modules/address/controllers/address.controller.dart';
 import 'package:doneapp/feature_modules/auth/controllers/register.controller.auth.dart';
 import 'package:doneapp/feature_modules/my_subscription/controller/my_subscription.controller.dart';
+import 'package:doneapp/feature_modules/plan_purchase/controllers/plan_purchase.controller.dart';
 import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/app_routes.constants.shared.dart';
@@ -71,6 +72,7 @@ class _MyAppState extends State<MyApp> {
     Get.put(AddressController());
     Get.put(ProfileController());
     Get.put(MySubscriptionController());
+    Get.put(PlanPurchaseController());
 
     super.initState();
   }

@@ -23,6 +23,7 @@ class  AppRouteNames {
 
   static const String planPurchaseSubscriptionPlansCategoryListRoute = '/subscription-category-list';
   static const String planPurchaseSubscriptionPlansListRoute = '/subscription-plan-list';
+  static const String planPurchaseSetInitialDateRoute = '/subscription-plan-initial-date';
   static const String planPurchaseCheckoutRoute = '/subscription-plan-checkout';
 
   //menu list

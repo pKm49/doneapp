@@ -77,7 +77,15 @@ class SharedController extends GetxController {
         print("mySubscriptions data fetched");
         isUserDataFetching.value = false;
         print(userData.value.id);
-        print(userData.value.profilePictureUrl);
+        print(userData.value.subscriptionRemainingDays);
+        print(userData.value.subscriptionRemainingDays.toLowerCase());
+        print(userData.value.subscriptionRemainingDays.toLowerCase().trim());
+        print( userData
+            .value.subscriptionRemainingDays
+            .toLowerCase()
+            .replaceAll(' ', '')
+            .contains(
+            "noactivesubscription").toString());
         // Decide route based on user data id and subscription status.
         if (userData.value.id != -1) {
           saveDeviceToken();

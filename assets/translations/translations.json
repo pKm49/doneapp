@@ -221,14 +221,26 @@
       "meal-selected": "Meals selected successfully for the day",
       "meal-not-selected": "Meals not selected for the day, please select",
       "item_count": "1 Item",
-      "calories": "Calories",
       "save": "Save",
       "add": "Add",
       "remove": "Remove",
       "selection_saved": "Selection Saved Successfully",
       "meal_limit_reached": "Sorry, Meal limit reached",
       "select_days_to_freeze": "Select Days For Freezing",
-      "subscription_frozen": "Subscription Frozen Successfully"
+      "subscription_frozen": "Subscription Frozen Successfully",
+      "no_plans_found": "No Subscription Plans found, please try again",
+      "no_plan_options_found": "No Plan options found, please try again",
+      "reload": "Reload",
+      "calories": "Calories",
+      "protein": "Protein",
+      "fat": "Fat",
+      "carbs": "Carbs",
+      "choose_package_message": "Please take a moment to choose the plan that best suits your needs",
+      "seasonal_offer": "Seasonal Offer",
+      "select_starting_date": "Select Starting Date",
+      "coupon_code_not_valid": "Coupon Code not valid",
+      "coupon_code_valid": "Coupon Code applied successfully"
+
     }
   },
   {
@@ -454,6 +466,9 @@
       "meal-not-selected": "Meals not selected for the day, please select",
       "item_count": "1 Item",
       "calories": "السعرات",
+      "protein": "بروتين",
+      "fat": "الدهون",
+      "carbs": "كارب",
       "save": "حفظ",
       "add": "Add",
       "remove": "Remove",
@@ -461,7 +476,16 @@
       "meal_limit_reached": "Sorry, Meal limit reached",
       "subscription_frozen": "تم تجميد الاشتراك بنجاح",
 
-      "select_days_to_freeze": "حدد أيام التجميد"
+      "select_days_to_freeze": "حدد أيام التجميد",
+      "no_plans_found": "No Subscription Plans found, please try again",
+      "no_plan_options_found": "No Plan options found, please try again",
+      "reload": "Reload",
+      "choose_package_message": "يرجى تخصيص بعض الوقت لاختيار الخطة التي تناسب احتياجاتك",
+      "seasonal_offer": "Seasonal Offer",
+      "select_starting_date": "Select Starting Date",
+      "coupon_code_not_valid": "رمز القسيمة غير صالح",
+      "coupon_code_valid": "تم تطبيق رمز القسيمة بنجاح"
+
     }
   }
 ]
