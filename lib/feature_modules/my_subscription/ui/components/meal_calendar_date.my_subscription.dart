@@ -22,6 +22,7 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
         height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
         decoration:   BoxDecoration(
@@ -42,31 +43,31 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                   .copyWith(
                   color:
                   (isMonthDay && isSubscriptionDay) ? APPSTYLE_PrimaryColor:
-                  isMonthDay ?APPSTYLE_Grey60:APPSTYLE_Grey40
+                  isMonthDay ? APPSTYLE_Grey60:APPSTYLE_Grey40
               ),
             ),
             addVerticalSpace(APPSTYLE_SpaceExtraSmall),
             Visibility(
-              visible: status==VALIDSUBSCRIPTIONDAY_STATUS.offDay &&  (isMonthDay && isSubscriptionDay) ,
-              child: Icon(Icons.close,
+              visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
+              child: const Icon(Icons.close,
                   color:APPSTYLE_PrimaryColor
                   , size: 15),
             ),
             Visibility(
               visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered  &&  (isMonthDay && isSubscriptionDay) ,
-              child: Icon(Icons.delivery_dining,
+              child: const Icon(Icons.delivery_dining,
                   color:APPSTYLE_WhatsappGreen
                   , size: 15),
             ),
             Visibility(
               visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed  &&  (isMonthDay && isSubscriptionDay)  ,
-              child: Icon(Icons.pause,
+              child: const Icon(Icons.pause,
                   color:APPSTYLE_PrimaryColor
                   , size: 15),
             ),
             Visibility(
               visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected  &&  (isMonthDay && isSubscriptionDay)  ,
-              child: Icon(Ionicons.checkmark ,
+              child: const Icon(Ionicons.checkmark ,
                   color:APPSTYLE_WhatsappGreen
                   , size: 15),
             ),

@@ -226,8 +226,9 @@
       "add": "Add",
       "remove": "Remove",
       "selection_saved": "Selection Saved Successfully",
-      "meal_limit_reached": "Sorry, Meal limit reached"
-
+      "meal_limit_reached": "Sorry, Meal limit reached",
+      "select_days_to_freeze": "Select Days For Freezing",
+      "subscription_frozen": "Subscription Frozen Successfully"
     }
   },
   {
@@ -457,8 +458,10 @@
       "add": "Add",
       "remove": "Remove",
       "selection_saved": "Selection Saved Successfully",
-      "meal_limit_reached": "Sorry, Meal limit reached"
+      "meal_limit_reached": "Sorry, Meal limit reached",
+      "subscription_frozen": "تم تجميد الاشتراك بنجاح",
 
+      "select_days_to_freeze": "حدد أيام التجميد"
     }
   }
 ]

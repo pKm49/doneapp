@@ -3,6 +3,7 @@ import 'package:doneapp/feature_modules/my_subscription/models/subscription_dail
 import 'package:doneapp/feature_modules/my_subscription/models/subscription_mealconfig.model.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/services/http.my_subscription.service.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ class MySubscriptionController extends GetxController {
   var fourthWeekDays = <DateTime>[].obs;
   var fifthWeekDays = <DateTime>[].obs;
   var sixthWeekDays = <DateTime>[].obs;
+  var frozenDays = <String>[].obs;
   var isDayMealSaving = false.obs;
   var isFreezing = false.obs;
   var isMealsFetching = false.obs;
@@ -42,6 +44,7 @@ class MySubscriptionController extends GetxController {
         isSubscriptionDatesLoading.value = false;
         setCurrentMonth();
         setSelectedDate();
+        frozenDays.value = [];
       } else {
         showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
         showSnackbar(Get.context!, "login_message".tr, "error");
@@ -51,7 +54,29 @@ class MySubscriptionController extends GetxController {
     }
   }
 
+  isAlreadySelectedForFreezing(DateTime dateTime){
+    final f = DateFormat('yyyy-MM-dd');
+    return frozenDays.contains(f.format(dateTime));
+  }
+
+ addDayToFreeze(DateTime dateTime){
+   if(dateTime.month== currentMonth.value.month && isSubscriptionDay(dateTime)
+      && dateTime.isAfter(DateTime.now())
+       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.delivered
+       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
+       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.freezed){
+     final f = DateFormat('yyyy-MM-dd');
+     if(frozenDays.contains(f.format(dateTime)) ){
+       frozenDays.remove(f.format(dateTime));
+     }else{
+       frozenDays.add(f.format(dateTime));
+     }
+   }
+
+ }
+
   void setSelectedDate() {
+
     if(subscriptionDates.isNotEmpty) {
       DateTime startDate = subscriptionDates.keys.toList().first;
       final f = DateFormat('yyyy-MM-dd');
@@ -71,6 +96,7 @@ class MySubscriptionController extends GetxController {
       currentMonth.value = getCurrentMonth(startDate, endDate);
       subscriptionDates.forEach((key, value) {
         subscriptionDays.add(key);
+        print("$key $value");
         if(!doesContainDate(subscriptionMonths,DateTime(key.year,key.month,1))){
           subscriptionMonths.add(DateTime(key.year,key.month,1));
         }
@@ -204,7 +230,10 @@ class MySubscriptionController extends GetxController {
   DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
 
   Future<void> getMealsByDate(  DateTime tSelectedDay,bool isNavigationRequired ) async {
-    if(!isMealsFetching.value){
+
+    if(tSelectedDay.month== currentMonth.value.month && isSubscriptionDay(tSelectedDay)
+        && getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
+        && getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.freezed && !isMealsFetching.value){
       selectedDate.value = tSelectedDay;
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -226,6 +255,8 @@ class MySubscriptionController extends GetxController {
         showSnackbar(Get.context!, "login_message".tr, "error");
         Get.offAllNamed(AppRouteNames.loginRoute);
       }
+
+    }else{
 
     }
 
@@ -388,6 +419,37 @@ class MySubscriptionController extends GetxController {
       return selectedMeals[0].items.length==originalMeals[0].itemCount;
     }
     return true;
+
+  }
+
+  Future<void> freezeSubscription() async {
+    if(!isFreezing.value){
+        final sharedController = Get.find<SharedController>();
+        int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
+        sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
+
+        if(subscriptionId != -1){
+          isFreezing.value = true;
+          final f = new DateFormat('yyyy-MM-dd');
+          var mySubsHttpService = MySubsHttpService();
+          bool isSuccess  =  await mySubsHttpService.freezeSubscriptionDays(subscriptionId,frozenDays);
+          isFreezing.value = false;
+          if(isSuccess){
+            showSnackbar(Get.context!, "subscription_frozen".tr, "info");
+            getSubscriptionDates();
+          }
+
+
+        }else {
+          showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
+          showSnackbar(Get.context!, "login_message".tr, "error");
+          Get.offAllNamed(AppRouteNames.loginRoute);
+        }
+
+
+
+    }
+
 
   }
 

@@ -101,5 +101,26 @@ class MySubsHttpService {
     }
   }
 
+  Future<bool> freezeSubscriptionDays(  int subscriptionId,List<String> frozenDays ) async {
+
+    try{
+      Map<String, dynamic> params = {};
+      params["subscription_id"]=subscriptionId;
+      params["freeze_dates"]=frozenDays;
+      AppHttpResponse response =
+      await patchRequest(MySubscriptionHttpRequestEndpoint_FreezeSubscriptionDays,params);
+      if(response.statusCode != 200){
+        showSnackbar(Get.context!, response.message, "error");
+      }
+      return response.statusCode == 200;
+
+
+    }catch (e,st){
+      print(e);
+      print(st);
+      return false;
+    }
+  }
+
 
 }
