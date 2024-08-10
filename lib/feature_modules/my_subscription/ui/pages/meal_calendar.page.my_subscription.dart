@@ -1,13 +1,19 @@
+import 'package:doneapp/feature_modules/my_subscription/controller/my_subscription.controller.dart';
+import 'package:doneapp/feature_modules/my_subscription/ui/components/meal_calendar_date.my_subscription.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/calendar_utilities.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/date_conversion.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_curve_shape.component.shared.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MealCalendarPage_MySubscription extends StatefulWidget {
   const MealCalendarPage_MySubscription({super.key});
@@ -17,9 +23,15 @@ class MealCalendarPage_MySubscription extends StatefulWidget {
 }
 
 class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySubscription> {
-  List<int> selectedIndex = [20, 21, 22, 23, 24];
 
-  int selectedItem = 0;
+   final mySubscriptionController = Get.find<MySubscriptionController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mySubscriptionController.getSubscriptionDates();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +44,15 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
         backgroundColor: APPSTYLE_PrimaryColorBg,
         scrolledUnderElevation:0.0,
         elevation: 0.0,
+        actions: [
+          InkWell(
+            onTap: (){
+              openCalendarNotationsGuide(screenwidth);
+            },
+            child: Icon(Ionicons.help_circle_outline,color: APPSTYLE_BackgroundWhite,),
+          ),
+          addHorizontalSpace(APPSTYLE_SpaceLarge)
+        ],
       ),
       body: SafeArea(child: Container(
         child: Column(
@@ -41,128 +62,463 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
               title: "meal_calendar".tr ,
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
-                          boxShadow:  [
-                            const BoxShadow(
-                              color: APPSTYLE_Grey80Shadow24,
-                              offset: Offset(1.0, 1.0),
-                              blurRadius: 2,
+              child: Obx(
+                ()=>Column(
+                  children: [
+                    Visibility(
+                      visible:  mySubscriptionController.isSubscriptionDatesLoading.value,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Shimmer.fromColors(
+                            baseColor: APPSTYLE_Grey20,
+                            highlightColor: APPSTYLE_Grey40,
+                            child:Container(
+                              decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
+                                  boxShadow:  [
+                                    const BoxShadow(
+                                      color: APPSTYLE_Grey80Shadow24,
+                                      offset: Offset(1.0, 1.0),
+                                      blurRadius: 2,
+                                    ),
+                                  ],
+                                  border: Border.all(
+                                      color: Colors.transparent, width: .2),
+                                  color: APPSTYLE_Grey20),
+                              margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
+                              padding: APPSTYLE_MediumPaddingAll,
+                              height: 350,
+                              width: screenwidth-(APPSTYLE_SpaceLarge*2),
                             ),
-                          ],
-                            border: Border.all(
-                                color: Colors.transparent, width: .2),
-                            color: APPSTYLE_Grey20),
-                        margin: APPSTYLE_LargePaddingAll,
-                        padding: APPSTYLE_MediumPaddingAll,
-                        height: 350,
-                        width: screenwidth-(APPSTYLE_SpaceLarge*2),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                      padding: APPSTYLE_ExtraSmallPaddingAll,
-                                      decoration:
-                                      APPSTYLE_BorderedContainerExtraSmallDecoration
-                                          .copyWith(color: APPSTYLE_BackgroundWhite),
-                                      child: Icon(Ionicons.chevron_back,
-                                          color: Colors.black)),
-                                ),
-                                Expanded(
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: mySubscriptionController.subscriptionDates.isNotEmpty &&
+                          !mySubscriptionController.isSubscriptionDatesLoading.value,
+                      child: Expanded(
+                        child: Container(
+                          decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
+                            boxShadow:  [
+                              const BoxShadow(
+                                color: APPSTYLE_Grey80Shadow24,
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 2,
+                              ),
+                            ],
+                              border: Border.all(
+                                  color: Colors.transparent, width: .2),
+                              color: APPSTYLE_Grey20),
+                          margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
+                          padding: APPSTYLE_MediumPaddingAll  ,
+                          width: screenwidth-(APPSTYLE_SpaceLarge*2),
+                          child: ListView(
+                            children: [
+
+                              // Month change arrows and current month title
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      mySubscriptionController.previousMonth();
+
+                                    },
                                     child: Container(
-                                      child: Text(
-                                        "January 2024",
-                                        textAlign: TextAlign.center,
-                                        style: getHeadlineMediumStyle(context)
-                                            .copyWith(
-                                            color: APPSTYLE_PrimaryColorBg,
-                                            fontWeight: APPSTYLE_FontWeightBold),
+                                        padding: APPSTYLE_ExtraSmallPaddingAll,
+                                        decoration:
+                                        APPSTYLE_BorderedContainerExtraSmallDecoration
+                                            .copyWith(color: APPSTYLE_BackgroundWhite),
+                                        child: Icon(Ionicons.chevron_back,
+                                            color: Colors.black)),
+                                  ),
+                                  Expanded(
+                                      child: Container(
+                                        child: Text(
+                                          getFormattedCurrentMonth( mySubscriptionController.currentMonth.value ),
+                                          textAlign: TextAlign.center,
+                                          style: getHeadlineMediumStyle(context)
+                                              .copyWith(
+                                              color: APPSTYLE_PrimaryColorBg,
+                                              fontWeight: APPSTYLE_FontWeightBold),
+                                        ),
+                                      )),
+                                  InkWell(
+                                    onTap: () {
+                                      mySubscriptionController.nextMonth();
+                                    },
+                                    child: Container(
+                                        padding: APPSTYLE_ExtraSmallPaddingAll,
+                                        decoration:
+                                        APPSTYLE_BorderedContainerExtraSmallDecoration
+                                            .copyWith(color: APPSTYLE_BackgroundWhite),
+                                        child: Icon(Ionicons.chevron_forward,
+                                            color: Colors.black)),
+                                  ),
+                                ],
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceLarge),
+                              // week day names
+                              Container(
+                                width: screenwidth,
+                                height:  35,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text( 'sun'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(color: APPSTYLE_Grey80)),
                                       ),
-                                    )),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                      padding: APPSTYLE_ExtraSmallPaddingAll,
-                                      decoration:
-                                      APPSTYLE_BorderedContainerExtraSmallDecoration
-                                          .copyWith(color: APPSTYLE_BackgroundWhite),
-                                      child: Icon(Ionicons.chevron_forward,
-                                          color: Colors.black)),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text( 'mon'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(color: APPSTYLE_Grey80)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text( 'tue'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(color: APPSTYLE_Grey80)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text( 'wed'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(color: APPSTYLE_Grey80)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text( 'thu'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(color: APPSTYLE_Grey80)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text( 'fri'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(color: APPSTYLE_Grey80)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text( 'sat'.tr,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(color: APPSTYLE_Grey80)),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            addVerticalSpace(APPSTYLE_SpaceLarge),
-                            Expanded(
-                                child: GridView.count(
-                                    mainAxisSpacing: APPSTYLE_SpaceExtraSmall * .5,
-                                    crossAxisSpacing: APPSTYLE_SpaceExtraSmall * .5,
-                                    crossAxisCount: 7,
-                                    children: List.generate(
-                                      42,
-                                          (index) {
-                                        return InkWell(
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceSmall),
+
+
+                              //calendar starts here
+
+                              Container(
+                                width: screenwidth,
+                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                child: Row(
+                                  children: [
+                                    for(var i=0;i<mySubscriptionController.firstWeekDays.length;i++)
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
                                           onTap: () {
-                                            // if (selectedIndex
-                                            //     .contains(index)) {
-                                            //   selectedIndex.remove(index);
-                                            // } else {
-                                            //   selectedIndex.add(index);
-                                            // }
-                                            // setState(() {});
-                                            Get.toNamed(AppRouteNames.mealSelectionRoute);
+                                            mySubscriptionController.getMealsByDate(mySubscriptionController.firstWeekDays[i],true);
+
                                           },
-                                          child: Container(
-                                            margin: APPSTYLE_ExtraSmallPaddingAll,
-                                            decoration: BoxDecoration(
-                                              color: selectedIndex
-                                                  .contains(index)
-                                                  ? APPSTYLE_GuideYellow
-                                                  : Colors.transparent,
-                                              border: Border.all(
-                                                  color: index == 27
-                                                      ? APPSTYLE_PrimaryColorBg
-                                                      : Colors.transparent,
-                                                  width: .7),
-                                              borderRadius:
-                                              BorderRadius.circular(
-                                                  APPSTYLE_BorderRadiusExtraSmall),
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                    getCalendarDayText(index),
-                                                    style: getLabelLargeStyle(
-                                                        context)
-                                                        .copyWith(
-                                                        color:selectedIndex
-                                                            .contains(index)
-                                                            ?APPSTYLE_BackgroundWhite:
-                                                        getCalendarDayTextColor(
-                                                            index))),
-                                                Icon(Ionicons.checkmark,size: 8,color: APPSTYLE_GuideGreen)
-                                              ],
-                                            ),
+                                          child: MealCalendarDateComponent_MySubscription(
+                                              isSelected:isSameDay(mySubscriptionController.firstWeekDays[i],mySubscriptionController.selectedDate.value),
+                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.firstWeekDays[i]),
+
+                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.firstWeekDays[i]),
+
+                                              borderColor: Colors.transparent,
+                                              isMonthDay:mySubscriptionController.firstWeekDays[i].month==
+                                                  mySubscriptionController.currentMonth.value.month,
+                                              dateText:
+                                              mySubscriptionController.firstWeekDays[i].day<10?
+                                              '0${mySubscriptionController.firstWeekDays[i].day}':mySubscriptionController.firstWeekDays[i].day.toString()
                                           ),
-                                        );
-                                      },
-                                    ))),
-                          ],
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              Container(
+                                width: screenwidth,
+                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                child: Row(
+                                  children: [
+                                    for(var i=0;i<mySubscriptionController.secondWeekDays.length;i++)
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            mySubscriptionController.getMealsByDate(mySubscriptionController.secondWeekDays[i],true);
+
+                                          },
+                                          child: MealCalendarDateComponent_MySubscription(
+                                              isSelected:isSameDay(mySubscriptionController.secondWeekDays[i],mySubscriptionController.selectedDate.value),
+                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.secondWeekDays[i]),
+
+                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.secondWeekDays[i]),
+                                              borderColor: Colors.transparent,
+                                              isMonthDay:mySubscriptionController.secondWeekDays[i].month==
+                                                  mySubscriptionController.currentMonth.value.month,
+                                              dateText:
+                                              mySubscriptionController.secondWeekDays[i].day<10?
+                                              '0${mySubscriptionController.secondWeekDays[i].day}':mySubscriptionController.secondWeekDays[i].day.toString()
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              Container(
+                                width: screenwidth,
+                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                child: Row(
+                                  children: [
+                                    for(var i=0;i<mySubscriptionController.thirdWeekDays.length;i++)
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            mySubscriptionController.getMealsByDate(mySubscriptionController.thirdWeekDays[i],true);
+
+                                          },
+                                          child: MealCalendarDateComponent_MySubscription(
+                                              isSelected:isSameDay(mySubscriptionController.thirdWeekDays[i],mySubscriptionController.selectedDate.value),
+                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.thirdWeekDays[i]),
+
+                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.thirdWeekDays[i]),
+                                              borderColor: Colors.transparent,
+                                              isMonthDay:mySubscriptionController.thirdWeekDays[i].month==
+                                                  mySubscriptionController.currentMonth.value.month,
+                                               dateText:
+                                              mySubscriptionController.thirdWeekDays[i].day<10?
+                                              '0${mySubscriptionController.thirdWeekDays[i].day}':mySubscriptionController.thirdWeekDays[i].day.toString()
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              Container(
+                                width: screenwidth,
+                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                child: Row(
+                                  children: [
+                                    for(var i=0;i<mySubscriptionController.fourthWeekDays.length;i++)
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            mySubscriptionController.getMealsByDate(mySubscriptionController.fourthWeekDays[i],true);
+
+                                          },
+                                          child: MealCalendarDateComponent_MySubscription(
+                                              isSelected:isSameDay(mySubscriptionController.fourthWeekDays[i],mySubscriptionController.selectedDate.value),
+                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.fourthWeekDays[i]),
+
+                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.fourthWeekDays[i]),
+                                              borderColor: Colors.transparent,
+                                              isMonthDay:mySubscriptionController.fourthWeekDays[i].month==
+                                                  mySubscriptionController.currentMonth.value.month,
+                                              dateText:
+                                              mySubscriptionController.fourthWeekDays[i].day<10?
+                                              '0${mySubscriptionController.fourthWeekDays[i].day}':mySubscriptionController.fourthWeekDays[i].day.toString()
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              Container(
+                                width: screenwidth,
+                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+
+                                child: Row(
+                                  children: [
+                                    for(var i=0;i<mySubscriptionController.fifthWeekDays.length;i++)
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            mySubscriptionController.getMealsByDate(mySubscriptionController.fifthWeekDays[i],true);
+
+                                          },
+                                          child:MealCalendarDateComponent_MySubscription (
+                                              isSelected:isSameDay(mySubscriptionController.fifthWeekDays[i],mySubscriptionController.selectedDate.value),
+                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.fifthWeekDays[i]),
+
+                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.fifthWeekDays[i]),
+                                              borderColor: Colors.transparent,
+                                              isMonthDay:mySubscriptionController.fifthWeekDays[i].month==
+                                                  mySubscriptionController.currentMonth.value.month,
+                                              dateText:
+                                              mySubscriptionController.fifthWeekDays[i].day<10?
+                                              '0${mySubscriptionController.fifthWeekDays[i].day}':mySubscriptionController.fifthWeekDays[i].day.toString()
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              Container(
+                                width: screenwidth,
+                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                child: Row(
+                                  children: [
+                                    for(var i=0;i<mySubscriptionController.sixthWeekDays.length;i++)
+                                      Expanded(
+                                        flex: 1,
+                                        child: InkWell(
+                                          onTap: () {
+                                            mySubscriptionController.getMealsByDate(mySubscriptionController.sixthWeekDays[i],true);
+
+                                          },
+                                          child:MealCalendarDateComponent_MySubscription (
+                                              isSelected:isSameDay(mySubscriptionController.sixthWeekDays[i],mySubscriptionController.selectedDate.value),
+                                              status:mySubscriptionController.getDayStatus(mySubscriptionController.sixthWeekDays[i]),
+                                              isSubscriptionDay:mySubscriptionController.isSubscriptionDay(mySubscriptionController.sixthWeekDays[i]),
+                                              borderColor: Colors.transparent,
+                                              isMonthDay:mySubscriptionController.sixthWeekDays[i].month==
+                                                  mySubscriptionController.currentMonth.value.month,
+                                              dateText:
+                                              mySubscriptionController.sixthWeekDays[i].day<10?
+                                              '0${mySubscriptionController.sixthWeekDays[i].day}':mySubscriptionController.sixthWeekDays[i].day.toString()
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+
+
+
+                    // No subs message
+
+                    Visibility(
+                      visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                          !mySubscriptionController.isSubscriptionDatesLoading.value,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(1000),
+                              color: APPSTYLE_Grey20,
+                            ),
+                            width: screenwidth * .3,
+                            height: screenwidth * .3,
+                            child: Center(
+                              child: Icon(Ionicons.cash_outline,
+                                  size: screenwidth * .15,
+                                  color: APPSTYLE_PrimaryColorBg),
+                            ),
+                          )
+                        ],
+                      ),
+                    ), 
+                    Visibility(
+                        visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                            !mySubscriptionController.isSubscriptionDatesLoading.value,child: addVerticalSpace(APPSTYLE_SpaceLarge)),
+                    Visibility(
+                      visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                          !mySubscriptionController.isSubscriptionDatesLoading.value,
+                      child: Text("no_active_subscription".tr,
+                          textAlign: TextAlign.center,
+                          style: getHeadlineMediumStyle(context)),
+                    ),
+                    Visibility(
+                        visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                            !mySubscriptionController.isSubscriptionDatesLoading.value,child: addVerticalSpace(APPSTYLE_SpaceLarge)),
+                    Visibility(
+                      visible: mySubscriptionController.subscriptionDates.isEmpty &&
+                          !mySubscriptionController.isSubscriptionDatesLoading.value,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: screenwidth * .6,
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                          const EdgeInsets.symmetric(
+                                              horizontal: APPSTYLE_SpaceMedium,
+                                              vertical:
+                                              APPSTYLE_SpaceExtraSmall)),
+                                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(1000)))),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(  "purchase_subscription"
+                                        .tr,
+                                        style: getLabelLargeStyle(context)
+                                            .copyWith(
+                                            color:
+                                            APPSTYLE_BackgroundWhite,
+                                            fontWeight:
+                                            APPSTYLE_FontWeightBold),
+                                        textAlign: TextAlign.center),
+                                  ),
+                                  onPressed: () {
+                                    Get.toNamed(AppRouteNames
+                                        .planPurchaseSubscriptionPlansCategoryListRoute);
+                                  })),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
@@ -204,5 +560,112 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
     }
     return APPSTYLE_PrimaryColorBg;
   }
+
+  void openCalendarNotationsGuide(double screenwidth) {
+    Get.bottomSheet(
+      Container(
+        width: screenwidth,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(APPSTYLE_BorderRadiusSmall),
+            topRight: Radius.circular(APPSTYLE_BorderRadiusSmall),
+          ),
+        ),
+        padding: APPSTYLE_LargePaddingAll,
+        child:  Column(
+          children: [
+            Text("calendar_notations".tr,style: getHeadlineLargeStyle(context)),
+            addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+            Divider(),
+            addVerticalSpace(APPSTYLE_SpaceSmall),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.delivery_dining,color: APPSTYLE_WhatsappGreen),
+                addHorizontalSpace(APPSTYLE_SpaceMedium),
+                Expanded(child: Text("delivered".tr,
+                    style: getHeadlineMediumStyle(context) ,
+                    textAlign: TextAlign.start),),
+
+              ],
+            ),
+            addVerticalSpace(APPSTYLE_SpaceSmall),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex:1,
+                    child: Icon(Icons.check,color: APPSTYLE_WhatsappGreen)),
+                addHorizontalSpace(APPSTYLE_SpaceMedium),
+                Expanded(
+                  flex: 10,
+                  child: Text("meal-selected".tr,
+                      style: getHeadlineMediumStyle(context),
+                      textAlign: TextAlign.start),),
+
+              ],
+            ),
+            addVerticalSpace(APPSTYLE_SpaceSmall),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex:1,child: SvgPicture.asset(ASSETS_SELECTHAND,width: 20,color: APPSTYLE_PrimaryColor,)),
+                addHorizontalSpace(APPSTYLE_SpaceMedium),
+                Expanded(
+                  flex: 10,
+                  child: Text("meal-not-selected".tr,
+                      style: getHeadlineMediumStyle(context),
+                      textAlign: TextAlign.start),),
+
+              ],
+            ),
+            addVerticalSpace(APPSTYLE_SpaceSmall),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex:1,child: Icon(Icons.close,color: APPSTYLE_PrimaryColor)),
+                addHorizontalSpace(APPSTYLE_SpaceMedium),
+                Expanded(
+                  flex: 10,
+                  child: Text("off-day".tr,
+                      style: getHeadlineMediumStyle(context),
+                      textAlign: TextAlign.start),),
+
+              ],
+            ),
+            addVerticalSpace(APPSTYLE_SpaceSmall),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex:1,child: Icon(Icons.pause,color: APPSTYLE_PrimaryColor)),
+                addHorizontalSpace(APPSTYLE_SpaceMedium),
+                Expanded(
+                  flex: 10,child: Text("freezed".tr,
+                    style: getHeadlineMediumStyle(context),
+                    textAlign: TextAlign.start),),
+
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 
 }

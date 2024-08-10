@@ -19,7 +19,9 @@ class ProfileHttpService {
         return mapUserData(response.data[0]);
       }
       return mapUserData({});
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       return mapUserData({});
     }
   }
@@ -34,7 +36,9 @@ class ProfileHttpService {
         return mapReferralData(response.data[0]);
       }
       return mapReferralData({});
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       return mapReferralData({});
     }
   }
@@ -46,7 +50,9 @@ class ProfileHttpService {
           userData.toJson() );
       return response.statusCode == 200?"":response.message;
 
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return "something_wrong".tr;
     }
@@ -89,13 +95,15 @@ class ProfileHttpService {
       final List<GeneralItem> tempItems = [];
 
       if (response.statusCode == 200 && response.data != null) {
-        for (var i = 0; i < response.data[0].length; i++) {
-          tempItems.add(mapGeneralItem(response.data[0][i]));
+        for (var i = 0; i < response.data.length; i++) {
+          tempItems.add(mapGeneralItem(response.data[i]));
         }
       }
       return tempItems;
 
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return [];
     }
@@ -137,7 +145,9 @@ class ProfileHttpService {
 
       return response.statusCode == 200;
 
-    }catch (e){
+    }catch (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }

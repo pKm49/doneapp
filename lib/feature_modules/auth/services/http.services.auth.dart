@@ -21,7 +21,9 @@ class AuthHttpService {
        showSnackbar(Get.context!, response.message, "error");
      }
      return response.statusCode == 200;
-   }catch (e){
+   }catch  (e,st){
+     print(e);
+     print(st);
      showSnackbar(Get.context!, "something_wrong".tr, "error");
      return false;
    }
@@ -35,7 +37,9 @@ class AuthHttpService {
         showSnackbar(Get.context!, response.message, "error");
       }
       return response.statusCode == 200;
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }
@@ -51,7 +55,9 @@ class AuthHttpService {
       showSnackbar(Get.context!, response.message,response.statusCode != 200? "error":"info");
 
       return response.statusCode == 200;
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }

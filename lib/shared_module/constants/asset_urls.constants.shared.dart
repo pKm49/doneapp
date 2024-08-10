@@ -19,6 +19,7 @@ const String ASSETS_OFFERMEAL = "assets/images/meal.svg";
 const String ASSETS_OFFERGUIDANCE = "assets/images/guidance.svg";
 const String ASSETS_WELCOME_LOGIN_BG = "assets/images/bg_welcome.jpg";
 const String ASSETS_HOME_BG = "assets/images/home_bg.jpg";
+const String ASSETS_SELECTHAND = "assets/images/select_hand.svg";
 
 const String ASSETS_SPLASH_ANIMATION = "assets/animations/splash_animation.gif";
 const String ASSETS_SUCCESS_ANIMATION =

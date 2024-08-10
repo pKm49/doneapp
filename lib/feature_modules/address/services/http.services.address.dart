@@ -25,7 +25,9 @@ class AddressHttpService {
 
       return tempAddressList;
 
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       return [];
     }
 
@@ -51,7 +53,9 @@ class AddressHttpService {
       }
 
 
-    }catch (e){
+    }catch (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }
@@ -67,7 +71,9 @@ class AddressHttpService {
       await deleteRequest(AddressHttpRequestEndpoint_Address, params);
       return response.statusCode == 200;
 
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }
@@ -90,7 +96,9 @@ class AddressHttpService {
 
       return tempAreas;
 
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       return [];
     }
   }
@@ -113,7 +121,9 @@ class AddressHttpService {
 
       return tempBlocks;
 
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       return [];
     }
   }

@@ -36,7 +36,9 @@ class SharedHttpService {
         return mapUserData(response.data[0]);
       }
       return mapUserData({});
-    } catch (e) {
+    } catch  (e,st){
+      print(e);
+      print(st);
       return mapUserData({});
     }
   }
@@ -58,7 +60,9 @@ class SharedHttpService {
 
       return tempMealCategories;
 
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       return [];
     }
   }
@@ -75,7 +79,9 @@ class SharedHttpService {
         }
       }
       return notifications;
-    } catch (e) {
+    } catch  (e,st){
+      print(e);
+      print(st);
       return [];
     }
   }
@@ -89,7 +95,9 @@ class SharedHttpService {
           await postRequest(SharedHttpRequestEndpoint_SaveDeviceToken, body);
 
       return response.statusCode == 200;
-    } catch (e) {
+    } catch  (e,st){
+      print(e);
+      print(st);
       return false;
     }
   }
@@ -103,7 +111,9 @@ class SharedHttpService {
         showSnackbar(Get.context!, response.message, "error");
       }
       return response.statusCode == 200;
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }
@@ -123,7 +133,9 @@ class SharedHttpService {
         showSnackbar(Get.context!, response.message, "error");
       }
       return response.statusCode == 200;
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }
@@ -141,7 +153,9 @@ class SharedHttpService {
         return response.data;
       }
       return "";
-    }catch (e){
+    }catch  (e,st){
+      print(e);
+      print(st);
       return "";
     }
   }
@@ -154,7 +168,9 @@ class SharedHttpService {
       await postRequest(SharedHttpRequestEndpoint_BookDietitianAppointment, body);
 
       return response.statusCode == 200;
-    } catch (e) {
+    } catch (e,st){
+      print(e);
+      print(st);
       showSnackbar(Get.context!, "something_wrong".tr, "error");
       return false;
     }

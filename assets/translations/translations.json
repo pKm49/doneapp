@@ -206,7 +206,28 @@
       "address_updated_successfully": "Address Updated Successfully",
       "address_added_successfully": "Address Added Successfully",
       "search_ingredients": "Search Ingredients",
-      "allergies_updated_successfully": "Allergies Updated Successfully"
+      "allergies_updated_successfully": "Allergies Updated Successfully",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun",
+      "calendar_notations": "Calendar Notations",
+      "off-day": "Off Day, Dietdone is closed for the day.",
+      "freezed": "Subscription Frozen by the customer for the day",
+      "delivered": "Meals successfully delivered to the customer",
+      "meal-selected": "Meals selected successfully for the day",
+      "meal-not-selected": "Meals not selected for the day, please select",
+      "item_count": "1 Item",
+      "calories": "Calories",
+      "save": "Save",
+      "add": "Add",
+      "remove": "Remove",
+      "selection_saved": "Selection Saved Successfully",
+      "meal_limit_reached": "Sorry, Meal limit reached"
+
     }
   },
   {
@@ -416,7 +437,28 @@
       "address_updated_successfully": "تم تحديث العنوان بنجاح",
       "address_added_successfully": "تمت إضافة العنوان بنجاح",
       "search_ingredients": "Search Ingredients",
-      "allergies_updated_successfully": "تم تحديث"
+      "allergies_updated_successfully": "تم تحديث",
+      "mon": "الأثنين",
+      "tue": "الثلاثاء",
+      "wed": "الأربعاء",
+      "thu": "الخميس",
+      "fri": "الجمعه",
+      "sat": "السبت",
+      "sun": "الأحد",
+      "calendar_notations": "Calendar Notations",
+      "off-day": "Off Day, Dietdone is closed for the day.",
+      "freezed": "Subscription Frozen by the customer for the day",
+      "delivered": "Meals successfully delivered to the customer",
+      "meal-selected": "Meals selected successfully for the day",
+      "meal-not-selected": "Meals not selected for the day, please select",
+      "item_count": "1 Item",
+      "calories": "السعرات",
+      "save": "حفظ",
+      "add": "Add",
+      "remove": "Remove",
+      "selection_saved": "Selection Saved Successfully",
+      "meal_limit_reached": "Sorry, Meal limit reached"
+
     }
   }
 ]
