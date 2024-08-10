@@ -120,7 +120,6 @@ class AddressController extends GetxController {
     if(tAddressList.isNotEmpty && !isAddressDeleting.value){
       isAddressDeleting.value = true;
       var addressHttpService = new AddressHttpService();
-      bool isSuccess =
       await addressHttpService.deleteUserAddressess( id);
       isAddressDeleting.value = false;
       getCustomerAddressList();

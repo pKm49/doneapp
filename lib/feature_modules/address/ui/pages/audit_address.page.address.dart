@@ -11,11 +11,9 @@ import 'package:doneapp/shared_module/services/utility-services/widget_generator
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
 import 'package:doneapp/shared_module/ui/components/dropdown_selector.component.shared.dart';
-import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AuditAddressPage_Address extends StatefulWidget {
   const AuditAddressPage_Address({super.key});
@@ -45,8 +43,6 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(

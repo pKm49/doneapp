@@ -1,14 +1,11 @@
 import 'package:doneapp/feature_modules/auth/controllers/reset_password.controller.auth.dart';
-import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
-import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/form_validator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
-import 'package:doneapp/shared_module/ui/components/custom_curve_shape.component.shared.dart';
-import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
+ import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
 import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,8 +40,7 @@ class _ResetPasswordPage_authState extends State<ResetPasswordPage_auth> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double screenwidth = MediaQuery.of(context).size.width;
+
     double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(

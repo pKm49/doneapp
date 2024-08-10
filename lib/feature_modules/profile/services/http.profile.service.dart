@@ -1,6 +1,4 @@
 import 'package:doneapp/feature_modules/profile/constants/http_request_endpoints.constants.profile.dart';
-import 'package:doneapp/feature_modules/profile/models/allergy_dislikes.profile.model.dart';
-import 'package:doneapp/feature_modules/profile/models/query_response.profile.model.dart';
 import 'package:doneapp/feature_modules/profile/models/referral_data.profile.model.dart';
 import 'package:doneapp/shared_module/models/general_item.model.shared.dart';
 import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
@@ -112,7 +110,6 @@ class ProfileHttpService {
   Future<List<GeneralItem>> getIngredients( ) async {
 
     try{
-      Map<String, dynamic> params = {};
       AppHttpResponse response =
       await getRequest(ProfileHttpRequestEndpoint_Ingredient,null);
 

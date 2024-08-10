@@ -26,7 +26,6 @@ class PrePostIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme _textTheme = Theme.of(context).textTheme;
 
     return InkWell(
       onTap: onPressed,

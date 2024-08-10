@@ -5,8 +5,7 @@ import 'package:doneapp/home.page.core.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
-import 'package:doneapp/shared_module/models/my_subscription.model.shared.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -19,8 +18,7 @@ class LandingPage_Core extends StatefulWidget {
 
 class _LandingPage_CoreState extends State<LandingPage_Core>   with TickerProviderStateMixin{
 
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final profileController = Get.find<ProfileController>();
+   final profileController = Get.find<ProfileController>();
   final sharedController = Get.find<SharedController>();
 
   List<int> tabHistory = [];

@@ -148,7 +148,7 @@ class ProfileController extends GetxController {
       isIngredientsFetching.value = true;
       var profileHttpService = ProfileHttpService();
       ingredients.value = await profileHttpService.getIngredients();
-      ingredientsToShow.value = ingredients.value;
+      ingredientsToShow.value = ingredients;
       print("getIngredients");
       print(ingredientsToShow.length);
       print(ingredients.length);
@@ -215,7 +215,7 @@ class ProfileController extends GetxController {
 
   void updateIngredientsListByQuery(String query) {
     if (query== "") {
-      ingredientsToShow.value = ingredients.value;
+      ingredientsToShow.value = ingredients;
     } else {
        List<GeneralItem> tIngredients = [];
        for (var element in ingredients) {

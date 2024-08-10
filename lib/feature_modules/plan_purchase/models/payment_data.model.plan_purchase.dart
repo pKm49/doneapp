@@ -1,4 +1,3 @@
-import 'package:doneapp/shared_module/models/my_subscription.model.shared.dart';
 
 class PaymentData {
   final int subscriptionId;
@@ -29,8 +28,7 @@ PaymentData mapPaymentData(dynamic payload) {
   print("mapPaymentData");
   print(payload);
   int subscriptionId = -1;
-  MySubscription selectedSubscriptionPlan = mapMySubscription({});
-  if (payload['subscription_details'] != null) {
+   if (payload['subscription_details'] != null) {
     if (payload['subscription_details']['subscription_id'] != null) {
       subscriptionId = payload['subscription_details']['subscription_id'] ?? -1;
     }

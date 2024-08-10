@@ -1,7 +1,6 @@
 
 
  import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal.model.my_subscription.dart';
-import 'package:doneapp/feature_modules/my_subscription/models/subscription_dailymeal_item.model.my_subscription.dart';
 
 class SubscriptoinMealConfig {
 
@@ -41,7 +40,6 @@ SubscriptoinMealConfig mapSubscriptoinMealConfig(dynamic payload, String date) {
    Map<String, List<int>> mealConfig = {};
 
    for (var element in subscriptoinMealConfig.meals) {
-       List<SubscriptoinDailyMealItem> items = [];
      mealConfig.addAll({element.id.toString():  element.items.map((e) => e.id).toList()});
    }
    mealConfigList.add(mealConfig);

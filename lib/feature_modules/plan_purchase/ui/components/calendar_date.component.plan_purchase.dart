@@ -1,12 +1,7 @@
  
-import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
-import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+ import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ionicons/ionicons.dart';
 
 class  CalendarDateComponent_PlanPurchase extends StatelessWidget {
 

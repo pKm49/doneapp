@@ -1,8 +1,6 @@
  import 'package:doneapp/feature_modules/address/controllers/address.controller.dart';
-import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
-import 'package:doneapp/feature_modules/address/ui/components/address_card.component.address.dart';
-import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+ import 'package:doneapp/feature_modules/address/ui/components/address_card.component.address.dart';
+ import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_addressauthor_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
  import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
@@ -39,9 +37,7 @@ class _MyAddressListPage_AddressState
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
+     double screenwidth = MediaQuery.of(context).size.width;
 
     return Obx(
         ()=> Scaffold(

@@ -2,15 +2,13 @@
 
  import 'package:app_settings/app_settings.dart';
 import 'package:doneapp/feature_modules/profile/ui/components/preposticon_button.component.shared.dart';
-import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
-import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.component.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -22,7 +20,6 @@ class SettingsPage_Profile extends StatelessWidget {
   Widget build(BuildContext context) {
 
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar:AppBar(
@@ -83,7 +80,7 @@ class SettingsPage_Profile extends StatelessWidget {
                         AppSettings.openAppSettings(type: AppSettingsType.notification);
                         // await platform.invokeMethod('openNotificationSettings');
                       } on Exception catch (e) {
-
+                        print(e);
                       }
                     },
                     theme: 'dark',

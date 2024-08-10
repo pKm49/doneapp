@@ -1,7 +1,6 @@
 import 'package:doneapp/feature_modules/address/models/shipping_address.model.address.dart';
 import 'package:doneapp/feature_modules/auth/models/register_credential.model.auth.dart';
-import 'package:doneapp/shared_module/models/sendotp_credential.model.auth.dart';
-import 'package:doneapp/feature_modules/auth/services/http.services.auth.dart';
+ import 'package:doneapp/feature_modules/auth/services/http.services.auth.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/available_genders.shared.constant.dart';

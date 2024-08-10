@@ -5,8 +5,7 @@ import 'dart:io';
 
 import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+ import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/form_validator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
@@ -43,7 +42,6 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
 
     return Obx(
       ()=> Scaffold(

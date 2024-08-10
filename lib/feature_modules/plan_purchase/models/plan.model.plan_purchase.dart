@@ -1,6 +1,5 @@
 
 
-import 'package:doneapp/feature_modules/plan_purchase/models/plan_category.model.plan_purchase.dart';
 
 class SubscriptionPlan {
 

@@ -37,8 +37,6 @@ class _FreezeSubscriptionPage_MySubscriptionState extends State<FreezeSubscripti
   Widget build(BuildContext context) {
 
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
-
     return   Scaffold(
 
       appBar: AppBar(

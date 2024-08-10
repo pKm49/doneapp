@@ -4,8 +4,6 @@ import 'package:doneapp/shared_module/constants/style_params.constants.shared.da
 import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/calendar_utilities.service.shared.dart';
-import 'package:doneapp/shared_module/services/utility-services/date_conversion.service.shared.dart';
-import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,8 +22,6 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
-
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       direction: Axis.vertical,

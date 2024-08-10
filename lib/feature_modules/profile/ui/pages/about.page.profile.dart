@@ -10,8 +10,7 @@ import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
-import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.component.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -24,8 +23,6 @@ class AboutPage_Profile extends StatelessWidget {
   Widget build(BuildContext context) {
 
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar:AppBar(
         automaticallyImplyLeading: false,

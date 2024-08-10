@@ -1,7 +1,6 @@
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/default_values.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/valid_addressauthor_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_phoneverification_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/models/my_subscription.model.shared.dart';
 import 'package:doneapp/shared_module/models/notification.model.shared.dart';
@@ -13,8 +12,7 @@ import 'package:doneapp/shared_module/services/utility-services/local_storage.se
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get/get.dart';
+ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedController extends GetxController {

@@ -6,12 +6,11 @@ import 'package:doneapp/shared_module/services/utility-services/widget_generator
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class AddressCardComponentShared extends StatelessWidget {
-  Address shippingAddress;
+   Address shippingAddress;
   GestureTapCallback onDeleteSelected;
   GestureTapCallback onEditSelected;
 
@@ -24,7 +23,6 @@ class AddressCardComponentShared extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
 
     return Container(
       decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(

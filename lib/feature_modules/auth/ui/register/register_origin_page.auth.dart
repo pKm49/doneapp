@@ -1,20 +1,16 @@
  import 'package:doneapp/feature_modules/auth/controllers/register.controller.auth.dart';
-import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+
 import 'package:doneapp/shared_module/constants/available_sources.shared.constant.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
-import 'package:doneapp/shared_module/services/utility-services/form_validator.service.shared.dart';
-import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
+ import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
 import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+ import 'package:get/get.dart';
+ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class RegisterOriginPage_Auth extends StatefulWidget {
   const RegisterOriginPage_Auth({super.key});
@@ -33,8 +29,7 @@ class _RegisterOriginPage_AuthState
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double screenwidth = MediaQuery.of(context).size.width;
+
     double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(

@@ -79,7 +79,6 @@ class MySubscriptionController extends GetxController {
 
     if(subscriptionDates.isNotEmpty) {
       DateTime startDate = subscriptionDates.keys.toList().first;
-      final f = DateFormat('yyyy-MM-dd');
       selectedDate.value = startDate.isAfter(DateTime.now())?
       startDate:DateTime.now();
     }
@@ -434,7 +433,6 @@ class MySubscriptionController extends GetxController {
 
         if(subscriptionId != -1){
           isFreezing.value = true;
-          final f = new DateFormat('yyyy-MM-dd');
           var mySubsHttpService = MySubsHttpService();
           bool isSuccess  =  await mySubsHttpService.freezeSubscriptionDays(subscriptionId,frozenDays);
           isFreezing.value = false;

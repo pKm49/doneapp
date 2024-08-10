@@ -2,7 +2,6 @@
 
  import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
@@ -12,7 +11,6 @@ import 'package:doneapp/shared_module/ui/components/custom_back_button.component
 import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -39,7 +37,6 @@ class _ReferralPointsPage_ProfileState extends State<ReferralPointsPage_Profile>
   Widget build(BuildContext context) {
 
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar:AppBar(

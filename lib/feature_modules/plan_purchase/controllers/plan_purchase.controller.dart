@@ -99,8 +99,7 @@ class PlanPurchaseController extends GetxController {
     subscriptions.value = await planPurchaseHttpService
         .getSubscriptionsByCategory(currentCategory.value);
     update();
-    print("getSubscriptionsByCategory");
-    print(subscriptions.value.length);
+
     subTotal.value = 0.0;
     total.value = 0.0;
     discount.value = 0.0;
@@ -151,7 +150,6 @@ class PlanPurchaseController extends GetxController {
     if (mobile != null && mobile != "") {
       isOrderCreating.value = true;
       var planPurchaseHttpService = PlanPurchaseHttpService();
-      List<dynamic> tSubscriptions = [];
 
       PaymentData tPaymentData = await planPurchaseHttpService.createOrder( PurchaseData(
           planCategoryId: currentCategory.value.id,

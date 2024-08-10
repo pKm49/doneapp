@@ -1,12 +1,10 @@
 import 'package:doneapp/feature_modules/auth/constants/http_request_endpoints.constant.auth.dart';
 import 'package:doneapp/feature_modules/auth/models/login_credential.model.auth.dart';
 import 'package:doneapp/feature_modules/auth/models/register_credential.model.auth.dart';
-import 'package:doneapp/shared_module/models/sendotp_credential.model.auth.dart';
-import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
+ import 'package:doneapp/shared_module/models/http_response.model.shared.dart';
 import 'package:doneapp/shared_module/services/http-services/http_request_handler.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+ import 'package:get/get.dart';
 class AuthHttpService {
 
 

@@ -2,7 +2,6 @@
 import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/feature_modules/profile/ui/components/preposticon_button.component.shared.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
-import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
@@ -13,7 +12,6 @@ import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MyProfilePage_Profile extends StatelessWidget {

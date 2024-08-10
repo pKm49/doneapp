@@ -1,6 +1,4 @@
- 
-import 'package:doneapp/feature_modules/my_subscription/controller/my_subscription.controller.dart';
-import 'package:doneapp/feature_modules/my_subscription/ui/components/meal_calendar_date.my_subscription.dart';
+
 import 'package:doneapp/feature_modules/plan_purchase/controllers/plan_purchase.controller.dart';
 import 'package:doneapp/feature_modules/plan_purchase/ui/components/calendar_date.component.plan_purchase.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
@@ -15,8 +13,6 @@ import 'package:doneapp/shared_module/ui/components/custom_curve_shape.component
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SelectInitialDatePage_PlanPurchase extends StatefulWidget {
   const SelectInitialDatePage_PlanPurchase({super.key});
@@ -39,7 +35,6 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
   Widget build(BuildContext context) {
 
     double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
 
     return   Scaffold(
 

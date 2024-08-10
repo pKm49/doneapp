@@ -41,7 +41,6 @@ class _MyAllergiesListPage_ProfileState
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 

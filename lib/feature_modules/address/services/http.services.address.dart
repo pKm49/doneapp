@@ -83,7 +83,7 @@ class AddressHttpService {
   Future<List<GeneralItem>> getAreas( ) async {
 
     try{
-      Map<String, dynamic> params = {};
+
       AppHttpResponse response =
       await getRequest(AddressHttpRequestEndpoint_GetAreas,null);
 

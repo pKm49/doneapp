@@ -13,7 +13,6 @@ import 'package:doneapp/shared_module/ui/components/language_preview_button.comp
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 
 class RegisterAboutmePage_Auth extends StatefulWidget {
   const RegisterAboutmePage_Auth({super.key});
@@ -46,8 +45,7 @@ class _RegisterAboutmePage_AuthState
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
+     double screenheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
