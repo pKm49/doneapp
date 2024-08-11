@@ -26,7 +26,7 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
           Container(
             width: screenwidth,
             height: 150,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(APPSTYLE_BorderRadiusSmall),
@@ -38,7 +38,7 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
               children: [
                 Text("app_language".tr,style: getHeadlineLargeStyle(context)),
                 addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                Divider(),
+                const Divider(),
                 addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                 Row(
                   children: [
@@ -51,7 +51,7 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
                         },
                         style: getElevatedButtonStyle(context).copyWith(
                             padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                EdgeInsets.symmetric(
+                                const EdgeInsets.symmetric(
                                     horizontal: APPSTYLE_SpaceLarge,
                                     vertical:APPSTYLE_SpaceSmall))
                         ),
@@ -73,7 +73,7 @@ class LanguagePreviewButtonComponentShared extends StatelessWidget {
                         },
                         style: getElevatedButtonStyle(context).copyWith(
                             padding:  MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                EdgeInsets.symmetric(
+                                const EdgeInsets.symmetric(
                                     horizontal: APPSTYLE_SpaceLarge,
                                     vertical:APPSTYLE_SpaceSmall))
                         ),

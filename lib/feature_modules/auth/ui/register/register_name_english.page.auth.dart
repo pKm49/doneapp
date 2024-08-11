@@ -71,7 +71,7 @@ class _RegisterNameEnglishPage_AuthState extends State<RegisterNameEnglishPage_A
                             title: "sign_up".tr,
                           ),
                           Row(
-
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               UpdateProfilePic(
                                 onClick: () {
@@ -81,8 +81,6 @@ class _RegisterNameEnglishPage_AuthState extends State<RegisterNameEnglishPage_A
                                 profilePictureUrl: registerController.profilePictureUrl.value,
                               ),
                             ],
-                            mainAxisAlignment: MainAxisAlignment.center,
-
                           ),
                           addVerticalSpace(APPSTYLE_SpaceMedium),
 

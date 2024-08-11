@@ -18,6 +18,7 @@ class RegisterCredential {
   final String jedha;
   final int houseNumber;
   final int floorNumber;
+  final int apartmentNumber;
   final String comments;
   final String profile_picture;
   final String other_source;
@@ -33,6 +34,7 @@ class RegisterCredential {
         required this.dateOfBirth,
         required this.gender,
         required this.height,
+        required this.apartmentNumber,
         required this.weight,
         required this.source,
         required this.nickname,
@@ -67,6 +69,7 @@ class RegisterCredential {
         jedha: json["jedha"]??"",
         houseNumber: json["house_number"]??-1,
         floorNumber: json["floor_number"]??-1,
+        apartmentNumber: json["apartment_no"]??-1,
         comments: json["comments"]??"",
         profile_picture: json["profile_picture"]??"",
         other_source: json["other_source"]??"",
@@ -85,7 +88,7 @@ class RegisterCredential {
     "height": height,
     "weight": weight,
     "source": source,
-    "nickname": nickname,
+    "nickname": "Home",
     "area_id": area,
     "block_id": block,
     "street": street,
@@ -93,6 +96,7 @@ class RegisterCredential {
     "house_number": houseNumber,
     "floor_number": floorNumber,
     "comments": comments,
+    "apartment_no":apartmentNumber,
     "profile_picture": profile_picture,
     "other_source": other_source
   };

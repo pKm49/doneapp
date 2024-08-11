@@ -34,26 +34,24 @@ class TermsPage_Core extends StatelessWidget {
         ],
       ) ,
       body: SafeArea(
-        child: Container(
-            child: Column(
+        child: Column(
+          children: [
+            CustomCurveShapeComponent_Shared(
+              color: APPSTYLE_PrimaryColor,
+              title: "terms_n_conditions".tr ,
+            ),
+            Expanded(
+              child: ListView(
               children: [
-                CustomCurveShapeComponent_Shared(
-                  color: APPSTYLE_PrimaryColor,
-                  title: "terms_n_conditions".tr ,
-                ),
-                Expanded(
-                  child: ListView(
-                  children: [
-                    Padding(
-                      padding: APPSTYLE_LargePaddingAll,
-                      child: Text("terms".tr,style: getBodyMediumStyle(context)),
-                    )
+                Padding(
+                  padding: APPSTYLE_LargePaddingAll,
+                  child: Text("terms".tr,style: getBodyMediumStyle(context)),
+                )
 
-                  ],
-                            ),
-                ),
               ],
-            )
+                        ),
+            ),
+          ],
         ),
       ),
     );

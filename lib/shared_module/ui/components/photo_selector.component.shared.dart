@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
+ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
@@ -7,8 +6,6 @@ import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.d
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,7 +20,7 @@ class PhotoSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape:   RoundedRectangleBorder(
+      shape:  const RoundedRectangleBorder(
           borderRadius:
           BorderRadius.all(Radius.circular(APPSTYLE_BorderRadiusSmall))),
       contentPadding: const EdgeInsets.symmetric(vertical: APPSTYLE_SpaceMedium, horizontal: APPSTYLE_SpaceMedium),
@@ -46,7 +43,7 @@ class PhotoSelector extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Icon(Icons.photo, color: APPSTYLE_PrimaryColor),
+                    const Icon(Icons.photo, color: APPSTYLE_PrimaryColor),
                     addHorizontalSpace(APPSTYLE_SpaceMedium),
                     Expanded(
                       child: Text('choose_from_gallery'.tr),
@@ -55,7 +52,7 @@ class PhotoSelector extends StatelessWidget {
                 ),
               ),
             ),
-            Divider(),
+            const Divider(),
             InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -66,7 +63,7 @@ class PhotoSelector extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Icon(Icons.camera_alt,
+                   const Icon(Icons.camera_alt,
                         color: APPSTYLE_PrimaryColor),
                     addHorizontalSpace(APPSTYLE_SpaceMedium),
                     Expanded(
@@ -83,20 +80,20 @@ class PhotoSelector extends StatelessWidget {
   }
 
   openFilePicker() async {
-    final _picker = ImagePicker();
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      await cropImage(pickedFile.path!);
+      await cropImage(pickedFile.path);
     } else {
       return;
     }
   }
    
   Future<void> getPictureFromCamera() async {
-    final _picker = ImagePicker();
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      await cropImage(pickedFile.path!);
+      await cropImage(pickedFile.path);
     } else {
       return;
     }
@@ -105,7 +102,7 @@ class PhotoSelector extends StatelessWidget {
   cropImage(filePath) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: filePath,
-        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
         aspectRatioPresets: [
           CropAspectRatioPreset.square,
         ],
@@ -129,7 +126,7 @@ class PhotoSelector extends StatelessWidget {
   }
 
   Future<void> handleMediaClick(context) async {
-    print("handleMediaClick");
+    // print("handleMediaClick");
     if (Platform.isIOS) {
       if (await Permission.photos.isGranted) {
         openFilePicker();
@@ -143,26 +140,26 @@ class PhotoSelector extends StatelessWidget {
     } else if (Platform.isAndroid) {
       final AndroidDeviceInfo android = await DeviceInfoPlugin().androidInfo;
       final int sdkInt = android.version.sdkInt;
-      print("Device is Android");
-      print(sdkInt);
+      // print("Device is Android");
+      // print(sdkInt);
       if(sdkInt>32){
-        print("sdkInt>32");
+        // print("sdkInt>32");
 
         if (await Permission.photos.isGranted) {
-          print("Permission is granted");
+          // print("Permission is granted");
           openFilePicker();
         } else {
-          print("Permission not granted");
+          // print("Permission not granted");
           if (await Permission.photos.isPermanentlyDenied) {
-            print("Permission isPermanentlyDenied");
+            // print("Permission isPermanentlyDenied");
             showSnackbar(context, "media_permission_message".tr, "error");
           }else{
-            print("Permission is not PermanentlyDenied");
+            // print("Permission is not PermanentlyDenied");
             showPhotosPermissionDialogue( );
           }
         }
       }else{
-        print("sdkInt<32");
+        // print("sdkInt<32");
         if (await Permission.storage.isGranted) {
           openFilePicker();
         } else {
@@ -183,7 +180,7 @@ class PhotoSelector extends StatelessWidget {
     } else {
       if (await Permission.camera.isPermanentlyDenied) {
         showSnackbar(
-            context, "camera_permission_message".tr, "error");
+            Get.context!, "camera_permission_message".tr, "error");
       }else{
         showCameraPermissionDialogue();
       }
@@ -198,7 +195,7 @@ class PhotoSelector extends StatelessWidget {
     final dialogTitleWidget = Text('photo_access_permission_title'.tr,style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
     final dialogTextWidget = Text( 'photo_access_permission_info'.tr,style: getBodyMediumStyle(context));
 
-    final updateButtonTextWidget = Text('continue'.tr,style: TextStyle(color: APPSTYLE_BackgroundWhite));
+    final updateButtonTextWidget = Text('continue'.tr,style: const TextStyle(color: APPSTYLE_BackgroundWhite));
 
     updateAction() async {
       Navigator.pop(context);
@@ -208,7 +205,7 @@ class PhotoSelector extends StatelessWidget {
           openFilePicker();
         }else{
           showSnackbar(
-              context, "media_permission_message".tr, "error");
+              Get.context!, "media_permission_message".tr, "error");
         }
       }else{
         final AndroidDeviceInfo android = await DeviceInfoPlugin().androidInfo;
@@ -219,7 +216,7 @@ class PhotoSelector extends StatelessWidget {
             openFilePicker();
           }else{
             showSnackbar(
-                context, "media_permission_message".tr, "error");
+                Get.context!, "media_permission_message".tr, "error");
           }
         }else{
           final PermissionStatus try1 = await Permission.storage.request();
@@ -227,7 +224,7 @@ class PhotoSelector extends StatelessWidget {
             openFilePicker();
           }else{
             showSnackbar(
-                context, "media_permission_message".tr, "error");
+                Get.context!, "media_permission_message".tr, "error");
           }
         }
       }
@@ -238,7 +235,7 @@ class PhotoSelector extends StatelessWidget {
       ElevatedButton(
           onPressed:updateAction,
           style: getElevatedButtonStyle(context).copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-              EdgeInsets.symmetric(
+              const EdgeInsets.symmetric(
                   horizontal: APPSTYLE_SpaceLarge,
                   vertical: APPSTYLE_SpaceSmall))),
           child:  updateButtonTextWidget)
@@ -265,7 +262,7 @@ class PhotoSelector extends StatelessWidget {
     final dialogTitleWidget = Text('camera_access_permission_title'.tr,style: getHeadlineMediumStyle(context).copyWith(color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
     final dialogTextWidget = Text( 'camera_access_permission_info'.tr,style: getBodyMediumStyle(context),);
 
-    final updateButtonTextWidget = Text('continue'.tr,style: TextStyle(color: APPSTYLE_BackgroundWhite));
+    final updateButtonTextWidget = Text('continue'.tr,style: const TextStyle(color: APPSTYLE_BackgroundWhite));
 
     updateAction() async {
       Navigator.pop(context);
@@ -273,8 +270,8 @@ class PhotoSelector extends StatelessWidget {
       if (try1 == PermissionStatus.granted) {
         getPictureFromCamera();
       }else{
-        showSnackbar(
-            context, "camera_permission_message".tr, "error");
+         showSnackbar(
+            Get.context!, "camera_permission_message".tr, "error");
       }
 
     }
@@ -284,7 +281,7 @@ class PhotoSelector extends StatelessWidget {
       ElevatedButton(
           onPressed:updateAction,
           style: getElevatedButtonStyle(context).copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-              EdgeInsets.symmetric(
+              const EdgeInsets.symmetric(
                   horizontal: APPSTYLE_SpaceLarge,
                   vertical: APPSTYLE_SpaceSmall))),
           child:  updateButtonTextWidget)

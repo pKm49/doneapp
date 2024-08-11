@@ -36,6 +36,7 @@ class Address {
         'mobile': mobile,
         'address_id': id,
         'name': name,
+        'nickname': "Home",
         'jedha': jedha,
         'comments': comments,
         'street': street,
@@ -50,7 +51,9 @@ class Address {
         'mobile': mobile,
         'name': name,
         'jedha': jedha,
-        'comments': comments,
+    'nickname': "Home",
+
+    'comments': comments,
         'street': street,
         'house_number': houseNumber==-1?'':houseNumber,
         'floor_number': floorNumber==-1?'':floorNumber,
@@ -71,12 +74,6 @@ Address mapAddress(dynamic payload) {
       jedha: payload["jedha"] != null ? payload["jedha"].toString() : "",
       street: payload["street"] != null ? payload["street"].toString() : "",
 
-      houseNumber: payload["house_number"] != null
-          ? int.parse(payload["house_number"].toString())
-          : -1,
-      floorNumber: payload["floor_number"] != null
-          ? int.parse(payload["floor_number"].toString())
-          : -1,
       areaId: payload["area_id"] ?? -1,
       areaName:
           payload["area_name"] != null ? payload["area_name"].toString() : "",
@@ -90,9 +87,16 @@ Address mapAddress(dynamic payload) {
       blockName: payload["block_name"] != null
           ? payload["block_name"].toString()
           : "",
+
+    floorNumber: payload["floor_number"] != null
+        ? payload["floor_number"] != ""? int.parse(payload["floor_number"].toString())
+        :-1 : -1,
+    houseNumber: payload["house_number"] != null
+        ? payload["house_number"] != ""? int.parse(payload["house_number"].toString())
+        :-1 : -1,
       apartmentNo: payload["apartment_no"] != null
-          ? int.parse(payload["apartment_no"].toString())
-          : -1,
+          ? payload["apartment_no"] != ""? int.parse(payload["apartment_no"].toString())
+          :-1 : -1,
 
 
   );

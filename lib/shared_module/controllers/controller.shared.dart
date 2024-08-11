@@ -286,10 +286,11 @@ class SharedController extends GetxController {
 
       if(isVerificationSuccess){
         showSnackbar(Get.context!, "otp_verified".tr, "info");
-        mobileTextEditingController.value.text="";
+
         if(isResetPassword){
           Get.offNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [mobileTextEditingController.value.text]);
         }else{
+
           Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
             ASSETS_SUCCESSMARK,
             "otp_verified".tr,

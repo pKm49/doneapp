@@ -106,6 +106,7 @@ class RegisterController extends GetxController {
         jedha:address.value.jedha,
         houseNumber: address.value.houseNumber,
         floorNumber: address.value.floorNumber,
+        apartmentNumber:address.value.apartmentNo,
         comments:address.value.comments,
         profile_picture:isFileSelected.value? profilePictureUrl.value:"",
         other_source: otherSourceTextEditingController.value.text));

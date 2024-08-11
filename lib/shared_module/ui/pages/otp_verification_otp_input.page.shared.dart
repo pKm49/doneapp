@@ -28,15 +28,14 @@ class _OtpVerificationOtpInputPage_SharedState extends State<OtpVerificationOtpI
   var getArguments = Get.arguments;
   final sharedController = Get.find<SharedController>();
   VALIDPHONEVERIFICATION_MODES phoneVerificationMode = VALIDPHONEVERIFICATION_MODES.register;
-  num otp = 0;
+  String otp = "111111";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     phoneVerificationMode = getArguments[0]??VALIDPHONEVERIFICATION_MODES.register;
-    print("phoneVerificationMode otp");
-    print(phoneVerificationMode);
+
   }
 
   @override
@@ -115,7 +114,9 @@ class _OtpVerificationOtpInputPage_SharedState extends State<OtpVerificationOtpI
                             },
                             onCompleted: (pin) {
                               setState(() {
-                                otp = num.parse(pin);
+                                print("Otp");
+                                print(pin);
+                                otp = pin;
                               });
                             },
                           ),
@@ -140,7 +141,7 @@ class _OtpVerificationOtpInputPage_SharedState extends State<OtpVerificationOtpI
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     horizontal: 0,vertical: APPSTYLE_SpaceSmall),
                 child:   SizedBox(
                     width: double.infinity,
@@ -156,7 +157,6 @@ class _OtpVerificationOtpInputPage_SharedState extends State<OtpVerificationOtpI
                             textAlign: TextAlign.center),
                         onPressed: () {
                           FocusManager.instance.primaryFocus?.unfocus();
-
                           sharedController.verifyOtp(otp.toString(),phoneVerificationMode==VALIDPHONEVERIFICATION_MODES.reset_password);
                         })),
               ),

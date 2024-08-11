@@ -31,8 +31,7 @@ class _OtpVerificationMobileInputPage_SharedState extends State<OtpVerificationM
     // TODO: implement initState
     super.initState();
     phoneVerificationMode = getArguments[0]??VALIDPHONEVERIFICATION_MODES.register;
-    print("phoneVerificationMode");
-    print(phoneVerificationMode);
+
   }
 
   @override
@@ -97,7 +96,7 @@ class _OtpVerificationMobileInputPage_SharedState extends State<OtpVerificationM
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     horizontal: 0,vertical: APPSTYLE_SpaceSmall),
                 child:  SizedBox(
                     width:  double.infinity,
