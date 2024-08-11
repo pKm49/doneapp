@@ -16,7 +16,6 @@ class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: APPSTYLE_SmallPaddingAll,
       margin: APPSTYLE_SmallPaddingAll,
       decoration:
       APPSTYLE_ShadowedContainerSmallDecoration
@@ -33,91 +32,103 @@ class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget
           fit: BoxFit.cover,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white.withOpacity(0.2),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                    sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  padding: APPSTYLE_SmallPaddingAll,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(Localizations.localeOf(context)
-                                .languageCode
-                                .toString() ==
-                                'ar'?subscriptionPlanCategory.arabicName
-                                :subscriptionPlanCategory.name,
-                              style: getHeadlineMediumStyle(context).copyWith(
-                                  color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold
-                              ),),
-                            addVerticalSpace(APPSTYLE_SpaceExtraSmall),
-                            Text(Localizations.localeOf(context)
-                                .languageCode
-                                .toString() ==
-                                'ar'?subscriptionPlanCategory.arabicDescription
-                                :subscriptionPlanCategory.description,
-                              style: getLabelSmallStyle(context).copyWith(
-                                  color: APPSTYLE_BackgroundWhite
-                              ),)
-                          ],
+      child: Container(
+        padding: APPSTYLE_SmallPaddingAll,
+        decoration:   BoxDecoration(
+            borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusSmall),
+            gradient: const LinearGradient(
+              colors: [Colors.transparent, Color(0xff000000)],
+              stops: [0, 0.99],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            )
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white.withOpacity(0.2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                      sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    padding: APPSTYLE_SmallPaddingAll,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(Localizations.localeOf(context)
+                                  .languageCode
+                                  .toString() ==
+                                  'ar'?subscriptionPlanCategory.arabicName
+                                  :subscriptionPlanCategory.name,
+                                style: getHeadlineMediumStyle(context).copyWith(
+                                    color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold
+                                ),),
+                              addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                              Text(Localizations.localeOf(context)
+                                  .languageCode
+                                  .toString() ==
+                                  'ar'?subscriptionPlanCategory.arabicDescription
+                                  :subscriptionPlanCategory.description,
+                                style: getLabelSmallStyle(context).copyWith(
+                                    color: APPSTYLE_BackgroundWhite
+                                ),)
+                            ],
+                          ),
                         ),
-                      ),
-                      addHorizontalSpace(APPSTYLE_SpaceSmall),
-                      Icon(Localizations.localeOf(context)
-                          .languageCode
-                          .toString() ==
-                          'ar'? Ionicons.arrow_back_circle:Ionicons.arrow_forward_circle,color: APPSTYLE_BackgroundWhite)
-                    ],
+                        addHorizontalSpace(APPSTYLE_SpaceSmall),
+                        Icon(Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.arrow_back_circle:Ionicons.arrow_forward_circle,color: APPSTYLE_BackgroundWhite)
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
+            Expanded(
 
-              child:Align(
-                alignment: Alignment.bottomCenter,
+                child:Align(
+                  alignment: Alignment.bottomCenter,
 
-                child: ListView.builder(
-                  shrinkWrap: true,
-                    itemCount: Localizations.localeOf(context)
-                        .languageCode
-                        .toString() ==
-                        'ar'?subscriptionPlanCategory.mealsConfigArabic.length
-                        :subscriptionPlanCategory.mealsConfig.length,
-                    itemBuilder: (context, index) {
-                      return  Text(Localizations.localeOf(context)
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                      itemCount: Localizations.localeOf(context)
                           .languageCode
                           .toString() ==
-                          'ar'?subscriptionPlanCategory.mealsConfigArabic[index]
-                          :subscriptionPlanCategory.mealsConfig[index],
-                        style: getBodyMediumStyle(context).copyWith(
-                            color: APPSTYLE_BackgroundWhite,
-                            fontWeight: APPSTYLE_FontWeightBold
-                        ),);
-                    }),
-              ))
-        ],
+                          'ar'?subscriptionPlanCategory.mealsConfigArabic.length
+                          :subscriptionPlanCategory.mealsConfig.length,
+                      itemBuilder: (context, index) {
+                        return  Text(Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'?subscriptionPlanCategory.mealsConfigArabic[index]
+                            :subscriptionPlanCategory.mealsConfig[index],
+                          style: getBodyMediumStyle(context).copyWith(
+                              color: APPSTYLE_BackgroundWhite,
+                              fontWeight: APPSTYLE_FontWeightBold
+                          ),);
+                      }),
+                ))
+          ],
+        ),
       ),
     );
   }
