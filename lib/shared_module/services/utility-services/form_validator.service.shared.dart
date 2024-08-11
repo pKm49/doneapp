@@ -78,13 +78,18 @@ String? checkIfNameFormValid(String? name, String fieldName) {
 }
 
 String? checkIfEmailFormValid(String? email) {
+
   String validOtpPattern = r'(^$)|(^.*@.*\..*$)';
   RegExp validOtpRegex = new RegExp(validOtpPattern);
+
+  if(email ==""){
+    return null;
+  }
 
   if (email!.isEmpty || !validOtpRegex.hasMatch(email)) {
     return "email_validation_message".tr;
   }
 
-
   return null;
+
 }
