@@ -34,7 +34,8 @@ class PlanPurchaseController extends GetxController {
   var isCouponChecking = false.obs;
   var isCouponCodeValid = false.obs;
   var isOrderCreating = false.obs;
-  var paymentGatewayIsLoading = false.obs; 
+  var isPaymentGatewayLoading = false.obs;
+  var paymentGatewayIsLoading = false.obs;
 
 
   // calendar
@@ -62,6 +63,7 @@ class PlanPurchaseController extends GetxController {
   Future<void> getSubscriptionCategories() async {
     isCategoriesFetching.value = true;
     subscriptionCategories.value = [];
+    isPaymentGatewayLoading.value = false;
     var planPurchaseHttpService = new PlanPurchaseHttpService();
     subscriptionCategories.value =
         await planPurchaseHttpService.getSubscriptionCategories();
@@ -93,6 +95,7 @@ class PlanPurchaseController extends GetxController {
     print(currentSubscription.value.name);
   }
   Future<void> getSubscriptionsByCategory(  ) async {
+    isPaymentGatewayLoading.value = false;
     isSubscriptionsFetching.value = true;
     subscriptions.value = [];
     var planPurchaseHttpService = PlanPurchaseHttpService();
@@ -177,6 +180,7 @@ class PlanPurchaseController extends GetxController {
           print("payment capture error");
         isOrderCreating.value = false;
       } else {
+        isPaymentGatewayLoading.value = true;
         Get.toNamed(AppRouteNames.paymentPageRoute, arguments: [
           paymentData.value.paymentUrl,
           paymentData.value.redirectUrl,
@@ -191,6 +195,7 @@ class PlanPurchaseController extends GetxController {
 
   void checkOrderStatus(String mobile) async {
     isOrderCreating.value = true;
+    isPaymentGatewayLoading.value = true;
     var planPurchaseHttpService = PlanPurchaseHttpService();
     bool isSuccess = await planPurchaseHttpService
         .checkOrderStatus(paymentData.value.refId);
@@ -232,6 +237,7 @@ class PlanPurchaseController extends GetxController {
   void resetData() {
     couponCodeController.value.text = "";
     currentSubscription.value = mapSubscriptionItem({});
+    isPaymentGatewayLoading.value = false;
     isSubscriptionsFetching.value = false;
     isCategoriesFetching.value = false;
     currentCategory.value = mapSubscriptionCategory({});
