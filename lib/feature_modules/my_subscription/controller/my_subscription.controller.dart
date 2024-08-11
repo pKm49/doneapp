@@ -382,6 +382,7 @@ class MySubscriptionController extends GetxController {
            }else{
              List<SubscriptoinDailyMealItem> mealItemsToAdd = [];
              mealItemsToAdd.add(mealItem[0]);
+             mealItemsToAdd.addAll(getAlreadySelectedMeals(element.id));
              meals.add(SubscriptoinDailyMeal(
                  name: element.name,
                  id: element.id,
@@ -417,6 +418,7 @@ class MySubscriptionController extends GetxController {
         element.items.where((item) => item.id==mealId).toList().isNotEmpty
     ).toList().isNotEmpty;
   }
+
   isMealMaximumCountReached(int categoryId){
 
     List<SubscriptoinDailyMeal> originalMeals = [];
