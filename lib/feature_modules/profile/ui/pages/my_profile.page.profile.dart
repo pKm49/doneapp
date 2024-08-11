@@ -184,7 +184,7 @@ class MyProfilePage_Profile extends StatelessWidget {
                         },
                         theme: 'dark',
                         border: '',
-                        buttonTitle: "subscription".tr,
+                        buttonTitle: "subscriptions".tr,
                         preIconData: Ionicons.cash_outline,
                         postIconData:Localizations.localeOf(context)
                             .languageCode

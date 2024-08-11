@@ -104,6 +104,7 @@ class _MyAllergiesListPage_ProfileState
                         child: TextFormField(
                             controller: searchController,
                             decoration: InputDecoration(
+                              icon: Icon(Ionicons.search),
                                 labelText: 'search_ingredients'.tr)),
                       ),
                     ),

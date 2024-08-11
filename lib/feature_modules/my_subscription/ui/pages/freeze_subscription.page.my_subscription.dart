@@ -130,7 +130,10 @@ class _FreezeSubscriptionPage_MySubscriptionState extends State<FreezeSubscripti
                                           decoration:
                                           APPSTYLE_BorderedContainerExtraSmallDecoration
                                               .copyWith(color: APPSTYLE_BackgroundWhite),
-                                          child: Icon(Ionicons.chevron_back,
+                                          child: Icon(Localizations.localeOf(context)
+                                              .languageCode
+                                              .toString() ==
+                                              'ar'?Ionicons.chevron_forward:Ionicons.chevron_back,
                                               color: Colors.black)),
                                     ),
                                     Expanded(
@@ -153,7 +156,10 @@ class _FreezeSubscriptionPage_MySubscriptionState extends State<FreezeSubscripti
                                           decoration:
                                           APPSTYLE_BorderedContainerExtraSmallDecoration
                                               .copyWith(color: APPSTYLE_BackgroundWhite),
-                                          child: Icon(Ionicons.chevron_forward,
+                                          child: Icon(Localizations.localeOf(context)
+                                              .languageCode
+                                              .toString() ==
+                                              'ar'?Ionicons.chevron_back:Ionicons.chevron_forward,
                                               color: Colors.black)),
                                     ),
                                   ],

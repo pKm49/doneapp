@@ -306,7 +306,7 @@ class _MealSelectionPage_MySubscriptionState
                                                     clipBehavior:
                                                         Clip.hardEdge),
                                                 addVerticalSpace(
-                                                    APPSTYLE_SpaceSmall),
+                                                    APPSTYLE_SpaceExtraSmall),
                                                 Text(
                                                   Localizations.localeOf(
                                                                   context)
@@ -333,8 +333,7 @@ class _MealSelectionPage_MySubscriptionState
                                                           color:
                                                               APPSTYLE_Grey80),
                                                 ),
-                                                addVerticalSpace(
-                                                    APPSTYLE_SpaceSmall),
+
                                                 Row(
                                                   children: [
                                                     Expanded(

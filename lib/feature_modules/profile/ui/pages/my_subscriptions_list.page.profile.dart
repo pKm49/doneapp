@@ -189,7 +189,11 @@ class _MySubscriptionListPage_ProfileState
                                   children: [
                                     Expanded(
                                         child:  FittedBox(
-                                          alignment: Alignment.centerLeft,
+                                          alignment: Localizations.localeOf(context)
+                                              .languageCode
+                                              .toString() ==
+                                              'ar'
+                                              ?  Alignment.centerRight: Alignment.centerLeft,
                                       fit:BoxFit.scaleDown,
                                       child: Text(
                                           Localizations.localeOf(context)
@@ -201,7 +205,11 @@ class _MySubscriptionListPage_ProfileState
                                               .planArabicName
                                               : sharedController
                                               .mySubscriptions[index].planName,
-                                          textAlign: TextAlign.start,
+                                          textAlign: Localizations.localeOf(context)
+                                              .languageCode
+                                              .toString() ==
+                                              'ar'
+                                              ? TextAlign.end:TextAlign.start,
                                           style: getHeadlineMediumStyle(context)
                                               .copyWith(
                                               fontWeight:
