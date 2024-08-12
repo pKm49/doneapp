@@ -74,8 +74,9 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
                           validator: (value) => checkIfMobileNumberValid(value),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            labelText: 'mobile_number'.tr ,
-                            hintText: 'enter_mobile_number'.tr
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+
+                              hintText: 'enter_mobile_number'.tr
                           )),
                       addVerticalSpace(APPSTYLE_SpaceMedium),
                       TextFormField(
@@ -83,7 +84,8 @@ class _LoginPage_AuthState extends State<LoginPage_Auth> {
                           loginController.passwordTextEditingController.value,
                           validator: (value) => checkIfPasswordFieldValid(value),
                           decoration: InputDecoration(
-                              labelText: 'password'.tr ,
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+
                               hintText: 'enter_password'.tr
                           )),
                       addVerticalSpace(APPSTYLE_SpaceMedium),
