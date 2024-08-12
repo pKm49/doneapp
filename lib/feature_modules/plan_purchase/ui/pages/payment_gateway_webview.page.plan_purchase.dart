@@ -59,7 +59,7 @@ class _PaymentGatewayWebView_PlanPurchaseState extends State<PaymentGatewayWebVi
         },
         child: Obx(
               ()=> Scaffold(
-              resizeToAvoidBottomInset: false,
+              resizeToAvoidBottomInset: true,
               backgroundColor: APPSTYLE_BackgroundWhite,
               appBar: AppBar(
                 title: Text('complete_payment'.tr),
