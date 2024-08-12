@@ -202,11 +202,11 @@ class PlanPurchaseController extends GetxController {
     isOrderCreating.value = false;
 
     if (!isSuccess) {
+      isPaymentGatewayLoading.value = false;
       showSnackbar(Get.context!, "payment_capture_error".tr, "error");
     } else {
       showSnackbar(Get.context!, "payment_capture_success".tr, "info");
       activatePlan(paymentData.value.subscriptionId );
-
       Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
         ASSETS_SUCCESSMARK,"subscription_success".tr,"subscription_success_info".tr,
         'home'.tr,false,AppRouteNames.homeRoute,""
