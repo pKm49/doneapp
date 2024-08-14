@@ -250,8 +250,9 @@
       "payment_capture_success": "Payment Successfully captured",
       "plan_activated_successfully": "Plan Activated Successfully",
       "customer_support": "Customer Support",
-      "customer_support_message": "Please Contact Customer Support to proceed"
-
+      "customer_support_message": "Please Contact Customer Support to proceed",
+      "enter_address_nickname": "Home, Office, etc",
+      "address_nickname": "Nickname"
 
     }
   },
@@ -507,8 +508,9 @@
       "payment_capture_success": "تم تسجيل الدفع بنجاح، وجارٍ إنشاء تذكرتك",
       "plan_activated_successfully": "تم تفعيل الخطة بنجاح",
       "customer_support": "دعم العملاء",
-      "customer_support_message": "يرجى الاتصال بدعم العملاء للمتابعة"
-
+      "customer_support_message": "يرجى الاتصال بدعم العملاء للمتابعة",
+      "enter_address_nickname": "المنزل والمكتب، الخ",
+      "address_nickname": "كنية"
     }
   }
 ]

@@ -101,6 +101,10 @@ class SharedController extends GetxController {
     }
   }
 
+  changeMobile(String mobile){
+    mobileTextEditingController.value.text = mobile;
+  }
+
   Future<void> refetchUserData() async {
      final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? tMobile = prefs.getString('mobile');

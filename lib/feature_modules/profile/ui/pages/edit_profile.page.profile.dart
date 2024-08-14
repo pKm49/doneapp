@@ -6,7 +6,9 @@ import 'dart:io';
 import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
  import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/valid_phoneverification_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
+import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/form_validator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
@@ -30,6 +32,7 @@ class EditProfilePage_Profile extends StatefulWidget {
 class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
   final profileController = Get.find<ProfileController>();
   final GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
+  final sharedController = Get.find<SharedController>();
 
 
   @override
@@ -62,7 +65,9 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                 onTap: (){
                   if(!profileController.isUserDataFetching.value &&
                   profileController.userData.value.id  != -1){
-                    Get.toNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [profileController.userData.value.mobile]);
+                    sharedController.changeMobile(profileController.userData.value.mobile);
+                    sharedController.sendOtp(true, false);
+                     // Get.toNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [profileController.userData.value.mobile]);
                   }
                 },
                 child: Container(
