@@ -78,6 +78,8 @@ class AddressController extends GetxController {
     }else{
       if(areaId.value != -1 ){
         getBlocks(areaId.value);
+      }else{
+        blocks.value = [];
       }
     }
 
