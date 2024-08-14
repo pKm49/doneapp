@@ -166,7 +166,9 @@
       "firstname_en_validation_message": "Please provide a valid First Name (English)",
       "lastname_en_validation_message": "Please provide a valid Last Name (English)",
       "firstname_ar_validation_message": "Please provide a valid First Name (Arabic)",
+      "firstname_ar_validation_message_short": "Please provide in Arabic",
       "lastname_ar_validation_message": "Please provide a valid Last Name (Arabic)",
+      "lastname_ar_validation_message_short": "Please provide in Arabic",
       "input_validation_message": "Please provide a valid input",
       "email_validation_message": "Please provide a valid Email",
       "height_validation_message": "Please provide a valid Height",
@@ -422,6 +424,8 @@
       "lastname_en_validation_message": "يرجى تقديم اسم عائلة صالح (باللغة الإنجليزية)",
       "firstname_ar_validation_message": "يرجى تقديم اسم أول صالح (باللغة العربية)",
       "lastname_ar_validation_message": "يرجى تقديم اسم عائلة صالح (باللغة العربية)",
+       "firstname_ar_validation_message_short": "يرجى تقديمها باللغة العربية",
+       "lastname_ar_validation_message_short": "يرجى تقديمها باللغة العربية",
       "input_validation_message": "يرجى تقديم إدخال صالح",
       "email_validation_message": "يرجى تقديم بريد إلكتروني صالح",
       "height_validation_message": "يرجى تقديم ارتفاع صالح",
@@ -502,6 +506,7 @@
       "plan_activated_successfully": "تم تفعيل الخطة بنجاح",
       "customer_support": "دعم العملاء",
       "customer_support_message": "يرجى الاتصال بدعم العملاء للمتابعة"
+
     }
   }
 ]

@@ -190,7 +190,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                               children: [
                                 Expanded(
                                     flex:1,
-                                    child: Text('First Name',
+                                    child: Text('first_name_en'.tr,
                                         style: getBodyMediumStyle(context)
                                             .copyWith(color: APPSTYLE_Grey40))),
                                 Visibility(
@@ -239,7 +239,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                                 Expanded(
                                     flex:1,
 
-                                    child: Text('Last Name',
+                                    child: Text('last_name_en'.tr,
                                         style: getBodyMediumStyle(context)
                                             .copyWith(color: APPSTYLE_Grey40))),
                                 Visibility(
@@ -267,7 +267,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                                       flex:2,
                                       child:  TextFormField(
                                           controller: profileController.lastNameEnglishTextEditingController.value,
-                                          validator: (email) => checkIfNameFormValid(email,'first_name_en'),
+                                          validator: (email) => checkIfNameFormValid(email,'last_name_en'),
                                           decoration: bottomBorderInputDecoration.copyWith(
                                             hintText: 'last_name_en_hint_short'.tr,
 
@@ -288,7 +288,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                                 Expanded(
                                     flex:1,
 
-                                    child: Text('الاسم الأول',
+                                    child: Text('first_name_ar'.tr,
                                         style: getBodyMediumStyle(context)
                                             .copyWith(color: APPSTYLE_Grey40))),
                                 Visibility(
@@ -316,7 +316,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                                       flex:2,
                                       child:  TextFormField(
                                           controller: profileController.firstNameArabicTextEditingController.value,
-                                          validator: (email) => checkIfNameFormValid(email,'first_name_ar'),
+                                          validator: (email) => checkIfArabicNameValid(email,'first_name_ar',true),
                                           decoration: bottomBorderInputDecoration.copyWith(
                                             hintText: 'first_name_ar_hint_short'.tr,
 
@@ -336,7 +336,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                               children: [
                                 Expanded(
                                     flex:1,
-                                    child: Text('اسم العائلة',
+                                    child: Text('last_name_ar'.tr,
                                         style: getBodyMediumStyle(context)
                                             .copyWith(color: APPSTYLE_Grey40))),
                                 Visibility(
@@ -364,7 +364,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                                       flex:2,
                                       child:  TextFormField(
                                           controller: profileController.lastNameArabicTextEditingController.value,
-                                          validator: (email) => checkIfNameFormValid(email,'last_name_ar'),
+                                          validator: (email) => checkIfArabicNameValid(email,'last_name_ar',true),
                                           decoration: bottomBorderInputDecoration.copyWith(
                                             hintText: 'last_name_ar_hint_short'.tr,
 

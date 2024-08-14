@@ -41,15 +41,15 @@ String? checkIfConfirmPasswordFieldValid(
   return null;
 }
 
-String? checkIfArabicNameValid(String? value, String fieldName) {
+String? checkIfArabicNameValid(String? value, String fieldName, bool isErrorMessageShort) {
   String validOtpPattern = r'[^\p{Arabic}\w\s]';
   RegExp validOtpRegex = new RegExp(validOtpPattern);
 
   if (value!.isEmpty || !validOtpRegex.hasMatch(value)) {
     switch(fieldName){
-      case "first_name_ar":return "firstname_ar_validation_message".tr;
-      case "last_name_ar":return "lastname_ar_validation_message".tr;
-      default:return "input_validation_message".tr;
+      case "first_name_ar":return isErrorMessageShort?  "firstname_ar_validation_message_short".tr: "firstname_ar_validation_message".tr;
+      case "last_name_ar":return isErrorMessageShort?  "lastname_ar_validation_message_short".tr: "lastname_ar_validation_message".tr;
+       default:return "input_validation_message".tr;
     }
   }
 
