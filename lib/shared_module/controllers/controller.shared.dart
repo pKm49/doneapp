@@ -293,9 +293,9 @@ class SharedController extends GetxController {
 
           Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
             ASSETS_SUCCESSMARK,
-            "otp_verified".tr,
-            "otp_verified_message".tr,
-            'continue'.tr,
+            "otp_verified",
+            "otp_verified_message",
+            'continue',
             true,
             AppRouteNames.addressAuditRoute,
             mobileTextEditingController.value.text

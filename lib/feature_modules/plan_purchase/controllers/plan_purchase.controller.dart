@@ -171,8 +171,8 @@ class PlanPurchaseController extends GetxController {
         if ((total.value == 0 || total.value == 0.0) && (paymentData.value.refId!='' && paymentData.value.orderId!='')) {
           showSnackbar(Get.context!, "payment_capture_success".tr, "info");
           Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
-            ASSETS_SUCCESSMARK,"subscription_success".tr,"subscription_success_info".tr,
-            'home'.tr,false,AppRouteNames.homeRoute,""
+            ASSETS_SUCCESSMARK,"subscription_success","subscription_success_info",
+            'home',false,AppRouteNames.homeRoute,""
           ])?.then((value) => Get.toNamed(AppRouteNames.homeRoute,arguments: [0]));
         }else{
           showSnackbar(Get.context!, "customer_support_message".tr, "error");
@@ -208,8 +208,8 @@ class PlanPurchaseController extends GetxController {
       showSnackbar(Get.context!, "payment_capture_success".tr, "info");
       activatePlan(paymentData.value.subscriptionId );
       Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
-        ASSETS_SUCCESSMARK,"subscription_success".tr,"subscription_success_info".tr,
-        'home'.tr,false,AppRouteNames.homeRoute,""
+        ASSETS_SUCCESSMARK,"subscription_success","subscription_success_info",
+        'home',false,AppRouteNames.homeRoute,""
       ]) ;
     }
   }

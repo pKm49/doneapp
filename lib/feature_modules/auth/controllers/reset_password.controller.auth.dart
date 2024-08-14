@@ -27,8 +27,8 @@ class ResetPasswordController extends GetxController {
     if(isResetSuccess){
       // Get.offAllNamed(AppRouteNames.loginRoute);
       Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
-        ASSETS_SUCCESSMARK,"password_changed".tr,"password_changed_message".tr,
-        'back_to_login'.tr,false,AppRouteNames.loginRoute,mobile.value
+        ASSETS_SUCCESSMARK,"password_changed","password_changed_message",
+        'back_to_login',false,AppRouteNames.loginRoute,mobile.value
       ])?.then((value) => Get.toNamed(AppRouteNames.loginRoute));
     }
   }

@@ -71,13 +71,14 @@ class AddressController extends GetxController {
       var addressHttpService = new AddressHttpService();
       areas.value =
       await addressHttpService.getAreas();
-
       if(areaId.value != -1 && blocks.isEmpty){
         getBlocks(areaId.value);
       }
-
       isAreasFetching.value = false;
-
+    }else{
+      if(areaId.value != -1 ){
+        getBlocks(areaId.value);
+      }
     }
 
   }

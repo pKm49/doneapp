@@ -23,9 +23,9 @@ class _SuccessConfirmationPage_SharedState
     extends State<SuccessConfirmationPage_Shared> {
   var getArguments = Get.arguments;
   String assetUrl = ASSETS_SUCCESSMARK;
-  String pageTitle = "password_changed".tr;
-  String pageInfo = "password_changed_message".tr;
-  String buttonText = "back_to_login".tr;
+  String pageTitle = "password_changed";
+  String pageInfo = "password_changed_message";
+  String buttonText = "back_to_login";
   String toRoute = AppRouteNames.addressAuditRoute;
   String mobile = "";
   bool isButtonPrimary = true;
@@ -88,12 +88,12 @@ class _SuccessConfirmationPage_SharedState
                       ],
                     ),
                     addVerticalSpace(APPSTYLE_SpaceLarge),
-                    Text(pageTitle,
+                    Text(pageTitle.tr,
                         textAlign: TextAlign.center,
                         style: getHeadlineLargeStyle(context).copyWith(
                             fontSize: APPSTYLE_FontSize24*1.5 )),
                     addVerticalSpace(APPSTYLE_SpaceLarge),
-                    Text(pageInfo,
+                    Text(pageInfo.tr,
                         textAlign: TextAlign.center,
                         style: getHeadlineMediumStyle(context).copyWith()),
 
@@ -107,7 +107,7 @@ class _SuccessConfirmationPage_SharedState
                   child: ElevatedButton(
                       style: getElevatedButtonStyle(context),
                       child: Text(
-                        buttonText,
+                        buttonText.tr,
                         style: getHeadlineMediumStyle(context).copyWith(
                             color: APPSTYLE_BackgroundWhite,fontWeight: APPSTYLE_FontWeightBold),
                       ),
