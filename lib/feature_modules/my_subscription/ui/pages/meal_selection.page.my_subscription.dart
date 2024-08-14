@@ -1,8 +1,12 @@
 import 'package:doneapp/feature_modules/my_subscription/controller/my_subscription.controller.dart';
 import 'package:doneapp/feature_modules/my_subscription/ui/components/meal_calendar_date_mealselection.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/ui/components/meal_selection_itemsloader.component.my_subscription.dart';
+import 'package:doneapp/feature_modules/my_subscription/ui/components/meal_selection_titleloader.component.my_subscription.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/valid_addressauthor_modes.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
  import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/calendar_utilities.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/date_conversion.service.shared.dart';
@@ -156,7 +160,10 @@ class _MealSelectionPage_MySubscriptionState
               Visibility(
                 visible: !mySubscriptionController.isMealsFetching.value &&
                     mySubscriptionController
-                        .subscriptoinMealConfig.value.meals.isNotEmpty,
+                        .subscriptoinMealConfig.value.meals.isNotEmpty && (mySubscriptionController
+                    .subscriptionDates[mySubscriptionController.selectedDate.value]  == VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ||
+                    mySubscriptionController
+                        .subscriptionDates[mySubscriptionController.selectedDate.value]  == VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected),
                 child: Expanded(
                   child: ListView.builder(
                       itemCount: mySubscriptionController
@@ -441,142 +448,334 @@ class _MealSelectionPage_MySubscriptionState
                 ),
               ),
               Visibility(
-                visible: mySubscriptionController.isMealsFetching.value,
-                child: Padding(
-                  padding: APPSTYLE_LargePaddingHorizontal,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Shimmer.fromColors(
-                        baseColor: APPSTYLE_Grey20,
-                        highlightColor: APPSTYLE_Grey40,
-                        child: Container(
-                          decoration:
-                              APPSTYLE_BorderedContainerExtraSmallDecoration
-                                  .copyWith(color: APPSTYLE_Grey20),
-                          height: 30,
-                          width: screenwidth * .3,
-                        ),
-                      ),
-                      Shimmer.fromColors(
-                        baseColor: APPSTYLE_Grey20,
-                        highlightColor: APPSTYLE_Grey40,
-                        child: Container(
-                          decoration:
-                              APPSTYLE_BorderedContainerExtraSmallDecoration
-                                  .copyWith(color: APPSTYLE_Grey20),
-                          height: 30,
-                          width: screenwidth * .2,
-                        ),
-                      ),
-                    ],
-                  ),
+                visible: !mySubscriptionController.isMealsFetching.value &&
+                    mySubscriptionController
+                        .subscriptoinMealConfig.value.meals.isNotEmpty && mySubscriptionController
+                    .subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.delivered,
+                child: Expanded(
+                  child: ListView.builder(
+                      itemCount: mySubscriptionController
+                          .subscriptoinMealConfig.value.meals.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding:
+                          APPSTYLE_MediumPaddingVertical.copyWith(top: 0),
+                          child: Wrap(
+                            children: [
+                              Padding(
+                                padding: APPSTYLE_LargePaddingHorizontal,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            Localizations.localeOf(context)
+                                                .languageCode
+                                                .toString() ==
+                                                'ar'
+                                                ? mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[index]
+                                                .arabicName
+                                                : mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[index]
+                                                .name,
+                                            style: getHeadlineMediumStyle(
+                                                context)
+                                                .copyWith(
+                                                fontWeight:
+                                                APPSTYLE_FontWeightBold)),
+                                        Container(
+                                          width: 30,
+                                          height: 2,
+                                          color: APPSTYLE_Grey80,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: APPSTYLE_LargePaddingHorizontal,
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: mySubscriptionController
+                                      .subscriptoinMealConfig
+                                      .value
+                                      .meals[index]
+                                      .items.where((element) => element.isSelected).toList()
+                                      .length,
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 0,
+                                      crossAxisSpacing:
+                                      APPSTYLE_SpaceMedium,
+                                      mainAxisExtent: screenheight * 0.3),
+                                  itemBuilder: (context, indx) {
+                                    return Container(
+                                      child: Stack(
+                                        alignment: Alignment.topCenter,
+                                        children: [
+                                          Container(
+                                            height: screenheight * .4,
+                                            margin:
+                                            const EdgeInsets.only(top: 50),
+                                            decoration:
+                                            APPSTYLE_BorderedContainerSmallDecoration
+                                                .copyWith(
+                                              color: APPSTYLE_Grey20,
+                                            ),
+                                          ),
+                                          Container(
+                                            height: screenheight * .4,
+                                            padding: APPSTYLE_MediumPaddingAll,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: [
+                                                Container(
+                                                    decoration: APPSTYLE_BorderedContainerDarkMediumDecoration
+                                                        .copyWith(
+                                                        image:
+                                                        DecorationImage(
+                                                          alignment:
+                                                          Alignment(
+                                                              -.2, 0),
+                                                          image: getProductImage(
+                                                              mySubscriptionController
+                                                                  .subscriptoinMealConfig
+                                                                  .value
+                                                                  .meals[
+                                                              index]
+                                                                  .items.where((element) => element.isSelected).toList()[
+                                                              indx]
+                                                                  .image),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            1000),
+                                                        color:
+                                                        APPSTYLE_BackgroundWhite,
+                                                        border: Border.all(
+                                                            color:
+                                                            APPSTYLE_PrimaryColorBg,
+                                                            width: 3)),
+                                                    padding:
+                                                    APPSTYLE_SmallPaddingAll,
+                                                    width: screenwidth * .3,
+                                                    height: screenwidth * .3,
+                                                    clipBehavior:
+                                                    Clip.hardEdge),
+                                                addVerticalSpace(
+                                                    APPSTYLE_SpaceExtraSmall),
+                                                Text(
+                                                  Localizations.localeOf(
+                                                      context)
+                                                      .languageCode
+                                                      .toString() ==
+                                                      'ar'
+                                                      ? mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[index]
+                                                      .items.where((element) => element.isSelected).toList()[indx]
+                                                      .arabicName
+                                                      : mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[index]
+                                                      .items.where((element) => element.isSelected).toList()[indx]
+                                                      .name,
+                                                  maxLines: 2,
+                                                  textAlign: TextAlign.center,
+                                                  style: getLabelLargeStyle(
+                                                      context)
+                                                      .copyWith(
+                                                      color:
+                                                      APPSTYLE_Grey80),
+                                                ),
+
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: FittedBox(
+                                                          fit: BoxFit.scaleDown,
+                                                          child: Text(
+                                                              '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].calories} Cal',
+                                                              style: getBodyMediumStyle(
+                                                                  context)
+                                                                  .copyWith(
+                                                                  fontWeight:
+                                                                  APPSTYLE_FontWeightBold)),
+                                                        )),
+                                                    addHorizontalSpace(
+                                                        APPSTYLE_SpaceSmall),
+                                                    Expanded(
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            mySubscriptionController
+                                                                .addOrRemoveMeal(
+                                                                mySubscriptionController
+                                                                    .subscriptoinMealConfig
+                                                                    .value
+                                                                    .meals[
+                                                                index]
+                                                                    .id,
+                                                                mySubscriptionController
+                                                                    .subscriptoinMealConfig
+                                                                    .value
+                                                                    .meals[
+                                                                index]
+                                                                    .items.where((element) => element.isSelected).toList()[indx]
+                                                                    .id);
+                                                          },
+                                                          child: Container(
+                                                            decoration:
+                                                            APPSTYLE_BorderedContainerExtraSmallDecoration
+                                                                .copyWith(
+                                                                color: APPSTYLE_WhatsappGreen),
+                                                            padding: EdgeInsets.symmetric(
+                                                                vertical:
+                                                                APPSTYLE_BorderRadiusExtraSmall *
+                                                                    .5,
+                                                                horizontal:
+                                                                APPSTYLE_SpaceSmall),
+                                                            child: FittedBox(
+                                                              fit: BoxFit.scaleDown,
+                                                              child: Text( "delivered_single".tr,
+                                                                textAlign: TextAlign
+                                                                    .center,
+                                                                style: getBodyMediumStyle(
+                                                                    context)
+                                                                    .copyWith(
+                                                                    color:
+                                                                    APPSTYLE_BackgroundWhite),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                 ),
               ),
               Visibility(
-                visible: mySubscriptionController.isMealsFetching.value,
+                visible:!mySubscriptionController.isMealsFetching.value && mySubscriptionController
+                    .subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.offDay,
                 child: Expanded(
-                  child: Padding(
-                    padding: APPSTYLE_LargePaddingHorizontal,
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: 6,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 0,
-                          crossAxisSpacing: APPSTYLE_SpaceMedium,
-                          mainAxisExtent: screenheight * 0.3),
-                      itemBuilder: (context, indx) {
-                        return Container(
-                          child: Stack(
-                            alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: APPSTYLE_LargePaddingAll,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: screenheight * .4,
-                                margin: const EdgeInsets.only(top: 50),
-                                decoration:
-                                    APPSTYLE_BorderedContainerSmallDecoration
-                                        .copyWith(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(1000),
                                   color: APPSTYLE_Grey20,
                                 ),
-                              ),
-                              Container(
-                                height: screenheight * .4,
-                                padding: APPSTYLE_MediumPaddingAll,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Shimmer.fromColors(
-                                      baseColor: APPSTYLE_Grey20,
-                                      highlightColor: APPSTYLE_Grey40,
-                                      child: Container(
-                                          decoration:
-                                              APPSTYLE_BorderedContainerDarkMediumDecoration
-                                                  .copyWith(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              1000),
-                                                      color:
-                                                          APPSTYLE_BackgroundWhite,
-                                                      border: Border.all(
-                                                          color:
-                                                              APPSTYLE_PrimaryColorBg,
-                                                          width: 3)),
-                                          padding: APPSTYLE_SmallPaddingAll,
-                                          width: screenwidth * .3,
-                                          height: screenwidth * .3,
-                                          clipBehavior: Clip.hardEdge),
-                                    ),
-                                    addVerticalSpace(APPSTYLE_SpaceSmall),
-                                    Shimmer.fromColors(
-                                      baseColor: APPSTYLE_Grey20,
-                                      highlightColor: APPSTYLE_Grey40,
-                                      child: Container(
-                                        decoration:
-                                            APPSTYLE_ShadowedContainerExtraSmallDecoration
-                                                .copyWith(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            APPSTYLE_BlurRadiusSmall),
-                                                    color: APPSTYLE_Grey20),
-                                        height: 20,
-                                        width: screenwidth * .25,
-                                      ),
-                                    ),
-                                    addVerticalSpace(APPSTYLE_SpaceSmall),
-                                    Shimmer.fromColors(
-                                      baseColor: APPSTYLE_Grey20,
-                                      highlightColor: APPSTYLE_Grey40,
-                                      child: Container(
-                                        decoration:
-                                            APPSTYLE_ShadowedContainerExtraSmallDecoration
-                                                .copyWith(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            APPSTYLE_BlurRadiusSmall),
-                                                    color: APPSTYLE_Grey20),
-                                        height: 20,
-                                        width: screenwidth * .25,
-                                      ),
-                                    ),
-                                  ],
+                                width: screenwidth * .3,
+                                height: screenwidth * .3,
+                                child: Center(
+                                  child: Icon(Ionicons.close_circle_outline,
+                                      size: screenwidth * .15,
+                                      color: APPSTYLE_Grey80),
                                 ),
                               )
                             ],
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                          addVerticalSpace(APPSTYLE_SpaceLarge),
+                          Text("off-day".tr,
+                              textAlign: TextAlign.center,
+                              style: getHeadlineMediumStyle(context)),
+                        ],
+                      ),
+                    )),
+              ),
+              Visibility(
+                visible:!mySubscriptionController.isMealsFetching.value && mySubscriptionController
+                    .subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.freezed,
+                child: Expanded(
+                    child: Padding(
+                      padding: APPSTYLE_LargePaddingAll,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(1000),
+                                  color: APPSTYLE_Grey20,
+                                ),
+                                width: screenwidth * .3,
+                                height: screenwidth * .3,
+                                child: Center(
+                                  child: Icon(Ionicons.pause_circle_outline,
+                                      size: screenwidth * .15,
+                                      color: APPSTYLE_Grey80),
+                                ),
+                              )
+                            ],
+                          ),
+                          addVerticalSpace(APPSTYLE_SpaceLarge),
+                          Text("freezed".tr,
+                              textAlign: TextAlign.center,
+                              style: getHeadlineMediumStyle(context)),
+                        ],
+                      ),
+                    )),
+              ),
+              Visibility(
+                visible: mySubscriptionController.isMealsFetching.value,
+                child: MealSelectionTitleLoader()
+              ),
+              Visibility(
+                visible: mySubscriptionController.isMealsFetching.value,
+                child: Expanded(
+                  child: MealSelectionItemsLoader(),
                 ),
               ),
               Visibility(
                 visible: !mySubscriptionController.isMealsFetching.value &&
                     mySubscriptionController
-                        .subscriptoinMealConfig.value.meals.isNotEmpty,
+                        .subscriptoinMealConfig.value.meals.isNotEmpty &&
+                    mySubscriptionController
+                        .subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.offDay &&
+                    mySubscriptionController
+                        .subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.freezed,
                 child: Container(
                   decoration: BoxDecoration(
                       boxShadow: APPSTYLE_ContainerTopShadow,
@@ -617,28 +816,36 @@ class _MealSelectionPage_MySubscriptionState
                         "${mySubscriptionController.selectedMealConfig.value.recommendedCalories} Cal",
                         style: getHeadlineLargeStyle(context),
                       )),
-                      SizedBox(
-                          width: screenwidth * .4,
-                          child: ElevatedButton(
-                              child: mySubscriptionController
-                                      .isDayMealSaving.value
-                                  ? LoadingAnimationWidget.staggeredDotsWave(
-                                      color: APPSTYLE_BackgroundWhite,
-                                      size: 24,
-                                    )
-                                  : Text('save'.tr,
-                                      style: getHeadlineMediumStyle(context)
-                                          .copyWith(
-                                              color: APPSTYLE_BackgroundWhite,
-                                              fontWeight:
-                                                  APPSTYLE_FontWeightBold),
-                                      textAlign: TextAlign.center),
-                              onPressed: () {
-                                if(!mySubscriptionController.isDayMealSaving.value &&
-                                !mySubscriptionController.isMealsFetching.value ){
-                                  mySubscriptionController.setMealsByDate();
-                                }
-                              })),
+                      Visibility(
+                        visible: (mySubscriptionController
+                            .subscriptionDates[mySubscriptionController.selectedDate.value]!=VALIDSUBSCRIPTIONDAY_STATUS.delivered &&
+                            mySubscriptionController
+                                .subscriptionDates[mySubscriptionController.selectedDate.value]!=VALIDSUBSCRIPTIONDAY_STATUS.freezed &&
+                            mySubscriptionController
+                                .subscriptionDates[mySubscriptionController.selectedDate.value]!=VALIDSUBSCRIPTIONDAY_STATUS.offDay  ),
+                        child: SizedBox(
+                            width: screenwidth * .4,
+                            child: ElevatedButton(
+                                child: mySubscriptionController
+                                        .isDayMealSaving.value
+                                    ? LoadingAnimationWidget.staggeredDotsWave(
+                                        color: APPSTYLE_BackgroundWhite,
+                                        size: 24,
+                                      )
+                                    : Text('save'.tr,
+                                        style: getHeadlineMediumStyle(context)
+                                            .copyWith(
+                                                color: APPSTYLE_BackgroundWhite,
+                                                fontWeight:
+                                                    APPSTYLE_FontWeightBold),
+                                        textAlign: TextAlign.center),
+                                onPressed: () {
+                                  if(!mySubscriptionController.isDayMealSaving.value &&
+                                  !mySubscriptionController.isMealsFetching.value ){
+                                    mySubscriptionController.setMealsByDate();
+                                  }
+                                })),
+                      ),
                     ],
                   ),
                 ),

@@ -61,7 +61,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                 Visibility(
                   visible: status ==VALIDSUBSCRIPTIONDAY_STATUS.offDay   ,
                   child: Icon(Icons.close,
-                      color:APPSTYLE_PrimaryColor
+                      color:isSelected? APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor
                       , size: 15),
                 ),
                 Visibility(
@@ -73,7 +73,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                 Visibility(
                   visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed     ,
                   child: Icon(Icons.pause,
-                      color:APPSTYLE_PrimaryColor
+                      color:isSelected? APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor
                       , size: 15),
                 ),
                 Visibility(
