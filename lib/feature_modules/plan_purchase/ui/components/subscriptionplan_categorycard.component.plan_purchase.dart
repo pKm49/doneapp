@@ -11,7 +11,9 @@ import 'package:ionicons/ionicons.dart';
 
 class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget {
   SubscriptionPlanCategory subscriptionPlanCategory;
-    SubscriptionPlanCategoryCardComponent_PlanPurchase({super.key, required this.subscriptionPlanCategory});
+  GestureTapCallback onClick;
+
+  SubscriptionPlanCategoryCardComponent_PlanPurchase({super.key, required this.onClick,required this.subscriptionPlanCategory});
 
   @override
   Widget build(BuildContext context) {
@@ -93,10 +95,13 @@ class SubscriptionPlanCategoryCardComponent_PlanPurchase extends StatelessWidget
                           ),
                         ),
                         addHorizontalSpace(APPSTYLE_SpaceSmall),
-                        Icon(Localizations.localeOf(context)
-                            .languageCode
-                            .toString() ==
-                            'ar'? Ionicons.arrow_back_circle:Ionicons.arrow_forward_circle,color: APPSTYLE_BackgroundWhite)
+                        InkWell(
+                          onTap: onClick,
+                          child: Icon(Localizations.localeOf(context)
+                              .languageCode
+                              .toString() ==
+                              'ar'? Ionicons.arrow_back_circle:Ionicons.arrow_forward_circle,color: APPSTYLE_BackgroundWhite),
+                        )
                       ],
                     ),
                   ),

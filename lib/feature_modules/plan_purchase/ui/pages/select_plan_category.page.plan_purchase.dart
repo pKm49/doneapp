@@ -172,6 +172,11 @@ class _SelectPlanCategoryPage_PlanPurchaseState
 
                             items:planPurchaseController.subscriptionCategories.map((element) =>
                                 SubscriptionPlanCategoryCardComponent_PlanPurchase(
+                                  onClick:(){
+                                    planPurchaseController.changeCategory(element);
+                                    Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansListRoute);
+
+                                  },
                                   subscriptionPlanCategory:element,
                                 ),
                             ).toList() ),
