@@ -88,7 +88,7 @@ class RegisterCredential {
     "height": height,
     "weight": weight,
     "source": source,
-    "nickname": "Home",
+    'nickname': nickname.trim()==""?"Home":nickname,
     "area_id": area,
     "block_id": block,
     "street": street,

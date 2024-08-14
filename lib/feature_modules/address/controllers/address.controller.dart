@@ -19,6 +19,7 @@ class AddressController extends GetxController {
   Rx<TextEditingController> floorNumberTextEditingController = TextEditingController().obs;
   Rx<TextEditingController> commentsTextEditingController = TextEditingController().obs;
   Rx<TextEditingController> jedhaTextEditingController = TextEditingController().obs;
+  Rx<TextEditingController> nicknameTextEditingController = TextEditingController().obs;
 
   var addressAuthorMode = VALIDADDRESSAUTHOR_MODES.complete_registration.obs;
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -55,6 +56,8 @@ class AddressController extends GetxController {
       apartmentNumberTextEditingController.value.text =  "";
       houseNumberTextEditingController.value.text =  "";
       jedhaTextEditingController.value.text =  "";
+      nicknameTextEditingController.value.text =  "";
+
       floorNumberTextEditingController.value.text =  "";
       areaId.value = -1;
       commentsTextEditingController.value.text = "";
@@ -141,6 +144,7 @@ class AddressController extends GetxController {
       streetTextEditingController.value.text = currentAddress.value.street;
       commentsTextEditingController.value.text = currentAddress.value.comments;
       jedhaTextEditingController.value.text = currentAddress.value.jedha;
+      nicknameTextEditingController.value.text = currentAddress.value.nickname;
       apartmentNumberTextEditingController.value.text =currentAddress.value.apartmentNo==-1?"": currentAddress.value.apartmentNo.toString();
       houseNumberTextEditingController.value.text = currentAddress.value.houseNumber==-1?"":currentAddress.value.houseNumber.toString();
       floorNumberTextEditingController.value.text = currentAddress.value.floorNumber==-1?"":currentAddress.value.floorNumber.toString();
@@ -156,6 +160,7 @@ class AddressController extends GetxController {
       areaId.value = -1;
       commentsTextEditingController.value.text = "";
       jedhaTextEditingController.value.text =  "";
+      nicknameTextEditingController.value.text =  "";
 
       blockId.value =-1;
     }
@@ -180,7 +185,7 @@ class AddressController extends GetxController {
             bool isSuccess =
             await addressHttpService.auditAddress( Address(
                 id: currentAddress.value.id,
-                name: getRandomString(5),
+                name: nicknameTextEditingController.value.text,
                 comments: commentsTextEditingController.value.text,
                 apartmentNo:apartmentNumberTextEditingController.value.text.toString().trim() !=""?
                 int.parse(apartmentNumberTextEditingController.value.text.toString().trim()):-1,
@@ -196,6 +201,7 @@ class AddressController extends GetxController {
                 blockId: blockId.value,
                 blockName: '',
                 blockNameArabic: '',
+                nickname:  nicknameTextEditingController.value.text,
                 jedha:  jedhaTextEditingController.value.text,
             ),mobile,currentAddress.value.id == -1);
             isAddressAuditing.value = false;
@@ -216,8 +222,5 @@ class AddressController extends GetxController {
 
 
 
-
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
 }

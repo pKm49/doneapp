@@ -323,6 +323,17 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
                             ),
                             addVerticalSpace(APPSTYLE_SpaceMedium),
                             TextFormField(
+                              keyboardType: TextInputType.text,
+                              controller: addressController
+                                  .nicknameTextEditingController.value,
+                              decoration: InputDecoration(
+                                hintText: 'enter_address_nickname'.tr,
+                                label: Text('address_nickname'.tr),
+                                isDense: true,
+                              ),
+                            ),
+                            addVerticalSpace(APPSTYLE_SpaceMedium),
+                            TextFormField(
                               controller: addressController
                                   .commentsTextEditingController.value,
                               decoration: InputDecoration(
@@ -390,6 +401,7 @@ class _AuditAddressPage_AddressState extends State<AuditAddressPage_Address> {
               blockId: addressController.blockId.value,
               blockName: "",
               blockNameArabic: "",
+              nickname: addressController.nicknameTextEditingController.value.text,
               jedha: addressController.jedhaTextEditingController.value.text,
               comments:
                   addressController.commentsTextEditingController.value.text,

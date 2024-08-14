@@ -99,7 +99,7 @@ class RegisterController extends GetxController {
         height: double.parse(heightTextEditingController.value.text.toString().trim()),
         weight: double.parse(weightTextEditingController.value.text.toString().trim()),
         source: source.value,
-        nickname: "",
+        nickname: address.value.nickname,
         area: address.value.areaId,
         block: address.value.blockId,
         street: address.value.street,

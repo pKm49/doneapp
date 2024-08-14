@@ -1,4 +1,6 @@
 
+import 'package:get/get.dart';
+
 class Address {
   final int id;
   final String name;
@@ -14,6 +16,7 @@ class Address {
   final int floorNumber;
   final int apartmentNo;
   final String comments;
+  final String nickname;
 
   Address({
     required this.id,
@@ -30,13 +33,14 @@ class Address {
     required this.houseNumber,
     required this.floorNumber,
     required this.apartmentNo,
+    required this.nickname,
   });
 
   Map toJsonForPatch(String mobile) => {
         'mobile': mobile,
         'address_id': id,
-        'name': name,
-        'nickname': "Home",
+        'name':nickname.trim()==""?"Home":nickname,
+    'nickname': nickname.trim()==""?"Home":nickname,
         'jedha': jedha,
         'comments': comments,
         'street': street,
@@ -49,9 +53,9 @@ class Address {
       };
   Map toJsonForPost(String mobile) => {
         'mobile': mobile,
-        'name': name,
+        'name': nickname.trim()==""?"Home":nickname,
         'jedha': jedha,
-    'nickname': "Home",
+    'nickname': nickname.trim()==""?"Home":nickname,
 
     'comments': comments,
         'street': street,
@@ -71,6 +75,8 @@ Address mapAddress(dynamic payload) {
       name: payload["name"] ?? "",
       comments:
           payload["comments"] != null ? payload["comments"].toString() : "",
+    nickname:
+    payload["name"] != null ? payload["name"].toString() : "",
       jedha: payload["jedha"] != null ? payload["jedha"].toString() : "",
       street: payload["street"] != null ? payload["street"].toString() : "",
 
