@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 const Color APPSTYLE_PrimaryColor = Color(0xffEB0067);
 const Color APPSTYLE_PrimaryColorBg = Color(0xffE8B6CC);
 const Color APPSTYLE_PrimaryColorDark = Color(0xff243624);
+const Color APPSTYLE_GuideOrange = Color(0xFFF88E0D);
 const Color APPSTYLE_GuideYellow = Color(0xFFF8CC0D);
 const Color APPSTYLE_GuideGreen = Color(0xFF7AF41C);
 const Color APPSTYLE_WhatsappGreen = Color(0xFF25D366);

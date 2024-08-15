@@ -17,10 +17,13 @@ const String ASSETS_OFFERPLAN = "assets/images/plans.svg";
 const String ASSETS_OFFERTRACKING = "assets/images/tracking.svg";
 const String ASSETS_OFFERMEAL = "assets/images/meal.svg";
 const String ASSETS_OFFERGUIDANCE = "assets/images/guidance.svg";
+const String ASSETS_FOODPLATE = "assets/images/food_plate.svg";
+const String ASSETS_FOODTRUCK = "assets/images/food_truck.svg";
+const String ASSETS_PAUSE = "assets/images/pause.svg";
+const String ASSETS_OFFDAY = "assets/images/off_day.svg";
 const String ASSETS_WELCOME_LOGIN_BG = "assets/images/bg_welcome.jpg";
 const String ASSETS_HOME_BG = "assets/images/home_bg.jpg";
 const String ASSETS_SELECTHAND = "assets/images/select_hand.svg";
-
 const String ASSETS_SPLASH_ANIMATION = "assets/animations/splash_animation.gif";
 const String ASSETS_SUCCESS_ANIMATION =
     "assets/animations/success_animation.gif";

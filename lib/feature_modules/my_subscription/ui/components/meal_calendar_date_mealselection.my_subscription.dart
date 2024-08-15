@@ -4,6 +4,7 @@ import 'package:doneapp/shared_module/constants/style_params.constants.shared.da
 import 'package:doneapp/shared_module/constants/valid_subscription_day_status.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/calendar_utilities.service.shared.dart';
+import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,141 +24,143 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      direction: Axis.vertical,
-      spacing: APPSTYLE_SpaceSmall,
-      children: [
-        Text(
-          getDayNameByDate(date),
-          style: getLabelSmallStyle(context).copyWith(
-              color: APPSTYLE_Grey80),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: isSelected
-                ? APPSTYLE_PrimaryColor
-                :  APPSTYLE_BackgroundOffWhite,
-            borderRadius:
-            BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
-            border: Border.all(color: APPSTYLE_Grey60, width: .4),
+    return Container(
+      height: 120 ,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+
+        children: [
+          Text(
+            getDayNameByDate(date),
+            style: getLabelSmallStyle(context).copyWith(
+                color: APPSTYLE_Grey80),
           ),
-          width: screenwidth * .12,
-          padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(
-              top: APPSTYLE_SpaceSmall, bottom: APPSTYLE_SpaceSmall),
-          margin: APPSTYLE_ExtraSmallPaddingHorizontal,
-          child: Center(
-            child: Column(
-              children: [
+          addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+          Container(
+            height: 75,
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? APPSTYLE_PrimaryColor
+                  :  APPSTYLE_BackgroundOffWhite,
+              borderRadius:
+              BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
+              border: Border.all(color: APPSTYLE_Grey60, width: .4),
+            ),
+            width: screenwidth * .14,
+            padding: APPSTYLE_ExtraSmallPaddingAll.copyWith(
+                top: APPSTYLE_SpaceSmall, bottom: APPSTYLE_SpaceSmall),
+            margin: APPSTYLE_ExtraSmallPaddingHorizontal,
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
 
-                Text(
-                  date.day.toString(),
-                  style: getBodyMediumStyle(context).copyWith(
-                      fontWeight: APPSTYLE_FontWeightBold,
-                      color:isSelected
-                          ? APPSTYLE_BackgroundWhite
-                          : APPSTYLE_PrimaryColorBg),
-                ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        date.day.toString(),
+                        textAlign: TextAlign.center,
+                        style: getLabelLargeStyle(context)
+                            .copyWith(
+                            color: isSelected?APPSTYLE_BackgroundWhite:
+                            status==VALIDSUBSCRIPTIONDAY_STATUS.offDay?APPSTYLE_PrimaryColor:
+                            status==VALIDSUBSCRIPTIONDAY_STATUS.freezed?APPSTYLE_GuideOrange:
+                            status==VALIDSUBSCRIPTIONDAY_STATUS.delivered?APPSTYLE_GuideGreen:
+                             APPSTYLE_WhatsappGreen
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(child: Container()),
+                  Visibility(
+                      visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) ,
+                      child:  Padding(
+                        padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
+                        child: SvgPicture.asset(ASSETS_OFFDAY,height: 13,color: isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor),
+                      )
+                  ),
+                  Visibility(
+                    visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) ,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text("off-day_single".tr,style: getLabelSmallStyle(context).copyWith(
+                          color: isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor
+                      ),),
+                    ),
+                  ),
 
+                  Visibility(
+                      visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered  ,
+                      child:  Padding(
+                        padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
+                        child: SvgPicture.asset(ASSETS_FOODTRUCK,height: 13,color: isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_WhatsappGreen),
+                      )
+                  ),
+                  Visibility(
+                    visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.delivered ) ,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text("delivered_single".tr,style: getLabelSmallStyle(context).copyWith(
+                          color: isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_WhatsappGreen
+                      ),),
+                    ),
+                  ),
 
-                Visibility(
-                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) ,
-                  child:   Icon(Icons.close_rounded,
-                      color:isSelected
-                          ? APPSTYLE_BackgroundWhite
-                          :APPSTYLE_PrimaryColor
-                      , size: 14),
-                ),
-                Visibility(
-                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) ,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text("off-day_single".tr,style: getLabelSmallStyle(context).copyWith(
-                        color: isSelected
-                            ? APPSTYLE_BackgroundWhite
-                            :APPSTYLE_PrimaryColor
-                    ),),
+                  Visibility(
+                      visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed   ,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
+                        child: SvgPicture.asset(ASSETS_PAUSE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_GuideOrange),
+                      )
                   ),
-                ),
-                Visibility(
-                  visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered  ,
-                  child:   Icon(Icons.delivery_dining,
-                      color:isSelected
-                          ? APPSTYLE_BackgroundWhite
-                          :APPSTYLE_WhatsappGreen
-                      , size: 14),
-                ),
-                Visibility(
-                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.delivered ) ,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text("delivered_single".tr,style: getLabelSmallStyle(context).copyWith(
-                        color: isSelected
-                            ? APPSTYLE_BackgroundWhite
-                            :APPSTYLE_WhatsappGreen
-                    ),),
+                  Visibility(
+                    visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.freezed ) ,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text("freezed_single".tr,style: getLabelSmallStyle(context).copyWith(
+                          color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_GuideOrange
+                      ),),
+                    ),
                   ),
-                ),
-                Visibility(
-                  visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed   ,
-                  child:   Icon(Icons.pause,
-                      color:isSelected
-                          ? APPSTYLE_BackgroundWhite
-                          :APPSTYLE_GuideYellow
-                      , size: 14),
-                ),
-                Visibility(
-                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.freezed ) ,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text("freezed_single".tr,style: getLabelSmallStyle(context).copyWith(
-                        color:isSelected
-                            ? APPSTYLE_BackgroundWhite
-                            : APPSTYLE_GuideYellow
-                    ),),
+                  Visibility(
+                      visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
+                      child:  Padding(
+                        padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
+                        child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen),
+                      )
                   ),
-                ),
-                Visibility(
-                  visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected   ,
-                  child:   Icon(Ionicons.restaurant ,
-                      color:isSelected
-                          ? APPSTYLE_BackgroundWhite
-                          :APPSTYLE_WhatsappGreen
-                      , size: 14),
-                ),
-                Visibility(
-                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
-                        color:isSelected
-                            ? APPSTYLE_BackgroundWhite
-                            : APPSTYLE_WhatsappGreen
-                    ),),
+                  Visibility(
+                    visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
+                          color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen
+                      ),),
+                    ),
                   ),
-                ),
-                Visibility(
-                    visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected   ,
-                    child: SvgPicture.asset(ASSETS_SELECTHAND,width: 10,color:isSelected
-                        ? APPSTYLE_BackgroundWhite
-                        : APPSTYLE_PrimaryColor,)
-                ),
-                Visibility(
-                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ) ,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text("meal-not-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
-                        color:isSelected
-                            ? APPSTYLE_BackgroundWhite
-                            : APPSTYLE_PrimaryColor
-                    ),),
+                  Visibility(
+                      visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected   ,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: APPSTYLE_SpaceExtraSmall),
+                        child: SvgPicture.asset(ASSETS_SELECTHAND,height: 13,color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_PrimaryColor,),
+                      )
                   ),
-                ),
-              ],
+                  Visibility(
+                    visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ) ,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text("meal-not-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
+                          color:  isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_PrimaryColor
+                      ),),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

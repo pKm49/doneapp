@@ -29,98 +29,95 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
         height: 55 + (APPSTYLE_SpaceExtraSmall * 2),
         decoration:   BoxDecoration(
             borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
-            color:isMonthDay?APPSTYLE_Grey30:APPSTYLE_Grey10,
+            color:isSelected?APPSTYLE_PrimaryColor:isMonthDay?APPSTYLE_Grey20:APPSTYLE_BackgroundWhite,
             border:Border.all(color:  isSelected ?APPSTYLE_Grey80:APPSTYLE_BackgroundWhite, width: .5)
         ),
         margin: EdgeInsets.only(right:APPSTYLE_SpaceExtraSmall ),
         padding: APPSTYLE_ExtraSmallPaddingAll,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              dateText,
-              textAlign: TextAlign.center,
-              style: getLabelLargeStyle(context)
-                  .copyWith(
-                  color:
-                  (isMonthDay && isSubscriptionDay) ? APPSTYLE_PrimaryColor:
-                  isMonthDay ? APPSTYLE_Grey80:APPSTYLE_Grey40
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  dateText,
+                  textAlign: TextAlign.center,
+                  style: getLabelLargeStyle(context)
+                      .copyWith(
+                      color:isSelected?APPSTYLE_BackgroundWhite:
+                      isSubscriptionDay? APPSTYLE_PrimaryColor:
+                      isMonthDay ? APPSTYLE_Grey80:APPSTYLE_Grey40
+                  ),
+                ),
+              ],
             ),
-             Visibility(
-              visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: const Icon(Icons.close_rounded,
-                    color:APPSTYLE_PrimaryColor
-                    , size: 14),
-              ),
+            Expanded(child: Container()),
+            Visibility(
+                visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
+                child: SvgPicture.asset(ASSETS_OFFDAY,height: 13,color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor)
             ),
             Visibility(
               visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("off-day_single".tr,style: getLabelSmallStyle(context).copyWith(
-                  color: APPSTYLE_PrimaryColor
+                  color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor
                 ),),
               ),
             ),
+
             Visibility(
-              visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered  &&  (isMonthDay && isSubscriptionDay) ,
-              child: const Icon(Icons.delivery_dining,
-                  color:APPSTYLE_WhatsappGreen
-                  , size: 14),
+                visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered  &&  (isMonthDay && isSubscriptionDay) ,
+                child: SvgPicture.asset(ASSETS_FOODTRUCK,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen)
             ),
             Visibility(
               visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.delivered ) &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("delivered_single".tr,style: getLabelSmallStyle(context).copyWith(
-                    color: APPSTYLE_WhatsappGreen
+                    color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_WhatsappGreen
                 ),),
               ),
             ),
+
             Visibility(
-              visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed  &&  (isMonthDay && isSubscriptionDay)  ,
-              child: const Icon(Icons.pause,
-                  color:APPSTYLE_GuideYellow
-                  , size: 14),
+                visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed  &&  (isMonthDay && isSubscriptionDay)  ,
+                child: SvgPicture.asset(ASSETS_PAUSE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_GuideOrange)
             ),
             Visibility(
               visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.freezed ) &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("freezed_single".tr,style: getLabelSmallStyle(context).copyWith(
-                    color: APPSTYLE_GuideYellow
+                    color:isSelected?APPSTYLE_BackgroundWhite: APPSTYLE_GuideOrange
                 ),),
               ),
             ),
             Visibility(
-              visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected  &&  (isMonthDay && isSubscriptionDay)  ,
-              child: const Icon(Ionicons.restaurant ,
-                  color:APPSTYLE_WhatsappGreen
-                  , size: 14),
+                visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) &&  (isMonthDay && isSubscriptionDay) ,
+                child: SvgPicture.asset(ASSETS_FOODPLATE,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen)
             ),
             Visibility(
               visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
-                    color: APPSTYLE_WhatsappGreen
+                    color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_WhatsappGreen
                 ),),
               ),
             ),
             Visibility(
               visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected  &&  (isMonthDay && isSubscriptionDay)  ,
-              child: SvgPicture.asset(ASSETS_SELECTHAND,width: 10,color: APPSTYLE_PrimaryColor,)
+              child: SvgPicture.asset(ASSETS_SELECTHAND,height: 13,color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_PrimaryColor,)
             ),
             Visibility(
               visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ) &&  (isMonthDay && isSubscriptionDay) ,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text("meal-not-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
-                    color: APPSTYLE_PrimaryColor
+                    color: isSelected?APPSTYLE_BackgroundWhite:APPSTYLE_PrimaryColor
                 ),),
               ),
             ),
