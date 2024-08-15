@@ -1,6 +1,7 @@
 
 
- import 'package:doneapp/feature_modules/profile/ui/components/preposticon_button.component.shared.dart';
+ import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
+import 'package:doneapp/feature_modules/profile/ui/components/preposticon_button.component.shared.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
@@ -9,6 +10,7 @@ import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
+import 'package:doneapp/shared_module/ui/components/confirm_dialogue.component.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
  import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,8 +18,23 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
  import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
-class AboutPage_Profile extends StatelessWidget {
+class AboutPage_Profile extends StatefulWidget {
   const AboutPage_Profile({super.key});
+
+  @override
+  State<AboutPage_Profile> createState() => _AboutPage_ProfileState();
+}
+
+class _AboutPage_ProfileState extends State<AboutPage_Profile> {
+
+  bool isAccountDeleteVisible = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setAccountDeleteVisibility();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -244,6 +261,38 @@ class AboutPage_Profile extends StatelessWidget {
                   ),
                 ),
                 addVerticalSpace(APPSTYLE_SpaceLarge ),
+                addVerticalSpace(APPSTYLE_SpaceLarge *6),
+                Visibility(
+                  visible: isAccountDeleteVisible,
+                  child: Container(
+                    decoration: APPSTYLE_BorderedContainerSmallDecoration.copyWith(color: APPSTYLE_Grey20),
+                    padding: APPSTYLE_MediumPaddingHorizontal,
+                    margin: APPSTYLE_LargePaddingAll.copyWith(bottom: 0),
+                    child: PrePostIconButton(
+                      specialColor: 1,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => ConfirmDialogue(
+                              onClick: () async {
+                                Navigator.of(context).pop(true);
+                              },
+                              titleKey: 'confirm_logout'.tr + " ?",
+                              subtitleKey: 'confirm_logout_message'.tr),
+                        );
+                      },
+                      theme: 'dark',
+                      border: '',
+                      buttonTitle: "delete_account".tr,
+                      preIconData: Ionicons.person_remove_outline,
+                      postIconData:Localizations.localeOf(context)
+                          .languageCode
+                          .toString() ==
+                          'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                    ),
+                  ),
+                ),
+                addVerticalSpace(APPSTYLE_SpaceLarge ),
 
               ],
             ),
@@ -274,5 +323,65 @@ class AboutPage_Profile extends StatelessWidget {
     } else {
       showSnackbar(buildContext, "not_able_to_connect".tr, "error");
     }
+  }
+
+  void showDeleteAccountConfirmDialogue(BuildContext context ) async {
+
+    final dialogTitleWidget = Text('account_delete_title'.tr,style: getHeadlineMediumStyle(context).copyWith(
+        color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
+    final dialogTextWidget = Text( 'account_delete_content'.tr,style: getBodyMediumStyle(context));
+
+    final updateButtonTextWidget = Text('yes'.tr,style: TextStyle(color: APPSTYLE_PrimaryColor),);
+    final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
+
+    updateLogoutAction() async {
+      final profileController = Get.find<ProfileController>();
+      profileController.deleteAccount();
+      Navigator.pop(context);
+    }
+
+    updateAction() {
+      Navigator.pop(context);
+    }
+    List<Widget> actions = [
+
+      TextButton(
+          onPressed:updateAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonCancelTextWidget),
+
+      TextButton(
+          onPressed:updateLogoutAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonTextWidget),
+    ];
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            child: AlertDialog(
+              title: dialogTitleWidget,
+              content: dialogTextWidget,
+              actions: actions,
+            ),
+            onWillPop: () => Future.value(false));
+      },
+    );
+  }
+
+  Future<void> setAccountDeleteVisibility() async {
+    await Future.delayed(Duration(seconds: 5));
+    isAccountDeleteVisible = true;
+    setState(() {
+
+    });
   }
 }
