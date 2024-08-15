@@ -22,21 +22,25 @@ class _MyAllergiesListPage_ProfileState
     extends State<MyAllergiesListPage_Profile> {
   final profileController = Get.find<ProfileController>();
   TextEditingController searchController = TextEditingController();
+  bool isRegisterComplete = true;
+  var getArguments = Get.arguments;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    profileController.getIngredients();
 
-    if (profileController.ingredients.isEmpty) {
-      profileController.getIngredients();
-    }
     profileController.getAllergies();
 
     searchController.addListener(() {
       profileController
           .updateIngredientsListByQuery(searchController.text.trim());
     });
+    isRegisterComplete = getArguments[0];
+    profileController.updateAllergyDislikePurpose(isRegisterComplete);
+
+
   }
 
   @override
@@ -54,7 +58,9 @@ class _MyAllergiesListPage_ProfileState
           elevation: 0.0,
           title: Row(
             children: [
-              CustomBackButton(isPrimaryMode: false),
+              Visibility(
+                  visible: !profileController.isAllregyDislikeForRegisterComplete.value,
+                  child: CustomBackButton(isPrimaryMode: false)),
               Expanded(
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
@@ -272,7 +278,7 @@ class _MyAllergiesListPage_ProfileState
                           child: ElevatedButton(
                             onPressed: () {
                               if(!profileController.isAllergiesUpdating.value && profileController.allergies.isNotEmpty){
-                                  profileController.updateAllergies();
+                                  profileController.updateAllergies(profileController.isAllregyDislikeForRegisterComplete.value);
                               }
                             },
                             style: getElevatedButtonStyle(context),

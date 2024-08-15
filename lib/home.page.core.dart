@@ -497,7 +497,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                             "noactivesubscription") &&
                                             !sharedController
                                                 .isUserDataFetching.value,
-                                        child:   Text( 'next shift evening',
+                                        child:   Text( sharedController.userData.value.shift,
                                           style: getBodyMediumStyle(context)
                                               .copyWith(
                                               color:

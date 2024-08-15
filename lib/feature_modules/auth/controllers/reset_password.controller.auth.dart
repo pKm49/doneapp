@@ -1,9 +1,18 @@
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
  import 'package:doneapp/feature_modules/auth/services/http.services.auth.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/available_genders.shared.constant.dart';
  import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 class ResetPasswordController extends GetxController {
+  Rx<TextEditingController> emailTextEditingController =
+      TextEditingController().obs;
+  var selectedDOB = DateTime
+      .now()
+      .obs;
+  var gender = VALID_GENDERS.male.name.obs;
+  Rx<TextEditingController> birthDayController = TextEditingController().obs;
 
   Rx<TextEditingController> passwordTextEditingController = TextEditingController().obs;
   Rx<TextEditingController> confirmPasswordTextEditingController = TextEditingController().obs;
@@ -17,11 +26,25 @@ class ResetPasswordController extends GetxController {
   }
 
 
+  void changeGender(String s) {
+    gender.value = s;
+  }
+
+  void changeDob(DateTime selectedDob) {
+    selectedDOB.value = selectedDob;
+    final f = new DateFormat('dd-MM-yyyy');
+    birthDayController.value.text = f.format(selectedDob);
+  }
+
   resetPassword() async {
     isResetingPassword.value = true;
     var authHttpService = new AuthHttpService();
+    final f = new DateFormat('yyyy-MM-dd');
+    String bday = birthDayController.value.text.trim() !=""?f.format(selectedDOB.value):'';
     bool isResetSuccess = await authHttpService.resetPassword( "${mobile}",
-        passwordTextEditingController.value.text);
+        passwordTextEditingController.value.text,
+        gender.value,bday,emailTextEditingController.value.text
+    );
     isResetingPassword.value = false;
 
     if(isResetSuccess){

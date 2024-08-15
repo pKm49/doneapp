@@ -1,4 +1,5 @@
 import 'package:doneapp/feature_modules/auth/controllers/reset_password.controller.auth.dart';
+import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 
 import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
@@ -134,10 +135,8 @@ class _ResetPasswordPage_authState extends State<ResetPasswordPage_auth> {
                       child: ElevatedButton(
                         onPressed: () {
                           FocusManager.instance.primaryFocus?.unfocus();
-                          if (resetPasswordFormKey.currentState!.validate() &&
-                              !resetPasswordController.isResetingPassword.value) {
-                            resetPasswordController.resetPassword();
-                          }
+
+                          Get.toNamed(AppRouteNames.resetPasswordAboutMeRoute);
 
                         },
                         style: getElevatedButtonStyle(context),

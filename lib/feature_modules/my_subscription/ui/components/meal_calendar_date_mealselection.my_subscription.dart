@@ -7,6 +7,7 @@ import 'package:doneapp/shared_module/services/utility-services/calendar_utiliti
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWidget {
@@ -58,37 +59,100 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                           : APPSTYLE_PrimaryColorBg),
                 ),
 
+
                 Visibility(
-                  visible: status ==VALIDSUBSCRIPTIONDAY_STATUS.offDay   ,
-                  child: Icon(Icons.close,
-                      color:isSelected? APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor
-                      , size: 15),
+                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) ,
+                  child:   Icon(Icons.close_rounded,
+                      color:isSelected
+                          ? APPSTYLE_BackgroundWhite
+                          :APPSTYLE_PrimaryColor
+                      , size: 14),
                 ),
                 Visibility(
-                  visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered    ,
-                  child: Icon(Icons.delivery_dining,
-                      color:APPSTYLE_WhatsappGreen
-                      , size: 15),
+                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.offDay ) ,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text("off-day_single".tr,style: getLabelSmallStyle(context).copyWith(
+                        color: isSelected
+                            ? APPSTYLE_BackgroundWhite
+                            :APPSTYLE_PrimaryColor
+                    ),),
+                  ),
                 ),
                 Visibility(
-                  visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed     ,
-                  child: Icon(Icons.pause,
-                      color:isSelected? APPSTYLE_BackgroundWhite: APPSTYLE_PrimaryColor
-                      , size: 15),
+                  visible:  status==VALIDSUBSCRIPTIONDAY_STATUS.delivered  ,
+                  child:   Icon(Icons.delivery_dining,
+                      color:isSelected
+                          ? APPSTYLE_BackgroundWhite
+                          :APPSTYLE_WhatsappGreen
+                      , size: 14),
                 ),
                 Visibility(
-                  visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected    ,
-                  child: Icon(Ionicons.checkmark ,
-                      color:APPSTYLE_WhatsappGreen
-                      , size: 15),
+                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.delivered ) ,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text("delivered_single".tr,style: getLabelSmallStyle(context).copyWith(
+                        color: isSelected
+                            ? APPSTYLE_BackgroundWhite
+                            :APPSTYLE_WhatsappGreen
+                    ),),
+                  ),
+                ),
+                Visibility(
+                  visible: status==VALIDSUBSCRIPTIONDAY_STATUS.freezed   ,
+                  child:   Icon(Icons.pause,
+                      color:isSelected
+                          ? APPSTYLE_BackgroundWhite
+                          :APPSTYLE_GuideYellow
+                      , size: 14),
+                ),
+                Visibility(
+                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.freezed ) ,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text("freezed_single".tr,style: getLabelSmallStyle(context).copyWith(
+                        color:isSelected
+                            ? APPSTYLE_BackgroundWhite
+                            : APPSTYLE_GuideYellow
+                    ),),
+                  ),
+                ),
+                Visibility(
+                  visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected   ,
+                  child:   Icon(Ionicons.restaurant ,
+                      color:isSelected
+                          ? APPSTYLE_BackgroundWhite
+                          :APPSTYLE_WhatsappGreen
+                      , size: 14),
+                ),
+                Visibility(
+                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ) ,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text("meal-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
+                        color:isSelected
+                            ? APPSTYLE_BackgroundWhite
+                            : APPSTYLE_WhatsappGreen
+                    ),),
+                  ),
                 ),
                 Visibility(
                     visible: status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected   ,
                     child: SvgPicture.asset(ASSETS_SELECTHAND,width: 10,color:isSelected
                         ? APPSTYLE_BackgroundWhite
-                        : APPSTYLE_PrimaryColor  )
+                        : APPSTYLE_PrimaryColor,)
                 ),
-
+                Visibility(
+                  visible: (status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected ) ,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text("meal-not-selected_single".tr,style: getLabelSmallStyle(context).copyWith(
+                        color:isSelected
+                            ? APPSTYLE_BackgroundWhite
+                            : APPSTYLE_PrimaryColor
+                    ),),
+                  ),
+                ),
               ],
             ),
           ),

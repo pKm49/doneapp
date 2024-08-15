@@ -2,12 +2,14 @@ import 'package:doneapp/feature_modules/profile/models/referral_data.profile.mod
 import 'package:doneapp/feature_modules/profile/services/http.profile.service.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/available_genders.shared.constant.dart';
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/models/general_item.model.shared.dart';
 import 'package:doneapp/shared_module/models/user_data.model.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
@@ -26,10 +28,19 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> emailTextEditingController =
       TextEditingController().obs;
 
+  var selectedDOB = DateTime
+      .now()
+      .obs;
+
+  var gender = VALID_GENDERS.male.name.obs;
+  Rx<TextEditingController> birthDayController = TextEditingController().obs;
+
+
   var profilePictureUrl = ASSETS_DEFAULTPROFILEPIC.obs;
   var isFileSelected = false.obs;
   var referralData = mapReferralData({}).obs;
 
+  var isAllregyDislikeForRegisterComplete = false.obs;
   var isUserDataFetching = false.obs;
   var isRefferalDataFetching = false.obs;
   var userData = mapUserData({}).obs;
@@ -70,6 +81,9 @@ class ProfileController extends GetxController {
             userData.value.lastName;
         lastNameArabicTextEditingController.value.text =
             userData.value.lastNameArabic;
+        selectedDOB.value = userData.value.birthday==""?DateTime.now():getParsableDate(userData.value.birthday);
+        birthDayController.value.text = userData.value.birthday;
+        gender.value = userData.value.gender;
         emailTextEditingController.value.text = userData.value.email;
         profilePictureUrl.value = userData.value.profilePictureUrl;
       }
@@ -80,6 +94,21 @@ class ProfileController extends GetxController {
     }
   }
 
+  getParsableDate(payload) {
+    List<String> dateItem = [];
+    List<String> dateItems = [];
+    List<String> dateItemsInt = [];
+    dateItem = payload.toString().split(" ").toList() ;
+    dateItems = dateItem[0].split("-").toList();
+    dateItems.forEach((element) {
+      if(int.parse(element)<10 && !element.startsWith("0")){
+        dateItemsInt.add('0$element');
+      }else{
+        dateItemsInt.add(element);
+      }
+    });
+    return DateTime.parse(dateItemsInt.join("-"));
+  }
   updateProfile() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     final String? mobile = sharedPreferences.getString('mobile');
@@ -90,9 +119,9 @@ class ProfileController extends GetxController {
       String message = await profileHttpService.updateProfileData(
           UserData(
             id: userData.value.id,
-            gender: userData.value.gender,
+            gender:  gender.value,
             height: userData.value.height,
-            birthday: userData.value.birthday,
+            birthday: birthDayController.value.text,
             weight: userData.value.weight,
             subscriptionEndDate: userData.value.subscriptionEndDate,
             subscriptionNameArabic: userData.value.subscriptionNameArabic,
@@ -107,6 +136,7 @@ class ProfileController extends GetxController {
             customerCode: userData.value.customerCode,
             profilePictureUrl:
                 isFileSelected.value ? profilePictureUrl.value : "",
+              shift:""
           ),
           mobile);
       isProfileUpdating.value = false;
@@ -127,6 +157,15 @@ class ProfileController extends GetxController {
     }
   }
 
+  void changeDob(DateTime selectedDob) {
+    selectedDOB.value = selectedDob;
+    final f = new DateFormat('yyyy-MM-dd');
+    birthDayController.value.text = f.format(selectedDob);
+  }
+
+  void changeGender(String s) {
+    gender.value = s;
+  }
   getRefferalData() async {
     if(! isRefferalDataFetching.value){
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -147,7 +186,8 @@ class ProfileController extends GetxController {
   }
 
   getIngredients() async {
-    if(! isIngredientsFetching.value){
+
+    if(! isIngredientsFetching.value && ingredients.isEmpty){
       isIngredientsFetching.value = true;
       var profileHttpService = ProfileHttpService();
       ingredients.value = await profileHttpService.getIngredients();
@@ -155,6 +195,8 @@ class ProfileController extends GetxController {
       print("getIngredients");
       print(ingredientsToShow.length);
       print(ingredients.length);
+      isIngredientsFetching.value = false;
+    }else{
       isIngredientsFetching.value = false;
     }
   }
@@ -167,7 +209,13 @@ class ProfileController extends GetxController {
         isAllergiesFetching.value = true;
         var profileHttpService = ProfileHttpService();
         allergies.value = await profileHttpService.getAllergies(tMobile);
+        print("getAllergies completed");
+        print(allergies.length);
+        print(  isAllergiesFetching.value );
         isAllergiesFetching.value = false;
+        print('getAllergies after');
+        print(  isAllergiesFetching.value );
+        print(  isIngredientsFetching.value );
       }else {
         showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
         showSnackbar(Get.context!, "login_message".tr, "error");
@@ -197,17 +245,21 @@ class ProfileController extends GetxController {
 
   }
 
-  updateDislikes() async {
+  updateDislikes(bool isRegisterComplete) async {
     if(! isDislikesUpdating.value && dislikes.isNotEmpty){
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? tMobile = prefs.getString('mobile');
       if (tMobile != null && tMobile != '') {
-        isDislikesUpdating .value = true;
+        isDislikesUpdating.value = true;
         var profileHttpService = ProfileHttpService();
-        bool isSuccess = await profileHttpService.updateAllergies(dislikes,tMobile);
+        bool isSuccess = await profileHttpService.updateDislikes(dislikes,tMobile);
         isDislikesUpdating.value = false;
         if(isSuccess){
-          Get.back();
+          if(isRegisterComplete){
+            Get.toNamed(AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute);
+          }else{
+            Get.back();
+          }
           showSnackbar(Get.context!, "dislikes_updated_successfully".tr, "info");
         }
       }else {
@@ -220,7 +272,7 @@ class ProfileController extends GetxController {
 
   }
 
-  updateAllergies() async {
+  updateAllergies(bool isRegisterComplete) async {
     if(! isAllergiesUpdating.value && allergies.isNotEmpty){
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? tMobile = prefs.getString('mobile');
@@ -230,7 +282,11 @@ class ProfileController extends GetxController {
         bool isSuccess = await profileHttpService.updateAllergies(allergies,tMobile);
         isAllergiesUpdating.value = false;
         if(isSuccess){
-          Get.back();
+          if(isRegisterComplete){
+            Get.toNamed(AppRouteNames.dislikeAuditRoute,arguments: [true]);
+          }else{
+            Get.back();
+          }
           showSnackbar(Get.context!, "allergies_updated_successfully".tr, "info");
 
         }
@@ -300,6 +356,12 @@ class ProfileController extends GetxController {
     }else{
       allergies.add(ingredient);
     }
+  }
+
+  void updateAllergyDislikePurpose(bool isRegisterComplete) {
+    print("updateAllergyDislikePurpose");
+    print(isRegisterComplete);
+    isAllregyDislikeForRegisterComplete.value = isRegisterComplete;
   }
 
 }

@@ -132,6 +132,31 @@ class ProfileHttpService {
     }
   }
 
+  Future<bool> updateDislikes(List<GeneralItem> allergies, String mobile ) async {
+
+    try{
+      print("updateAllergies");
+
+
+      AppHttpResponse response = await patchRequest(ProfileHttpRequestEndpoint_Dislike,
+          {
+            "mobile": mobile,
+            "dislikes": allergies.map((e) => e.id).toList(),
+          });
+      print("response");
+      print(response.statusCode);
+      if(response.statusCode != 200){
+        showSnackbar(Get.context!, "something_wrong".tr, "error");
+      }
+      return response.statusCode == 200;
+
+    }catch (e,st){
+      print(e);
+      print(st);
+      showSnackbar(Get.context!, "something_wrong".tr, "error");
+      return false;
+    }
+  }
 
   Future<List<GeneralItem>> getIngredients( ) async {
 

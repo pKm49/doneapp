@@ -12,6 +12,7 @@ const Color APPSTYLE_GuideRedLight = Color(0x2CD62C49);
 
 const Color APPSTYLE_Grey10 = Color(0xFFF8F8F8);
 const Color APPSTYLE_Grey20 = Color(0xFFF3F3F3);
+const Color APPSTYLE_Grey30 = Color(0xFFE3E3E3);
 const Color APPSTYLE_Grey40 = Color(0xFFB5B5B5);
 const Color APPSTYLE_Grey60 = Color(0xFF6B6B6B);
 const Color APPSTYLE_Grey80 = Color(0xFF292929);

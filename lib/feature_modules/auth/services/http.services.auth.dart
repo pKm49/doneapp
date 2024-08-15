@@ -43,12 +43,18 @@ class AuthHttpService {
     }
   }
 
-  Future<bool> resetPassword(String mobile, String newPassword) async {
+  Future<bool> resetPassword(String mobile, String newPassword, String gender, String birthday, String email) async {
 
     try{
+      print("resetPassword");
+      print("resetPassword");
+      print("resetPassword");
       AppHttpResponse response = await patchRequest(AuthHttpRequestEndpoint_ResetPassword, {
         "mobile": mobile,
-        "new_password": newPassword
+        "new_password": newPassword,
+        "gender": gender,
+        "date_of_birth": birthday,
+        "email": email,
       });
       showSnackbar(Get.context!, response.message,response.statusCode != 200? "error":"info");
 

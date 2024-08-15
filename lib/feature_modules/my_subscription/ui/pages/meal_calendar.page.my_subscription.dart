@@ -30,7 +30,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
   void initState() {
     // TODO: implement initState
     super.initState();
-    mySubscriptionController.getSubscriptionDates(true);
+    mySubscriptionController.getSubscriptionDates(true,false);
   }
 
   @override
@@ -85,10 +85,9 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                   border: Border.all(
                                       color: Colors.transparent, width: .2),
                                   color: APPSTYLE_Grey20),
-                              margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
-                              padding: APPSTYLE_MediumPaddingAll,
-                              height: 350,
-                              width: screenwidth-(APPSTYLE_SpaceLarge*2),
+                              margin: APPSTYLE_SmallPaddingAll.copyWith(top: 0),
+                              height: 450,
+                              width: screenwidth-(APPSTYLE_SpaceSmall*2),
                             ),
                           ),
 
@@ -97,23 +96,11 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                     ),
                     Visibility(
                       visible: mySubscriptionController.subscriptionDates.isNotEmpty &&
-                          !mySubscriptionController.isSubscriptionDatesLoading.value,
+                           !mySubscriptionController.isSubscriptionDatesLoading.value,
                       child: Expanded(
                         child: Container(
-                          decoration: APPSTYLE_ShadowedContainerSmallDecoration.copyWith(
-                            boxShadow:  [
-                              const BoxShadow(
-                                color: APPSTYLE_Grey80Shadow24,
-                                offset: Offset(1.0, 1.0),
-                                blurRadius: 2,
-                              ),
-                            ],
-                              border: Border.all(
-                                  color: Colors.transparent, width: .2),
-                              color: APPSTYLE_Grey20),
-                          margin: APPSTYLE_LargePaddingAll.copyWith(top: 0),
-                          padding: APPSTYLE_MediumPaddingAll  ,
-                          width: screenwidth-(APPSTYLE_SpaceLarge*2),
+                          margin: APPSTYLE_SmallPaddingAll.copyWith(top: 0),
+                          width: screenwidth-(APPSTYLE_SpaceSmall*2),
                           child: ListView(
                             children: [
 
@@ -164,7 +151,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                   ),
                                 ],
                               ),
-                              addVerticalSpace(APPSTYLE_SpaceLarge),
+                              addVerticalSpace(APPSTYLE_SpaceSmall),
                               // week day names
                               Container(
                                 width: screenwidth,
@@ -251,7 +238,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
 
                               Container(
                                 width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                height: 55 +  (APPSTYLE_SpaceExtraSmall * 2),
                                 child: Row(
                                   children: [
                                     for(var i=0;i<mySubscriptionController.firstWeekDays.length;i++)
@@ -283,7 +270,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                               addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                               Container(
                                 width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                height: 55 +  (APPSTYLE_SpaceExtraSmall * 2),
 
                                 child: Row(
                                   children: [
@@ -315,7 +302,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                               addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                               Container(
                                 width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                height: 55 +  (APPSTYLE_SpaceExtraSmall * 2),
 
                                 child: Row(
                                   children: [
@@ -347,7 +334,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                               addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                               Container(
                                 width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                height: 55 +  (APPSTYLE_SpaceExtraSmall * 2),
 
                                 child: Row(
                                   children: [
@@ -379,7 +366,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                               addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                               Container(
                                 width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                height: 55 +  (APPSTYLE_SpaceExtraSmall * 2),
 
                                 child: Row(
                                   children: [
@@ -411,7 +398,7 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                               addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                               Container(
                                 width: screenwidth,
-                                height: 40 + (APPSTYLE_SpaceExtraSmall * 2),
+                                height: 55 +  (APPSTYLE_SpaceExtraSmall * 2),
                                 child: Row(
                                   children: [
                                     for(var i=0;i<mySubscriptionController.sixthWeekDays.length;i++)

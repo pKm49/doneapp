@@ -120,21 +120,39 @@ postRequest(endpoint, body) async {
 }
 
 patchRequest(endpoint, body) async {
+  print("patchRequest called");
+  print(endpoint);
+  print(Uri.https(env.apiEndPoint, "$endpoint").toString());
+  print(body);
   try {
     final http = InterceptedHttp.build(interceptors: [
       AppHttpInterceptor(),
     ]);
+    print("patchRequest called pass 1");
+    print(Uri.https(env.apiEndPoint, "$endpoint").toString());
+    print("update_customer_profile request");
+    print(endpoint.toString().contains('update_customer_profile'));
+    late var httpResponse;
+    httpResponse = await http.patch(
+        Uri.https(env.apiEndPoint, "$endpoint"),
+        body:endpoint.toString().contains('update_customer_profile')?null: json.encode(body)
+    );
 
-    final httpResponse = await http.patch(
-        Uri.https(env.apiEndPoint, "/$endpoint"),
-        body: json.encode(body));
+    print("patchRequest called pass 2");
 
+    print("patch body");
+    print(json.encode(body));
+    print(httpResponse.body);
+    print(httpResponse.statusCode);
     var httpResponseBody = json.decode(httpResponse.body);
 
     return generateSuccessResponse(httpResponseBody,httpResponse.statusCode);
   } on SocketException {
+    // print("patch SocketException exception");
     return generateErrorResponse('Couldn\'t Connect, Try Again Later');
   } on FormatException catch (e) {
+    // print("patch FormatException exception");
+    // print(e.toString());
     if (e.toString().contains("Request Not Implemented")) {
       return generateErrorResponse('Request Not Implemented');
     }
@@ -142,15 +160,20 @@ patchRequest(endpoint, body) async {
     if (e.toString().contains("Already authorised")) {
       return generateErrorResponse('Already authorised');
     }
+
     if (e.toString().contains("Request Not Authorised")) {
       return generateErrorResponse('Request Not Authorised');
     }
+
     return generateErrorResponse('Something went wrong, try again');
-  } on Exception {
+  } on Exception catch (e) {
+
+    // print("patch exception");
+    // print(e.toString());
     return generateErrorResponse('Something went wrong, try again');
   }
-}
 
+}
 deleteRequest(endpoint,parameters) async {
   try {
     final http = InterceptedHttp.build(interceptors: [

@@ -214,7 +214,7 @@ class MyProfilePage_Profile extends StatelessWidget {
                       child: PrePostIconButton(
                         specialColor: 0,
                         onPressed: () {
-                          Get.toNamed(AppRouteNames.allergyAuditRoute);
+                          Get.toNamed(AppRouteNames.allergyAuditRoute,arguments: [false]);
                         },
                         theme: 'dark',
                         border: '',
@@ -231,7 +231,7 @@ class MyProfilePage_Profile extends StatelessWidget {
                       child: PrePostIconButton(
                         specialColor: 0,
                         onPressed: () {
-                          Get.toNamed(AppRouteNames.dislikeAuditRoute);
+                          Get.toNamed(AppRouteNames.dislikeAuditRoute,arguments: [false]);
                         },
                         theme: 'dark',
                         border: '',

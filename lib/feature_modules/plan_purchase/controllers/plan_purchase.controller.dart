@@ -217,7 +217,6 @@ class PlanPurchaseController extends GetxController {
 
   }
 
-
   void checkOrderStatus(String mobile) async {
     isOrderCreating.value = true;
     isPaymentGatewayLoading.value = true;

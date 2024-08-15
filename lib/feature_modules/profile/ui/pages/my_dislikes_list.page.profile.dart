@@ -22,21 +22,26 @@ class _MyDislikesListPage_ProfileState
     extends State<MyDislikesListPage_Profile> {
   final profileController = Get.find<ProfileController>();
   TextEditingController searchController = TextEditingController();
+  var getArguments = Get.arguments;
+  bool isRegisterComplete = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    if (profileController.ingredients.isEmpty) {
-      profileController.getIngredients();
-    }
+    profileController.getIngredients();
     profileController.getDislikes();
 
     searchController.addListener(() {
       profileController
           .updateIngredientsListByQuery(searchController.text.trim());
     });
+
+    isRegisterComplete = getArguments[0];
+    profileController.updateAllergyDislikePurpose(isRegisterComplete);
+
+
   }
 
   @override
@@ -272,7 +277,8 @@ class _MyDislikesListPage_ProfileState
                           child: ElevatedButton(
                             onPressed: () {
                               if(!profileController.isDislikesUpdating.value && profileController.dislikes.isNotEmpty){
-                                  profileController.updateDislikes();
+                                profileController.updateDislikes(profileController.isAllregyDislikeForRegisterComplete.value);
+
                               }
                             },
                             style: getElevatedButtonStyle(context),

@@ -14,6 +14,7 @@ class  AppRouteNames {
   static const String registerOriginRoute = '$authRoute/register-origin';
   static const String loginRoute = '$authRoute/login';
   static const String resetPasswordNewpasswordRoute = '$authRoute/reset-password-new-password';
+  static const String resetPasswordAboutMeRoute = '$authRoute/reset-password-about-me';
 
   //home
   static const String otpVerificationMobileInputRoute = '/otp-verification-mobile-input';

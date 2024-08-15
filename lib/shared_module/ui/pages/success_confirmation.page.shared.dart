@@ -124,7 +124,6 @@ class _SuccessConfirmationPage_SharedState
                           final sharedController = Get.find<SharedController>();
                           await sharedController.handleLogout();
                         }else{
-
                           Get.offAllNamed(toRoute);
                         }
 

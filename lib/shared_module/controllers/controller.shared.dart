@@ -163,7 +163,11 @@ class SharedController extends GetxController {
       if (userData.value.id != -1) {
         saveDeviceToken();
         if (targetRoute != "") {
-          Get.offAllNamed(targetRoute);
+          if(targetRoute==AppRouteNames.allergyAuditRoute){
+            Get.offAllNamed(targetRoute,arguments: [true]);
+          }else{
+            Get.offAllNamed(targetRoute);
+          }
         }
       } else {
         if (targetRoute != "") {

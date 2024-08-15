@@ -6,6 +6,7 @@ import 'package:doneapp/feature_modules/auth/ui/register/register_name_english.p
 import 'package:doneapp/feature_modules/auth/ui/register/register_origin_page.auth.dart';
 import 'package:doneapp/feature_modules/auth/ui/register/register_other_data.page.auth.dart';
 import 'package:doneapp/feature_modules/auth/ui/reset-password/reset_password.page.auth.dart';
+import 'package:doneapp/feature_modules/auth/ui/reset-password/reset_password_aboutme_page.auth.dart';
 import 'package:doneapp/feature_modules/auth/ui/welcome.page.auth.dart';
 import 'package:doneapp/feature_modules/my_subscription/ui/pages/freeze_subscription.page.my_subscription.dart';
 import 'package:doneapp/feature_modules/my_subscription/ui/pages/meal_selection.page.my_subscription.dart';
@@ -83,6 +84,11 @@ AppPages() => [
   GetPage(
     name: AppRouteNames.resetPasswordNewpasswordRoute,
     page: () =>   ResetPasswordPage_auth(),
+  ),
+
+  GetPage(
+    name: AppRouteNames.resetPasswordAboutMeRoute,
+    page: () =>   ResetPasswordAboutMePage_Auth(),
   ),
 
   GetPage(

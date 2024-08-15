@@ -32,7 +32,7 @@ class MySubscriptionController extends GetxController {
   var subscriptoinMealConfig = mapSubscriptoinMealConfig({}, "").obs ;
   var selectedMealConfig = mapSubscriptoinMealConfig({}, "").obs ;
 
-  getSubscriptionDates(bool setDate) async {
+  getSubscriptionDates(bool setDate, bool getSubs) async {
     if(!isSubscriptionDatesLoading.value){
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? tMobile = prefs.getString('mobile');
@@ -46,6 +46,9 @@ class MySubscriptionController extends GetxController {
         setCurrentMonth();
         if(setDate){
           setSelectedDate();
+        }
+        if(getSubs){
+          getMealsByDate(selectedDate.value,false);
         }
         // frozenDays.value = [];
       } else {
@@ -238,7 +241,8 @@ class MySubscriptionController extends GetxController {
      selectedDate.value = tSelectedDay;
 
      if( getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
-         && getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.freezed && !isMealsFetching.value){
+         && getDayStatus(tSelectedDay) != VALIDSUBSCRIPTIONDAY_STATUS.freezed
+         && !isMealsFetching.value){
 
 
        final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -264,6 +268,7 @@ class MySubscriptionController extends GetxController {
      }else{
        subscriptoinMealConfig.value = mapSubscriptoinMealConfig({},  "");
        selectedMealConfig.value = mapSubscriptoinMealConfig({},  "");
+       Get.toNamed(AppRouteNames.mealSelectionRoute);
      }
    }
 
@@ -288,8 +293,7 @@ class MySubscriptionController extends GetxController {
 
           if(isSuccess){
             showSnackbar(Get.context!, "selection_saved".tr, "info");
-            getSubscriptionDates(false);
-
+            getSubscriptionDates(false,false);
           }
 
           isDayMealSaving.value = false;
@@ -448,8 +452,13 @@ class MySubscriptionController extends GetxController {
           var mySubsHttpService = MySubsHttpService();
           bool isSuccess  =  await mySubsHttpService.freezeSubscriptionDays(subscriptionId,frozenDays,isFreeze);
           if(isSuccess){
-            showSnackbar(Get.context!, "subscription_frozen".tr, "info");
-            getSubscriptionDates(false);
+            if(isFreeze){
+              showSnackbar(Get.context!, "subscription_frozen".tr, "info");
+            }else{
+              showSnackbar(Get.context!, "subscription_unfrozen".tr, "info");
+
+            }
+            getSubscriptionDates(false, true);
           }else{
             isFreezing.value = false;
           }

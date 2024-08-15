@@ -128,7 +128,7 @@ class RegisterController extends GetxController {
       showSnackbar(Get.context!, "account_created".tr, "info");
       final sharedController = Get.find<SharedController>();
       sharedController.fetchUserData(
-          AppRouteNames.planPurchaseSubscriptionPlansCategoryListRoute,
+          AppRouteNames.allergyAuditRoute,
           mobile.value);
     }
   }

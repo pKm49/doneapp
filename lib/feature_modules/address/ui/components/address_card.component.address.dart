@@ -48,7 +48,7 @@ class AddressCardComponentShared extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child:shippingAddress.jedha.trim()!=''?
+                  child:shippingAddress.nickname.trim()!=''?
                   Text(shippingAddress.nickname,style: getHeadlineMediumStyle(context)):
                   Container(),
                 ),

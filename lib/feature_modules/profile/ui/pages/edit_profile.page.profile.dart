@@ -5,6 +5,8 @@ import 'dart:io';
 
 import 'package:doneapp/feature_modules/profile/controllers/profile.controller.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
+import 'package:doneapp/shared_module/constants/available_genders.shared.constant.dart';
  import 'package:doneapp/shared_module/constants/style_params.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/valid_phoneverification_modes.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/widget_styles.constants.shared.dart';
@@ -13,10 +15,12 @@ import 'package:doneapp/shared_module/services/utility-services/form_validator.s
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
+import 'package:doneapp/shared_module/ui/components/dob_picker.profile.component.dart';
 import 'package:doneapp/shared_module/ui/components/photo_selector.component.shared.dart';
 import 'package:doneapp/shared_module/ui/components/update_profile_pic.profile.component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -45,6 +49,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
   @override
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
+    double screenhight = MediaQuery.of(context).size.height;
 
     return Obx(
       ()=> Scaffold(
@@ -67,7 +72,7 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                   profileController.userData.value.id  != -1){
                     sharedController.changeMobile(profileController.userData.value.mobile);
                     sharedController.sendOtp(true, false);
-                     // Get.toNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [profileController.userData.value.mobile]);
+                    //  Get.toNamed(AppRouteNames.resetPasswordNewpasswordRoute,arguments: [profileController.userData.value.mobile]);
                   }
                 },
                 child: Container(
@@ -109,7 +114,6 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
               ),
             ),
             addHorizontalSpace(APPSTYLE_SpaceLarge)
-
           ],
         ) ,
         body: SafeArea(
@@ -185,8 +189,127 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                               ),
                             ),
                           ),
-                          addVerticalSpace(APPSTYLE_SpaceMedium),
+                          addVerticalSpace(APPSTYLE_SpaceLarge),
+                          Visibility(
+                            visible: profileController.isUserDataFetching.value,
+                            child: Padding(
+                              padding: APPSTYLE_LargePaddingHorizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child:  Shimmer.fromColors(
+                                      baseColor: APPSTYLE_Grey20,
+                                      highlightColor: APPSTYLE_Grey40,
+                                      child: Container(
+                                        height: screenhight  * 0.07,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(40),
+                                          color:profileController.gender.value==VALID_GENDERS.female.name?
+                                          APPSTYLE_Black:APPSTYLE_Grey20,),
 
+                                      ),
+                                    ),
+                                  ),
+                                  addHorizontalSpace(APPSTYLE_SpaceMedium),
+                                  Expanded(
+                                    child:  Shimmer.fromColors(
+                                    baseColor: APPSTYLE_Grey20,
+                                    highlightColor: APPSTYLE_Grey40,
+                                    child: Container(
+                                      height: screenhight  * 0.07,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(40),
+                                        color:profileController.gender.value==VALID_GENDERS.female.name?
+                                        APPSTYLE_Black:APPSTYLE_Grey20,),
+
+                                    ),
+                                  ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: !profileController.isUserDataFetching.value,
+                            child: Padding(
+                              padding: APPSTYLE_LargePaddingHorizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        profileController.changeGender(VALID_GENDERS.male.name);
+                                      },
+                                      child: Container(
+                                        height: screenhight * 0.07,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(40),
+                                          color:profileController.gender.value==VALID_GENDERS.male.name?
+                                          APPSTYLE_Black:APPSTYLE_Grey20,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(ASSETS_MALE,
+                                              height: screenhight * 0.05,
+                                              color:profileController.gender.value==VALID_GENDERS.male.name?
+                                              APPSTYLE_BackgroundWhite:APPSTYLE_Black ,
+                                            ),
+                                            addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                            Text(
+                                              "Male",
+                                              style: getBodyMediumStyle(context).copyWith(
+                                                  color:profileController.gender.value==VALID_GENDERS.male.name?
+                                                  APPSTYLE_BackgroundWhite:APPSTYLE_Black ,
+                                                  fontWeight: APPSTYLE_FontWeightBold
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  addHorizontalSpace(APPSTYLE_SpaceMedium),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        profileController.changeGender(VALID_GENDERS.female.name);
+                                      },
+                                      child: Container(
+                                        height: screenhight  * 0.07,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(40),
+                                          color:profileController.gender.value==VALID_GENDERS.female.name?
+                                          APPSTYLE_Black:APPSTYLE_Grey20,),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                              ASSETS_FEMALE,
+                                              height: screenhight * 0.05,
+                                              color:profileController.gender.value==VALID_GENDERS.female.name?
+                                              APPSTYLE_BackgroundWhite:APPSTYLE_Black ,
+                                            ),
+                                            addHorizontalSpace(APPSTYLE_SpaceSmall),
+                                            Text(
+                                              "Female",
+                                              style: getBodyMediumStyle(context).copyWith(
+                                                  color:profileController.gender.value==VALID_GENDERS.female.name?
+                                                  APPSTYLE_BackgroundWhite:APPSTYLE_Black ,
+                                                  fontWeight: APPSTYLE_FontWeightBold
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                           Container(
                             decoration: APPSTYLE_ShadowedContainerSmallDecoration,
                             padding: APPSTYLE_MediumPaddingAll,
@@ -389,6 +512,57 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
                               children: [
                                 Expanded(
                                     flex:1,
+                                    child: Text('birthday'.tr,
+                                        style: getBodyMediumStyle(context)
+                                            .copyWith(color: APPSTYLE_Grey40))),
+                                Visibility(
+                                  visible: profileController.isUserDataFetching.value,
+                                  child: Expanded(
+                                    flex:2,
+                                    child: Shimmer.fromColors(
+                                      baseColor: APPSTYLE_Grey20,
+                                      highlightColor: APPSTYLE_Grey40,
+                                      child: Container(
+                                        height: 30,
+                                        decoration:
+                                        APPSTYLE_BorderedContainerExtraSmallDecoration
+                                            .copyWith(
+                                          border: null,
+                                          color: APPSTYLE_Grey20,
+                                          borderRadius: BorderRadius.circular(
+                                              APPSTYLE_BlurRadiusSmall),
+                                        ),),
+                                    ),
+                                  ),),
+                                Visibility(
+                                  visible: !profileController.isUserDataFetching.value,
+                                  child: Expanded(
+                                      flex:2,
+                                      child:  TextFormField(
+                                          onTap: () {
+                                            showDOBPickerDialog();
+                                          },
+                                          showCursor: true,
+                                          readOnly: true,
+                                          controller: profileController.birthDayController.value,
+                                          decoration: bottomBorderInputDecoration.copyWith(
+                                            hintText:'${'day'.tr} / ${'month'.tr} / ${'year'.tr}',
+                                            isDense: true,
+                                          )
+
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            decoration: APPSTYLE_ShadowedContainerSmallDecoration,
+                            padding: APPSTYLE_MediumPaddingAll,
+                            margin: APPSTYLE_LargePaddingAll.copyWith(bottom: 0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    flex:1,
                                     child: Text('email'.tr,
                                         style: getBodyMediumStyle(context)
                                             .copyWith(color: APPSTYLE_Grey40))),
@@ -525,7 +699,6 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
     );
   }
 
-
   void openSourceSelector(context) {
     showDialog(
       context: context,
@@ -543,4 +716,16 @@ class _EditProfilePage_ProfileState extends State<EditProfilePage_Profile> {
       print(valueFromDialog);
     });
   }
+
+  showDOBPickerDialog() async {
+    showDialog(
+      context: context,
+      builder: (_) => DOBPicker(
+          dob: profileController.selectedDOB.value,
+          dobPicked: (DateTime selectedDob) {
+            profileController.changeDob(selectedDob);
+          }),
+    );
+  }
+
 }
