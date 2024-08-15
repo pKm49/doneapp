@@ -9,6 +9,7 @@ import 'package:doneapp/shared_module/services/utility-services/form_validator.s
 import 'package:doneapp/shared_module/services/utility-services/widget_generator.service.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/widget_properties_generator.service.shared.dart';
 import 'package:doneapp/shared_module/ui/components/custom_back_button.component.shared.dart';
+import 'package:doneapp/shared_module/ui/components/dob_picker.profile.component.dart';
 import 'package:doneapp/shared_module/ui/components/language_preview_button.component.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -163,7 +164,24 @@ class _RegisterAboutmePage_AuthState
                               )
                             ],
                           ),
-
+                          addVerticalSpace(APPSTYLE_SpaceLarge*2),
+                          Text(
+                            'when_bday_q'.tr,
+                            style: getBodyMediumStyle(context).copyWith(  fontWeight: APPSTYLE_FontWeightBold),
+                            textAlign: TextAlign.start,
+                          ),
+                          addVerticalSpace(APPSTYLE_SpaceMedium),
+                          TextFormField(
+                              controller: registerController.birthDayController.value,
+                              onTap: () {
+                                showDOBPickerDialog();
+                              },
+                              showCursor: true,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                hintText:'${'day'.tr} / ${'month'.tr} / ${'year'.tr}',
+                                labelText:  'birthday'.tr,
+                              )),
                           addVerticalSpace(APPSTYLE_SpaceLarge * 2),
 
                           Text(
@@ -283,4 +301,15 @@ class _RegisterAboutmePage_AuthState
           ),
         ));
   }
+
+   showDOBPickerDialog() async {
+     showDialog(
+       context: context,
+       builder: (_) => DOBPicker(
+           dob: registerController.selectedDOB.value,
+           dobPicked: (DateTime selectedDob) {
+             registerController.changeDob(selectedDob);
+           }),
+     );
+   }
 }

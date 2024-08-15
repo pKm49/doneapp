@@ -9,6 +9,7 @@ import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterController extends GetxController {
@@ -21,6 +22,7 @@ class RegisterController extends GetxController {
 
   Rx<TextEditingController> firstNameArabicTextEditingController =
       TextEditingController().obs;
+  Rx<TextEditingController> birthDayController = TextEditingController().obs;
 
   Rx<TextEditingController> lastNameArabicTextEditingController =
       TextEditingController().obs;
@@ -45,7 +47,9 @@ class RegisterController extends GetxController {
 
   var isRegisterSubmitting = false.obs;
   var isOtpSending = false.obs;
-
+  var selectedDOB = DateTime
+      .now()
+      .obs;
   var gender = VALID_GENDERS.male.name.obs;
   var source = VALID_SOURCES.social.name.obs;
   var mobile = "".obs;
@@ -73,6 +77,12 @@ class RegisterController extends GetxController {
     source.value = s;
   }
 
+  void changeDob(DateTime selectedDob) {
+    selectedDOB.value = selectedDob;
+    final f = new DateFormat('dd-MM-yyyy');
+    birthDayController.value.text = f.format(selectedDob);
+  }
+
   void updateAddressData(Address tAddress){
     address.value = tAddress;
     print("updateAddressData");
@@ -94,7 +104,7 @@ class RegisterController extends GetxController {
         firstNameArabic: firstNameArabicTextEditingController.value.text,
         lastNameArabic: lastNameArabicTextEditingController.value.text,
         email: emailTextEditingController.value.text,
-        dateOfBirth: "",
+        dateOfBirth: selectedDOB.value,
         gender: gender.value,
         height: double.parse(heightTextEditingController.value.text.toString().trim()),
         weight: double.parse(weightTextEditingController.value.text.toString().trim()),

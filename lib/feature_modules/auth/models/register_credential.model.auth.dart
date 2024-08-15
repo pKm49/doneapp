@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class RegisterCredential {
   final String mobile;
   final String password;
@@ -6,7 +8,7 @@ class RegisterCredential {
   final String firstNameArabic;
   final String lastNameArabic;
   final String email;
-  final String dateOfBirth;
+  final DateTime dateOfBirth;
   final String gender;
   final double height;
   final double weight;
@@ -48,32 +50,6 @@ class RegisterCredential {
         required this.profile_picture,
         required this.other_source});
 
-  factory RegisterCredential.fromJson(Map<String, dynamic> json) =>
-      RegisterCredential(
-        mobile: json["mobile"]??"",
-        password: json["password"]??"",
-        firstName: json["first_name"]??"",
-        lastName: json["last_name"]??"",
-        firstNameArabic: json["first_name_arabic"]??"",
-        lastNameArabic: json["last_name_arabic"]??"",
-        email: json["email"]??"",
-        dateOfBirth: json["date_of_birth"]??"",
-        gender: json["gender"]??"",
-        height: json["height"]??0.0,
-        weight: json["weight"]??0.0,
-        source: json["source"]??"",
-        nickname: json["nickname"]??"",
-        area: json["area_id"]??-1,
-        block: json["block_id"]??-1,
-        street: json["street"]??"",
-        jedha: json["jedha"]??"",
-        houseNumber: json["house_number"]??-1,
-        floorNumber: json["floor_number"]??-1,
-        apartmentNumber: json["apartment_no"]??-1,
-        comments: json["comments"]??"",
-        profile_picture: json["profile_picture"]??"",
-        other_source: json["other_source"]??"",
-      );
 
   Map<String, dynamic> toJson() => {
     "mobile": mobile,
@@ -83,11 +59,13 @@ class RegisterCredential {
     "first_name_arabic": firstNameArabic,
     "last_name_arabic": lastNameArabic,
     "email": email,
-    "date_of_birth": dateOfBirth,
+    "date_of_birth": convertBirthDay(dateOfBirth),
+
     "gender": gender,
     "height": height,
     "weight": weight,
     "source": source,
+    'name': nickname.trim()==""?"Home":nickname,
     'nickname': nickname.trim()==""?"Home":nickname,
     "area_id": area,
     "block_id": block,
@@ -100,4 +78,8 @@ class RegisterCredential {
     "profile_picture": profile_picture,
     "other_source": other_source
   };
+}
+String convertBirthDay(DateTime birthDay) {
+  final f = new DateFormat('yyyy-MM-dd');
+  return f.format(birthDay);
 }
