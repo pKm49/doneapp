@@ -97,6 +97,11 @@ class _MyAppState extends State<MyApp> {
     precacheImage(AssetImage(ASSETS_OTPMESSAGE), context);
     precacheImage(AssetImage(ASSETS_SUCCESSMARK), context);
     precacheImage(AssetImage(ASSETS_NAMELOGO), context);
+    precacheImage(AssetImage(ASSETS_FOODTRUCK), context);
+    precacheImage(AssetImage(ASSETS_FOODPLATE), context);
+    precacheImage(AssetImage(ASSETS_SELECTHAND), context);
+    precacheImage(AssetImage(ASSETS_OFFDAY), context);
+    precacheImage(AssetImage(ASSETS_PAUSE), context);
 
     return GetMaterialApp(
       navigatorKey: MyApp.navigatorKey,

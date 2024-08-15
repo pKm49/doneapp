@@ -12,6 +12,7 @@ class SubscriptoinDailyMealItem {
   final double carbs;
   final double fat;
   final double protien;
+  final int ratingCount;
   final double rating;
   final bool isSelected;
 
@@ -29,6 +30,7 @@ class SubscriptoinDailyMealItem {
         required this.fat,
         required this.protien,
         required this.rating,
+        required this.ratingCount,
       });
 }
 
@@ -47,6 +49,7 @@ SubscriptoinDailyMealItem mapSubscriptoinDailyMealItem(dynamic payload) {
     fat: payload["fat"] ?? 0.0,
     protien: payload["protien"] ?? 0.0,
     rating: payload["rating"] ?? 0.0,
+    ratingCount: payload["rating_count"] ?? 0,
     isSelected: payload["is_selected"] ?? false,
     image: payload["image"] ?? ASSETS_SAMPLEFOOD,
   );

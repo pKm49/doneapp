@@ -419,7 +419,7 @@ class _MealSelectionPage_MySubscriptionState
                                                     alignment: Alignment.centerRight,
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
-                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].rating} ⭐',
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].rating}(${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].ratingCount}) ⭐',
                                                         style: getBodyMediumStyle(
                                                             context)
                                                             .copyWith(
@@ -711,7 +711,7 @@ class _MealSelectionPage_MySubscriptionState
                                                     alignment: Alignment.centerRight,
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
-                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].rating} ⭐',
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].rating}(${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].rating}) ⭐',
                                                         style: getBodyMediumStyle(
                                                             context)
                                                             .copyWith(
