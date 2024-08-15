@@ -25,10 +25,10 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
     return Container(
-      height: 120 ,
+      height: 100 ,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             getDayNameByDate(date),

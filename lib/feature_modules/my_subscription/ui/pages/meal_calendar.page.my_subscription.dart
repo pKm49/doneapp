@@ -575,9 +575,18 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.delivery_dining,color: APPSTYLE_WhatsappGreen),
+                Expanded(
+                    flex:2,child: Column(
+                      children: [
+                        SvgPicture.asset(ASSETS_FOODTRUCK,height: 20,color: APPSTYLE_WhatsappGreen,),
+                        Text("delivered_single".tr,style: getLabelLargeStyle(context).copyWith(color:APPSTYLE_WhatsappGreen ))
+
+                      ],
+                    )),
                 addHorizontalSpace(APPSTYLE_SpaceMedium),
-                Expanded(child: Text("delivered".tr,
+                Expanded(
+                  flex: 10,
+                  child: Text("delivered".tr,
                     style: getHeadlineMediumStyle(context) ,
                     textAlign: TextAlign.start),),
 
@@ -591,8 +600,13 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    flex:1,
-                    child: Icon(Icons.check,color: APPSTYLE_WhatsappGreen)),
+                    flex:2,child: Column(
+                      children: [
+                        SvgPicture.asset(ASSETS_FOODPLATE,height: 20,color: APPSTYLE_GuideGreen,),
+                        Text("meal-selected_single".tr,style: getLabelLargeStyle(context).copyWith(color:APPSTYLE_GuideGreen ))
+
+                      ],
+                    )),
                 addHorizontalSpace(APPSTYLE_SpaceMedium),
                 Expanded(
                   flex: 10,
@@ -609,7 +623,12 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    flex:1,child: SvgPicture.asset(ASSETS_SELECTHAND,width: 20,color: APPSTYLE_PrimaryColor,)),
+                    flex:2,child: Column(
+                      children: [
+                        SvgPicture.asset(ASSETS_SELECTHAND,width: 20,color: APPSTYLE_PrimaryColor,),
+                        Text("meal-not-selected_single".tr,style: getLabelLargeStyle(context).copyWith(color:APPSTYLE_PrimaryColor ))
+                      ],
+                    )),
                 addHorizontalSpace(APPSTYLE_SpaceMedium),
                 Expanded(
                   flex: 10,
@@ -626,7 +645,13 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    flex:1,child: Icon(Icons.close,color: APPSTYLE_PrimaryColor)),
+                    flex:2,child: Column(
+                      children: [
+                        SvgPicture.asset(ASSETS_OFFDAY,height: 20,color: APPSTYLE_GuideRed,),
+                        Text("off-day_single".tr,style: getLabelLargeStyle(context).copyWith(color:APPSTYLE_GuideRed ))
+
+                      ],
+                    )),
                 addHorizontalSpace(APPSTYLE_SpaceMedium),
                 Expanded(
                   flex: 10,
@@ -636,21 +661,23 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
 
               ],
             ),
-            addVerticalSpace(APPSTYLE_SpaceSmall),
-
-
+            addVerticalSpace(APPSTYLE_SpaceMedium),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    flex:1,child: Icon(Icons.pause,color: APPSTYLE_PrimaryColor)),
+                    flex:2,child: Column(
+                      children: [
+                        SvgPicture.asset(ASSETS_PAUSE,height: 20,color: APPSTYLE_GuideOrange,),
+                        Text("freezed_single".tr,style: getLabelLargeStyle(context).copyWith(color:APPSTYLE_GuideOrange ))
+                      ],
+                    )),
                 addHorizontalSpace(APPSTYLE_SpaceMedium),
                 Expanded(
                   flex: 10,child: Text("freezed".tr,
                     style: getHeadlineMediumStyle(context),
                     textAlign: TextAlign.start),),
-
               ],
             ),
           ],

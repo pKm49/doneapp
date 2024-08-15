@@ -176,7 +176,7 @@ class _MealSelectionPage_MySubscriptionState
                   ),
                 ),
               ),
-              addVerticalSpace(APPSTYLE_SpaceLarge),
+              addVerticalSpace(APPSTYLE_SpaceMedium),
               Visibility(
                 visible: !mySubscriptionController.isMealsFetching.value && !mySubscriptionController.isFreezing.value &&
                     mySubscriptionController
@@ -379,6 +379,7 @@ class _MealSelectionPage_MySubscriptionState
                                             children: [
                                               Expanded(
                                                   child: FittedBox(
+                                                    alignment: Alignment.centerLeft,
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].carbs} Carbs',
@@ -389,42 +390,33 @@ class _MealSelectionPage_MySubscriptionState
                                                   APPSTYLE_SpaceSmall),
                                               Expanded(
                                                   child: FittedBox(
-                                                    fit: BoxFit.scaleDown,
-                                                    child: Text(
-                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].fat} Fat',
-                                                        style: getLabelLargeStyle(
-                                                            context) ),
-                                                  )),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                  child: FittedBox(
+                                                    alignment: Alignment.centerRight,
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].protien} Prot',
                                                         style: getLabelLargeStyle(
                                                             context) ),
                                                   )),
-                                              addHorizontalSpace(
-                                                  APPSTYLE_SpaceSmall),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+
                                               Expanded(
                                                   child: FittedBox(
+                                                    alignment: Alignment.centerLeft,
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].calories} Cal',
                                                         style: getLabelLargeStyle(
                                                             context) ),
                                                   )),
-                                            ],
-                                          ),
-                                          addVerticalSpace(
-                                              APPSTYLE_SpaceExtraSmall),
-                                          Row(
-                                            children: [
+
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
                                               Expanded(
                                                   child: FittedBox(
+                                                    alignment: Alignment.centerRight,
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].rating} ⭐',
@@ -436,6 +428,13 @@ class _MealSelectionPage_MySubscriptionState
                                                   )),
                                               addHorizontalSpace(
                                                   APPSTYLE_SpaceSmall),
+                                            ],
+                                          ),
+                                          addVerticalSpace(
+                                              APPSTYLE_SpaceExtraSmall),
+                                          Row(
+                                            children: [
+
                                               Expanded(
                                                   child: InkWell(
                                                     onTap: () {
@@ -598,7 +597,7 @@ class _MealSelectionPage_MySubscriptionState
                                       mainAxisSpacing: 0,
                                       crossAxisSpacing:
                                       APPSTYLE_SpaceMedium,
-                                      mainAxisExtent: screenheight * 0.35),
+                                      mainAxisExtent: screenheight * 0.4),
                                   itemBuilder: (context, indx) {
                                     return Container(
                                       decoration:
@@ -673,6 +672,7 @@ class _MealSelectionPage_MySubscriptionState
                                             children: [
                                               Expanded(
                                                   child: FittedBox(
+                                                    alignment: Alignment.centerLeft,
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].carbs} Carbs',
@@ -684,51 +684,46 @@ class _MealSelectionPage_MySubscriptionState
                                               Expanded(
                                                   child: FittedBox(
                                                     fit: BoxFit.scaleDown,
-                                                    child: Text(
-                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].fat} Fat',
-                                                        style: getLabelLargeStyle(
-                                                            context) ),
-                                                  )),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                  child: FittedBox(
-                                                    fit: BoxFit.scaleDown,
+                                                    alignment: Alignment.centerRight,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].protien} Prot',
                                                         style: getLabelLargeStyle(
                                                             context) ),
                                                   )),
-                                              addHorizontalSpace(
-                                                  APPSTYLE_SpaceSmall),
-                                              Expanded(
-                                                  child: FittedBox(
-                                                    fit: BoxFit.scaleDown,
-                                                    child: Text(
-                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].calories} Cal',
-                                                        style: getLabelLargeStyle(
-                                                            context) ),
-                                                  )),
                                             ],
                                           ),
-                                          addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                                           Row(
                                             children: [
                                               Expanded(
                                                   child: FittedBox(
                                                     fit: BoxFit.scaleDown,
+                                                    alignment: Alignment.centerLeft,
                                                     child: Text(
-                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].rating}',
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].calories} Cal',
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
+                                                  )),
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
+
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    alignment: Alignment.centerRight,
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].rating} ⭐',
                                                         style: getBodyMediumStyle(
                                                             context)
                                                             .copyWith(
                                                             fontWeight:
                                                             APPSTYLE_FontWeightBold)),
                                                   )),
-                                              addHorizontalSpace(
-                                                  APPSTYLE_SpaceSmall),
+                                            ],
+                                          ),
+                                          addVerticalSpace(APPSTYLE_SpaceExtraSmall),
+                                          Row(
+                                            children: [
+
                                               Expanded(
                                                   child: InkWell(
                                                     onTap: () {
