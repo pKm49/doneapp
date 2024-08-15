@@ -29,8 +29,7 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
         height: 55 + (APPSTYLE_SpaceExtraSmall * 2),
         decoration:   BoxDecoration(
             borderRadius: BorderRadius.circular(APPSTYLE_BorderRadiusExtraSmall),
-            color:isSelected?APPSTYLE_PrimaryColor:isMonthDay?APPSTYLE_Grey20:APPSTYLE_BackgroundWhite,
-            border:Border.all(color:  isSelected ?APPSTYLE_Grey80:APPSTYLE_BackgroundWhite, width: .5)
+            color:(isSelected && isMonthDay) ?APPSTYLE_PrimaryColor:isMonthDay?APPSTYLE_Grey20:APPSTYLE_BackgroundWhite
         ),
         margin: EdgeInsets.only(right:APPSTYLE_SpaceExtraSmall ),
         padding: APPSTYLE_ExtraSmallPaddingAll,
@@ -47,8 +46,8 @@ class MealCalendarDateComponent_MySubscription extends StatelessWidget {
                   style: getLabelLargeStyle(context)
                       .copyWith(
                       color:isSelected?APPSTYLE_BackgroundWhite:
-                      isSubscriptionDay? APPSTYLE_PrimaryColor:
-                      isMonthDay ? APPSTYLE_Grey80:APPSTYLE_Grey40
+                      (isSubscriptionDay && isMonthDay)? APPSTYLE_PrimaryColor:
+                      isMonthDay ? APPSTYLE_Grey80:APPSTYLE_BackgroundWhite
                   ),
                 ),
               ],

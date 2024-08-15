@@ -246,7 +246,11 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            mySubscriptionController.getMealsByDate(mySubscriptionController.firstWeekDays[i],true);
+                                            if(mySubscriptionController.firstWeekDays[i].month==
+                                                mySubscriptionController.currentMonth.value.month && mySubscriptionController.isSubscriptionDay(mySubscriptionController.firstWeekDays[i])){
+                                              mySubscriptionController.getMealsByDate(mySubscriptionController.firstWeekDays[i],true);
+
+                                            }
 
                                           },
                                           child: MealCalendarDateComponent_MySubscription(
@@ -279,7 +283,11 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            mySubscriptionController.getMealsByDate(mySubscriptionController.secondWeekDays[i],true);
+                                            if(mySubscriptionController.secondWeekDays[i].month==
+                                                mySubscriptionController.currentMonth.value.month && mySubscriptionController.isSubscriptionDay(mySubscriptionController.secondWeekDays[i])){
+                                              mySubscriptionController.getMealsByDate(mySubscriptionController.secondWeekDays[i],true);
+
+                                            }
 
                                           },
                                           child: MealCalendarDateComponent_MySubscription(
@@ -311,7 +319,11 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            mySubscriptionController.getMealsByDate(mySubscriptionController.thirdWeekDays[i],true);
+                                            if(mySubscriptionController.thirdWeekDays[i].month==
+                                                mySubscriptionController.currentMonth.value.month && mySubscriptionController.isSubscriptionDay(mySubscriptionController.thirdWeekDays[i])){
+                                              mySubscriptionController.getMealsByDate(mySubscriptionController.thirdWeekDays[i],true);
+
+                                            }
 
                                           },
                                           child: MealCalendarDateComponent_MySubscription(
@@ -343,7 +355,11 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            mySubscriptionController.getMealsByDate(mySubscriptionController.fourthWeekDays[i],true);
+                                            if(mySubscriptionController.fourthWeekDays[i].month==
+                                                mySubscriptionController.currentMonth.value.month && mySubscriptionController.isSubscriptionDay(mySubscriptionController.fourthWeekDays[i])){
+                                              mySubscriptionController.getMealsByDate(mySubscriptionController.fourthWeekDays[i],true);
+
+                                            }
 
                                           },
                                           child: MealCalendarDateComponent_MySubscription(
@@ -375,8 +391,11 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            mySubscriptionController.getMealsByDate(mySubscriptionController.fifthWeekDays[i],true);
+                                            if(mySubscriptionController.fifthWeekDays[i].month==
+                                                mySubscriptionController.currentMonth.value.month && mySubscriptionController.isSubscriptionDay(mySubscriptionController.fifthWeekDays[i])){
+                                              mySubscriptionController.getMealsByDate(mySubscriptionController.fifthWeekDays[i],true);
 
+                                            }
                                           },
                                           child:MealCalendarDateComponent_MySubscription (
                                               isSelected:isSameDay(mySubscriptionController.fifthWeekDays[i],mySubscriptionController.selectedDate.value),
@@ -406,8 +425,11 @@ class _MealCalendarPage_MySubscriptionState extends State<MealCalendarPage_MySub
                                         flex: 1,
                                         child: InkWell(
                                           onTap: () {
-                                            mySubscriptionController.getMealsByDate(mySubscriptionController.sixthWeekDays[i],true);
+                                            if(mySubscriptionController.sixthWeekDays[i].month==
+                                                mySubscriptionController.currentMonth.value.month && mySubscriptionController.isSubscriptionDay(mySubscriptionController.sixthWeekDays[i])){
+                                              mySubscriptionController.getMealsByDate(mySubscriptionController.sixthWeekDays[i],true);
 
+                                            }
                                           },
                                           child:MealCalendarDateComponent_MySubscription (
                                               isSelected:isSameDay(mySubscriptionController.sixthWeekDays[i],mySubscriptionController.selectedDate.value),

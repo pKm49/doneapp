@@ -1013,7 +1013,7 @@ class _MealSelectionPage_MySubscriptionState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(_scrollController.hasClients){
         _scrollController.jumpTo(
-            mySubscriptionController.subscriptionDates.keys.toList().indexOf(mySubscriptionController.selectedDate.value)*46  );
+            mySubscriptionController.subscriptionDates.keys.toList().indexOf(mySubscriptionController.selectedDate.value)*100  );
       }
     });
   }
