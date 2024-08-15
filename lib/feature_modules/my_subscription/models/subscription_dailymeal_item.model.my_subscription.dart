@@ -9,6 +9,10 @@ class SubscriptoinDailyMealItem {
   final String arabicDescription;
   final String image;
   final double calories;
+  final double carbs;
+  final double fat;
+  final double protien;
+  final double rating;
   final bool isSelected;
 
   SubscriptoinDailyMealItem(
@@ -21,6 +25,10 @@ class SubscriptoinDailyMealItem {
         required this.calories,
         required this.isSelected,
         required this.image,
+        required this.carbs,
+        required this.fat,
+        required this.protien,
+        required this.rating,
       });
 }
 
@@ -35,6 +43,10 @@ SubscriptoinDailyMealItem mapSubscriptoinDailyMealItem(dynamic payload) {
     arabicDescription: payload["arabic_description"] != null?
     payload["arabic_description"]==false?'':payload["arabic_description"]:"",
     calories: payload["calories"] ?? 0.0,
+    carbs: payload["carbs"] ?? 0.0,
+    fat: payload["fat"] ?? 0.0,
+    protien: payload["protien"] ?? 0.0,
+    rating: payload["rating"] ?? 0.0,
     isSelected: payload["is_selected"] ?? false,
     image: payload["image"] ?? ASSETS_SAMPLEFOOD,
   );

@@ -286,7 +286,7 @@ class _MealSelectionPage_MySubscriptionState
                                 ),
                               ),
                               Padding(
-                                padding: APPSTYLE_LargePaddingHorizontal,
+                                padding: APPSTYLE_LargePaddingHorizontal.copyWith(top: APPSTYLE_SpaceMedium),
                                 child: GridView.builder(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
@@ -301,9 +301,223 @@ class _MealSelectionPage_MySubscriptionState
                                           crossAxisCount: 2,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing:
-                                              APPSTYLE_SpaceMedium,
-                                          mainAxisExtent: screenheight * 0.3),
+                                              APPSTYLE_SpaceSmall,
+                                          mainAxisExtent: screenheight * 0.4),
                                   itemBuilder: (context, indx) {
+                                    return Container(
+                                      decoration:
+                                      APPSTYLE_BorderedContainerSmallDecoration
+                                          .copyWith(
+                                        color: APPSTYLE_Grey20,
+                                      ),
+                                      margin: EdgeInsets.only(bottom: APPSTYLE_SpaceMedium),
+                                      padding: APPSTYLE_SmallPaddingAll,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
+                                        children: [
+                                          Container(
+                                            decoration: APPSTYLE_BorderedContainerDarkMediumDecoration
+                                                .copyWith(
+
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    APPSTYLE_BorderRadiusSmall),
+                                                color:
+                                                APPSTYLE_Grey20,
+                                                border: Border.all(
+                                                    color:
+                                                    APPSTYLE_BackgroundWhite,
+                                                    width: 0.0)),
+                                            width: screenwidth * .4,
+                                            clipBehavior:
+                                            Clip.hardEdge,
+                                            child:  Image.network(
+                                                mySubscriptionController
+                                                    .subscriptoinMealConfig
+                                                    .value
+                                                    .meals[
+                                                index]
+                                                    .items[
+                                                indx]
+                                                    .image
+                                            ),),
+                                          addVerticalSpace(
+                                              APPSTYLE_SpaceExtraSmall),
+                                          Text(
+                                            Localizations.localeOf(
+                                                context)
+                                                .languageCode
+                                                .toString() ==
+                                                'ar'
+                                                ? mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[index]
+                                                .items[indx]
+                                                .arabicName
+                                                : mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[index]
+                                                .items[indx]
+                                                .name,
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: getBodyMediumStyle(
+                                                context)
+                                                .copyWith(
+                                              fontWeight: APPSTYLE_FontWeightBold,
+                                                color:
+                                                APPSTYLE_Grey80),
+                                          ),
+                                          addVerticalSpace(
+                                              APPSTYLE_SpaceExtraSmall),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].carbs} Carbs',
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
+                                                  )),
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].fat} Fat',
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
+                                                  )),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].protien} Prot',
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
+                                                  )),
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].calories} Cal',
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
+                                                  )),
+                                            ],
+                                          ),
+                                          addVerticalSpace(
+                                              APPSTYLE_SpaceExtraSmall),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items[indx].rating} ⭐',
+                                                        style: getBodyMediumStyle(
+                                                            context)
+                                                            .copyWith(
+                                                            fontWeight:
+                                                            APPSTYLE_FontWeightBold)),
+                                                  )),
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
+                                              Expanded(
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      mySubscriptionController
+                                                          .addOrRemoveMeal(
+                                                          mySubscriptionController
+                                                              .subscriptoinMealConfig
+                                                              .value
+                                                              .meals[
+                                                          index]
+                                                              .id,
+                                                          mySubscriptionController
+                                                              .subscriptoinMealConfig
+                                                              .value
+                                                              .meals[
+                                                          index]
+                                                              .items[indx]
+                                                              .id);
+                                                    },
+                                                    child: Container(
+                                                      decoration:
+                                                      APPSTYLE_BorderedContainerExtraSmallDecoration
+                                                          .copyWith(
+                                                          color:
+                                                          mySubscriptionController
+                                                              .isMealAlreadySelected(
+                                                              mySubscriptionController
+                                                                  .subscriptoinMealConfig
+                                                                  .value
+                                                                  .meals[
+                                                              index]
+                                                                  .id,
+                                                              mySubscriptionController
+                                                                  .subscriptoinMealConfig
+                                                                  .value
+                                                                  .meals[
+                                                              index]
+                                                                  .items[indx]
+                                                                  .id)?APPSTYLE_Black:APPSTYLE_PrimaryColor),
+                                                      padding: EdgeInsets.symmetric(
+                                                          vertical:
+                                                          APPSTYLE_BorderRadiusExtraSmall *
+                                                              .5,
+                                                          horizontal:
+                                                          APPSTYLE_SpaceSmall),
+                                                      child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          mySubscriptionController
+                                                              .isMealAlreadySelected(
+                                                              mySubscriptionController
+                                                                  .subscriptoinMealConfig
+                                                                  .value
+                                                                  .meals[
+                                                              index]
+                                                                  .id,
+                                                              mySubscriptionController
+                                                                  .subscriptoinMealConfig
+                                                                  .value
+                                                                  .meals[
+                                                              index]
+                                                                  .items[indx]
+                                                                  .id)?"remove".tr:"add".tr,
+                                                          textAlign: TextAlign
+                                                              .center,
+                                                          style: getBodyMediumStyle(
+                                                              context)
+                                                              .copyWith(
+                                                              color:
+                                                              APPSTYLE_BackgroundWhite),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                                    );
                                     return Container(
                                       child: Stack(
                                         alignment: Alignment.topCenter,
@@ -555,7 +769,7 @@ class _MealSelectionPage_MySubscriptionState
                                 ),
                               ),
                               Padding(
-                                padding: APPSTYLE_LargePaddingHorizontal,
+                                padding: APPSTYLE_LargePaddingHorizontal.copyWith(top:APPSTYLE_SpaceMedium),
                                 child: GridView.builder(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
@@ -571,160 +785,199 @@ class _MealSelectionPage_MySubscriptionState
                                       mainAxisSpacing: 0,
                                       crossAxisSpacing:
                                       APPSTYLE_SpaceMedium,
-                                      mainAxisExtent: screenheight * 0.3),
+                                      mainAxisExtent: screenheight * 0.35),
                                   itemBuilder: (context, indx) {
                                     return Container(
-                                      child: Stack(
-                                        alignment: Alignment.topCenter,
+                                      decoration:
+                                      APPSTYLE_BorderedContainerSmallDecoration
+                                          .copyWith(
+                                        color: APPSTYLE_Grey20,
+                                      ),
+                                      padding: APPSTYLE_SmallPaddingAll,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
                                         children: [
                                           Container(
-                                            height: screenheight * .4,
-                                            margin:
-                                            const EdgeInsets.only(top: 50),
-                                            decoration:
-                                            APPSTYLE_BorderedContainerSmallDecoration
-                                                .copyWith(
-                                              color: APPSTYLE_Grey20,
-                                            ),
-                                          ),
-                                          Container(
-                                            height: screenheight * .4,
-                                            padding: APPSTYLE_MediumPaddingAll,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Container(
-                                                    decoration: APPSTYLE_BorderedContainerDarkMediumDecoration
-                                                        .copyWith(
-                                                        image:
-                                                        DecorationImage(
-                                                          alignment:
-                                                          Alignment(
-                                                              -.2, 0),
-                                                          image: getProductImage(
-                                                              mySubscriptionController
-                                                                  .subscriptoinMealConfig
-                                                                  .value
-                                                                  .meals[
-                                                              index]
-                                                                  .items.where((element) => element.isSelected).toList()[
-                                                              indx]
-                                                                  .image),
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            1000),
-                                                        color:
-                                                        APPSTYLE_BackgroundWhite,
-                                                        border: Border.all(
-                                                            color:
-                                                            APPSTYLE_PrimaryColorBg,
-                                                            width: 3)),
-                                                    padding:
-                                                    APPSTYLE_SmallPaddingAll,
-                                                    width: screenwidth * .3,
-                                                    height: screenwidth * .3,
-                                                    clipBehavior:
-                                                    Clip.hardEdge),
-                                                addVerticalSpace(
-                                                    APPSTYLE_SpaceExtraSmall),
-                                                Text(
-                                                  Localizations.localeOf(
-                                                      context)
-                                                      .languageCode
-                                                      .toString() ==
-                                                      'ar'
-                                                      ? mySubscriptionController
-                                                      .subscriptoinMealConfig
-                                                      .value
-                                                      .meals[index]
-                                                      .items.where((element) => element.isSelected).toList()[indx]
-                                                      .arabicName
-                                                      : mySubscriptionController
-                                                      .subscriptoinMealConfig
-                                                      .value
-                                                      .meals[index]
-                                                      .items.where((element) => element.isSelected).toList()[indx]
-                                                      .name,
-                                                  maxLines: 2,
-                                                  textAlign: TextAlign.center,
-                                                  style: getLabelLargeStyle(
-                                                      context)
-                                                      .copyWith(
-                                                      color:
-                                                      APPSTYLE_Grey80),
-                                                ),
+                                              decoration: APPSTYLE_BorderedContainerDarkMediumDecoration
+                                                  .copyWith(
 
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: FittedBox(
-                                                          fit: BoxFit.scaleDown,
-                                                          child: Text(
-                                                              '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].calories} Cal',
-                                                              style: getBodyMediumStyle(
-                                                                  context)
-                                                                  .copyWith(
-                                                                  fontWeight:
-                                                                  APPSTYLE_FontWeightBold)),
-                                                        )),
-                                                    addHorizontalSpace(
-                                                        APPSTYLE_SpaceSmall),
-                                                    Expanded(
-                                                        child: InkWell(
-                                                          onTap: () {
-                                                            mySubscriptionController
-                                                                .addOrRemoveMeal(
-                                                                mySubscriptionController
-                                                                    .subscriptoinMealConfig
-                                                                    .value
-                                                                    .meals[
-                                                                index]
-                                                                    .id,
-                                                                mySubscriptionController
-                                                                    .subscriptoinMealConfig
-                                                                    .value
-                                                                    .meals[
-                                                                index]
-                                                                    .items.where((element) => element.isSelected).toList()[indx]
-                                                                    .id);
-                                                          },
-                                                          child: Container(
-                                                            decoration:
-                                                            APPSTYLE_BorderedContainerExtraSmallDecoration
-                                                                .copyWith(
-                                                                color: APPSTYLE_WhatsappGreen),
-                                                            padding: EdgeInsets.symmetric(
-                                                                vertical:
-                                                                APPSTYLE_BorderRadiusExtraSmall *
-                                                                    .5,
-                                                                horizontal:
-                                                                APPSTYLE_SpaceSmall),
-                                                            child: FittedBox(
-                                                              fit: BoxFit.scaleDown,
-                                                              child: Text( "delivered_single".tr,
-                                                                textAlign: TextAlign
-                                                                    .center,
-                                                                style: getBodyMediumStyle(
-                                                                    context)
-                                                                    .copyWith(
-                                                                    color:
-                                                                    APPSTYLE_BackgroundWhite),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          )
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(
+                                                      APPSTYLE_BorderRadiusSmall),
+                                                  color:
+                                                  APPSTYLE_BackgroundWhite,
+                                                  border: Border.all(
+                                                      color:
+                                                      APPSTYLE_BackgroundWhite,
+                                                      width: 0.0)),
+                                              padding:
+                                              APPSTYLE_SmallPaddingAll,
+                                              width: screenwidth * .4,
+                                              height: screenwidth * .4,
+                                              clipBehavior:
+                                              Clip.hardEdge,
+                                          child:  Image.network(
+                                              mySubscriptionController
+                                                  .subscriptoinMealConfig
+                                                  .value
+                                                  .meals[
+                                              index]
+                                                  .items.where((element) => element.isSelected).toList()[
+                                              indx]
+                                                  .image
+                                          ),),
+                                          addVerticalSpace(
+                                              APPSTYLE_SpaceExtraSmall),
+                                          Text(
+                                            Localizations.localeOf(
+                                                context)
+                                                .languageCode
+                                                .toString() ==
+                                                'ar'
+                                                ? mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[index]
+                                                .items.where((element) => element.isSelected).toList()[indx]
+                                                .arabicName
+                                                : mySubscriptionController
+                                                .subscriptoinMealConfig
+                                                .value
+                                                .meals[index]
+                                                .items.where((element) => element.isSelected).toList()[indx]
+                                                .name,
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: getLabelLargeStyle(
+                                                context)
+                                                .copyWith(
+                                                color:
+                                                APPSTYLE_Grey80),
+                                          ),
+
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].carbs} Carbs',
+                                                        style: getBodyMediumStyle(
+                                                            context)
+                                                            .copyWith(
+                                                            fontWeight:
+                                                            APPSTYLE_FontWeightBold)),
+                                                  )),
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].fat} Fat',
+                                                        style: getBodyMediumStyle(
+                                                            context)
+                                                            .copyWith(
+                                                            fontWeight:
+                                                            APPSTYLE_FontWeightBold)),
+                                                  )),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].protien} Prot',
+                                                        style: getBodyMediumStyle(
+                                                            context)
+                                                            .copyWith(
+                                                            fontWeight:
+                                                            APPSTYLE_FontWeightBold)),
+                                                  )),
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].calories} Cal',
+                                                        style: getBodyMediumStyle(
+                                                            context)
+                                                            .copyWith(
+                                                            fontWeight:
+                                                            APPSTYLE_FontWeightBold)),
+                                                  )),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].rating}',
+                                                        style: getBodyMediumStyle(
+                                                            context)
+                                                            .copyWith(
+                                                            fontWeight:
+                                                            APPSTYLE_FontWeightBold)),
+                                                  )),
+                                              addHorizontalSpace(
+                                                  APPSTYLE_SpaceSmall),
+                                              Expanded(
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      mySubscriptionController
+                                                          .addOrRemoveMeal(
+                                                          mySubscriptionController
+                                                              .subscriptoinMealConfig
+                                                              .value
+                                                              .meals[
+                                                          index]
+                                                              .id,
+                                                          mySubscriptionController
+                                                              .subscriptoinMealConfig
+                                                              .value
+                                                              .meals[
+                                                          index]
+                                                              .items.where((element) => element.isSelected).toList()[indx]
+                                                              .id);
+                                                    },
+                                                    child: Container(
+                                                      decoration:
+                                                      APPSTYLE_BorderedContainerExtraSmallDecoration
+                                                          .copyWith(
+                                                          color: APPSTYLE_WhatsappGreen),
+                                                      padding: EdgeInsets.symmetric(
+                                                          vertical:
+                                                          APPSTYLE_BorderRadiusExtraSmall *
+                                                              .5,
+                                                          horizontal:
+                                                          APPSTYLE_SpaceSmall),
+                                                      child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text( "delivered_single".tr,
+                                                          textAlign: TextAlign
+                                                              .center,
+                                                          style: getBodyMediumStyle(
+                                                              context)
+                                                              .copyWith(
+                                                              color:
+                                                              APPSTYLE_BackgroundWhite),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+
                                         ],
                                       ),
                                     );

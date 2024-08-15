@@ -13,7 +13,7 @@ class MealSelectionItemsLoader extends StatelessWidget {
     double screenheight = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: APPSTYLE_LargePaddingHorizontal,
+      padding: APPSTYLE_LargePaddingHorizontal.copyWith(top: APPSTYLE_SpaceMedium),
       child: GridView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -24,82 +24,68 @@ class MealSelectionItemsLoader extends StatelessWidget {
             crossAxisSpacing: APPSTYLE_SpaceMedium,
             mainAxisExtent: screenheight * 0.3),
         itemBuilder: (context, indx) {
-          return Container(
-            child: Stack(
-              alignment: Alignment.topCenter,
+          return  Container(
+            height: screenheight * .4,
+            padding: APPSTYLE_MediumPaddingAll,
+            color: APPSTYLE_Grey20,
+            margin: EdgeInsets.only(bottom: APPSTYLE_SpaceMedium),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: screenheight * .4,
-                  margin: const EdgeInsets.only(top: 50),
-                  decoration:
-                  APPSTYLE_BorderedContainerSmallDecoration
-                      .copyWith(
-                    color: APPSTYLE_Grey20,
+                Shimmer.fromColors(
+                  baseColor: APPSTYLE_Grey20,
+                  highlightColor: APPSTYLE_Grey40,
+                  child: Container(
+                      decoration:
+                      APPSTYLE_BorderedContainerDarkMediumDecoration
+                          .copyWith(
+                          borderRadius:
+                          BorderRadius.circular(
+                              APPSTYLE_BorderRadiusSmall),
+                          color:
+                          APPSTYLE_BackgroundWhite,
+                          border: Border.all(
+                              color:
+                              APPSTYLE_PrimaryColorBg,
+                              width: 3)),
+                      padding: APPSTYLE_SmallPaddingAll,
+                      width: screenwidth * .3,
+                      height: screenwidth * .3,
+                      clipBehavior: Clip.hardEdge),
+                ),
+                addVerticalSpace(APPSTYLE_SpaceSmall),
+                Shimmer.fromColors(
+                  baseColor: APPSTYLE_Grey20,
+                  highlightColor: APPSTYLE_Grey40,
+                  child: Container(
+                    decoration:
+                    APPSTYLE_ShadowedContainerExtraSmallDecoration
+                        .copyWith(
+                        borderRadius:
+                        BorderRadius.circular(
+                            APPSTYLE_BlurRadiusSmall),
+                        color: APPSTYLE_Grey20),
+                    height: 20,
+                    width: screenwidth * .25,
                   ),
                 ),
-                Container(
-                  height: screenheight * .4,
-                  padding: APPSTYLE_MediumPaddingAll,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Shimmer.fromColors(
-                        baseColor: APPSTYLE_Grey20,
-                        highlightColor: APPSTYLE_Grey40,
-                        child: Container(
-                            decoration:
-                            APPSTYLE_BorderedContainerDarkMediumDecoration
-                                .copyWith(
-                                borderRadius:
-                                BorderRadius.circular(
-                                    1000),
-                                color:
-                                APPSTYLE_BackgroundWhite,
-                                border: Border.all(
-                                    color:
-                                    APPSTYLE_PrimaryColorBg,
-                                    width: 3)),
-                            padding: APPSTYLE_SmallPaddingAll,
-                            width: screenwidth * .3,
-                            height: screenwidth * .3,
-                            clipBehavior: Clip.hardEdge),
-                      ),
-                      addVerticalSpace(APPSTYLE_SpaceSmall),
-                      Shimmer.fromColors(
-                        baseColor: APPSTYLE_Grey20,
-                        highlightColor: APPSTYLE_Grey40,
-                        child: Container(
-                          decoration:
-                          APPSTYLE_ShadowedContainerExtraSmallDecoration
-                              .copyWith(
-                              borderRadius:
-                              BorderRadius.circular(
-                                  APPSTYLE_BlurRadiusSmall),
-                              color: APPSTYLE_Grey20),
-                          height: 20,
-                          width: screenwidth * .25,
-                        ),
-                      ),
-                      addVerticalSpace(APPSTYLE_SpaceSmall),
-                      Shimmer.fromColors(
-                        baseColor: APPSTYLE_Grey20,
-                        highlightColor: APPSTYLE_Grey40,
-                        child: Container(
-                          decoration:
-                          APPSTYLE_ShadowedContainerExtraSmallDecoration
-                              .copyWith(
-                              borderRadius:
-                              BorderRadius.circular(
-                                  APPSTYLE_BlurRadiusSmall),
-                              color: APPSTYLE_Grey20),
-                          height: 20,
-                          width: screenwidth * .25,
-                        ),
-                      ),
-                    ],
+                addVerticalSpace(APPSTYLE_SpaceSmall),
+                Shimmer.fromColors(
+                  baseColor: APPSTYLE_Grey20,
+                  highlightColor: APPSTYLE_Grey40,
+                  child: Container(
+                    decoration:
+                    APPSTYLE_ShadowedContainerExtraSmallDecoration
+                        .copyWith(
+                        borderRadius:
+                        BorderRadius.circular(
+                            APPSTYLE_BlurRadiusSmall),
+                        color: APPSTYLE_Grey20),
+                    height: 20,
+                    width: screenwidth * .25,
                   ),
-                )
+                ),
               ],
             ),
           );
