@@ -32,7 +32,7 @@ class _MealSelectionPage_MySubscriptionState
     extends State<MealSelectionPage_MySubscription> {
   final mySubscriptionController = Get.find<MySubscriptionController>();
   ScrollController _scrollController = ScrollController();
-
+  bool isScrolled= false;
   @override
   void initState() {
     // TODO: implement initState
@@ -42,7 +42,6 @@ class _MealSelectionPage_MySubscriptionState
       mySubscriptionController.getMealsByDate(
           mySubscriptionController.selectedDate.value, false);
     }
-    scrollToDate();
 
   }
 
@@ -50,6 +49,10 @@ class _MealSelectionPage_MySubscriptionState
   Widget build(BuildContext context) {
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
+    if(!isScrolled){
+      scrollToDate(screenwidth);
+
+    }
 
     return Obx(
       () => Scaffold(
@@ -1008,12 +1011,16 @@ class _MealSelectionPage_MySubscriptionState
   }
 
 
-  Future<void> scrollToDate() async {
+  Future<void> scrollToDate(double screenwidth) async {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(_scrollController.hasClients){
         _scrollController.jumpTo(
-            mySubscriptionController.subscriptionDates.keys.toList().indexOf(mySubscriptionController.selectedDate.value)*100  );
+            mySubscriptionController.subscriptionDates.keys.toList().indexOf(mySubscriptionController.selectedDate.value)* (screenwidth * .15)  );
+        isScrolled = true;
+        setState(() {
+
+        });
       }
     });
   }
