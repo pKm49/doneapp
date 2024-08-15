@@ -322,30 +322,28 @@ class _MealSelectionPage_MySubscriptionState
                                           Container(
                                             decoration: APPSTYLE_BorderedContainerDarkMediumDecoration
                                                 .copyWith(
-
                                                 borderRadius:
                                                 BorderRadius
                                                     .circular(
                                                     APPSTYLE_BorderRadiusSmall),
                                                 color:
                                                 APPSTYLE_Grey20,
-                                                border: Border.all(
-                                                    color:
-                                                    APPSTYLE_BackgroundWhite,
-                                                    width: 0.0)),
-                                            width: screenwidth * .4,
-                                            clipBehavior:
-                                            Clip.hardEdge,
-                                            child:  Image.network(
-                                                mySubscriptionController
+                                                image: DecorationImage(image: getProductImage(mySubscriptionController
                                                     .subscriptoinMealConfig
                                                     .value
                                                     .meals[
                                                 index]
                                                     .items[
                                                 indx]
-                                                    .image
-                                            ),),
+                                                    .image),fit: BoxFit.cover),
+                                                border: Border.all(
+                                                    color:
+                                                    APPSTYLE_BackgroundWhite,
+                                                    width: 0.0)),
+                                            width: screenwidth * .4,
+                                            height: screenwidth * .35,
+                                            clipBehavior:
+                                            Clip.hardEdge ),
                                           addVerticalSpace(
                                               APPSTYLE_SpaceExtraSmall),
                                           Text(
@@ -804,33 +802,28 @@ class _MealSelectionPage_MySubscriptionState
                                           Container(
                                               decoration: APPSTYLE_BorderedContainerDarkMediumDecoration
                                                   .copyWith(
-
                                                   borderRadius:
                                                   BorderRadius
                                                       .circular(
                                                       APPSTYLE_BorderRadiusSmall),
                                                   color:
-                                                  APPSTYLE_BackgroundWhite,
+                                                  APPSTYLE_Grey20,
+                                                  image: DecorationImage(image: getProductImage(mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[
+                                                  index]
+                                                      .items.where((element) => element.isSelected).toList()[
+                                                  indx]
+                                                      .image),fit: BoxFit.cover),
                                                   border: Border.all(
                                                       color:
                                                       APPSTYLE_BackgroundWhite,
                                                       width: 0.0)),
-                                              padding:
-                                              APPSTYLE_SmallPaddingAll,
                                               width: screenwidth * .4,
-                                              height: screenwidth * .4,
+                                              height: screenwidth * .35,
                                               clipBehavior:
-                                              Clip.hardEdge,
-                                          child:  Image.network(
-                                              mySubscriptionController
-                                                  .subscriptoinMealConfig
-                                                  .value
-                                                  .meals[
-                                              index]
-                                                  .items.where((element) => element.isSelected).toList()[
-                                              indx]
-                                                  .image
-                                          ),),
+                                              Clip.hardEdge ),
                                           addVerticalSpace(
                                               APPSTYLE_SpaceExtraSmall),
                                           Text(
@@ -853,13 +846,14 @@ class _MealSelectionPage_MySubscriptionState
                                                 .name,
                                             maxLines: 2,
                                             textAlign: TextAlign.center,
-                                            style: getLabelLargeStyle(
+                                            style: getBodyMediumStyle(
                                                 context)
                                                 .copyWith(
+                                              fontWeight: APPSTYLE_FontWeightBold,
                                                 color:
                                                 APPSTYLE_Grey80),
                                           ),
-
+                                          addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                                           Row(
                                             children: [
                                               Expanded(
@@ -867,11 +861,8 @@ class _MealSelectionPage_MySubscriptionState
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].carbs} Carbs',
-                                                        style: getBodyMediumStyle(
-                                                            context)
-                                                            .copyWith(
-                                                            fontWeight:
-                                                            APPSTYLE_FontWeightBold)),
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
                                                   )),
                                               addHorizontalSpace(
                                                   APPSTYLE_SpaceSmall),
@@ -880,11 +871,8 @@ class _MealSelectionPage_MySubscriptionState
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].fat} Fat',
-                                                        style: getBodyMediumStyle(
-                                                            context)
-                                                            .copyWith(
-                                                            fontWeight:
-                                                            APPSTYLE_FontWeightBold)),
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
                                                   )),
                                             ],
                                           ),
@@ -895,11 +883,8 @@ class _MealSelectionPage_MySubscriptionState
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].protien} Prot',
-                                                        style: getBodyMediumStyle(
-                                                            context)
-                                                            .copyWith(
-                                                            fontWeight:
-                                                            APPSTYLE_FontWeightBold)),
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
                                                   )),
                                               addHorizontalSpace(
                                                   APPSTYLE_SpaceSmall),
@@ -908,14 +893,12 @@ class _MealSelectionPage_MySubscriptionState
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${mySubscriptionController.subscriptoinMealConfig.value.meals[index].items.where((element) => element.isSelected).toList()[indx].calories} Cal',
-                                                        style: getBodyMediumStyle(
-                                                            context)
-                                                            .copyWith(
-                                                            fontWeight:
-                                                            APPSTYLE_FontWeightBold)),
+                                                        style: getLabelLargeStyle(
+                                                            context) ),
                                                   )),
                                             ],
                                           ),
+                                          addVerticalSpace(APPSTYLE_SpaceExtraSmall),
                                           Row(
                                             children: [
                                               Expanded(
