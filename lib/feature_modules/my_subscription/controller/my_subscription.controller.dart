@@ -461,4 +461,33 @@ class MySubscriptionController extends GetxController {
 
   }
 
+  removeSelectionPerCategory(int categoryId, ){
+    double currentSelectedCalories = selectedMealConfig.value.recommendedCalories;
+    List<SubscriptoinDailyMeal> meals = [];
+    for (var element in selectedMealConfig.value.meals) {
+      if(element.id != categoryId){
+        meals.add(SubscriptoinDailyMeal(
+            name: element.name,
+            id: element.id,
+            arabicName: element.arabicName,
+            items: getAlreadySelectedMeals(element.id),
+            itemCount: element.itemCount));
+      }else{
+        for (var element in element.items) {
+          currentSelectedCalories -= element.calories;
+        }
+        meals.add(SubscriptoinDailyMeal(
+            name: element.name,
+            id: element.id,
+            arabicName: element.arabicName,
+            items: [],
+            itemCount: element.itemCount));
+      }
+    }
+    selectedMealConfig.value = SubscriptoinMealConfig(
+        date: selectedMealConfig.value.date,
+        recommendedCalories:currentSelectedCalories, meals: meals);
+
+  }
+
 }

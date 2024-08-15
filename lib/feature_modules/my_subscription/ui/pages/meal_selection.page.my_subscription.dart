@@ -181,36 +181,38 @@ class _MealSelectionPage_MySubscriptionState
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            Localizations.localeOf(context)
-                                                        .languageCode
-                                                        .toString() ==
-                                                    'ar'
-                                                ? mySubscriptionController
-                                                    .subscriptoinMealConfig
-                                                    .value
-                                                    .meals[index]
-                                                    .arabicName
-                                                : mySubscriptionController
-                                                    .subscriptoinMealConfig
-                                                    .value
-                                                    .meals[index]
-                                                    .name,
-                                            style: getHeadlineMediumStyle(
-                                                    context)
-                                                .copyWith(
-                                                    fontWeight:
-                                                        APPSTYLE_FontWeightBold)),
-                                        Container(
-                                          width: 30,
-                                          height: 2,
-                                          color: APPSTYLE_Grey80,
-                                        ),
-                                      ],
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              Localizations.localeOf(context)
+                                                          .languageCode
+                                                          .toString() ==
+                                                      'ar'
+                                                  ? mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[index]
+                                                      .arabicName
+                                                  : mySubscriptionController
+                                                      .subscriptoinMealConfig
+                                                      .value
+                                                      .meals[index]
+                                                      .name,
+                                              style: getHeadlineMediumStyle(
+                                                      context)
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          APPSTYLE_FontWeightBold)),
+                                          Container(
+                                            width: 30,
+                                            height: 2,
+                                            color: APPSTYLE_Grey80,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Container(
                                       decoration:
@@ -229,6 +231,35 @@ class _MealSelectionPage_MySubscriptionState
                                             .copyWith(
                                                 color:
                                                     APPSTYLE_BackgroundWhite),
+                                      ),
+                                    ),
+                                    Visibility(
+                                        visible: mySubscriptionController.selectedMealConfig.value.meals[index].items.isNotEmpty,
+                                        child: addHorizontalSpace(APPSTYLE_SpaceSmall)),
+                                    Visibility(
+                                      visible: mySubscriptionController.selectedMealConfig.value.meals[index].items.isNotEmpty,
+                                      child: InkWell(
+                                        onTap: (){
+                                          mySubscriptionController.removeSelectionPerCategory(mySubscriptionController.selectedMealConfig.value.meals[index].id);
+                                        },
+                                        child: Container(
+                                          decoration:
+                                          APPSTYLE_BorderedContainerLargeDecoration
+                                              .copyWith(
+                                            border: Border.all(color: APPSTYLE_GuideRed, width: .5),
+                                              color: APPSTYLE_BackgroundWhite),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                              APPSTYLE_BorderRadiusExtraSmall *
+                                                  .5,
+                                              horizontal: APPSTYLE_SpaceSmall),
+                                          child: Text(  "remove".tr,
+                                            style: getBodyMediumStyle(context)
+                                                .copyWith(
+                                                color:
+                                                APPSTYLE_GuideRed),
+                                          ),
+                                        ),
                                       ),
                                     )
                                   ],
