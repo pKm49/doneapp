@@ -73,6 +73,7 @@ class  AppRouteNames {
   static const String addressPickerRoute = '/pick-address';
 
   static const String allergyAuditRoute = '/audit-allergies';
+  static const String dislikeAuditRoute = '/audit-dislikes';
   static const String refferalProgramRoute = '/referral-program';
 
   static const String mySubscriptionsRoute = '/my-subscriptions';

@@ -210,6 +210,7 @@
       "address_added_successfully": "Address Added Successfully",
       "search_ingredients": "Search Ingredients",
       "allergies_updated_successfully": "Allergies Updated Successfully",
+      "dislikes_updated_successfully": "Dislikes Updated Successfully",
       "mon": "Mon",
       "tue": "Tue",
       "wed": "Wed",
@@ -257,7 +258,9 @@
       "sub_freeze_title": "Day Freeze Confirmation",
       "sub_freeze_content": "Are you sure you wish to freeze subscription for the day?",
       "sub_unfreeze_title": "Day Un-Freeze Confirmation",
-      "sub_unfreeze_content": "Are you sure you wish to un-freeze subscription for the day?"
+      "sub_unfreeze_content": "Are you sure you wish to un-freeze subscription for the day?",
+      "dislikes": "Dislikes"
+
     }
   },
   {
@@ -471,6 +474,7 @@
       "address_added_successfully": "تمت إضافة العنوان بنجاح",
       "search_ingredients": "ابحث عنها عن المكونات التي لديك حساسية منها",
       "allergies_updated_successfully": "تم تحديث",
+      "dislikes_updated_successfully": "تم تحديث",
       "mon": "الأثنين",
       "tue": "الثلاثاء",
       "wed": "الأربعاء",
@@ -519,7 +523,8 @@
       "sub_freeze_title": "Day Freeze Confirmation",
       "sub_freeze_content": "Are you sure you wish to freeze subscription for the day?",
       "sub_unfreeze_title": "Day Un-Freeze Confirmation",
-      "sub_unfreeze_content": "Are you sure you wish to un-freeze subscription for the day?"
+      "sub_unfreeze_content": "Are you sure you wish to un-freeze subscription for the day?",
+      "dislikes": "الغير مرغوب"
     }
   }
 ]

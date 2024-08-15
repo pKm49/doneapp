@@ -107,6 +107,32 @@ class ProfileHttpService {
     }
   }
 
+  Future<List<GeneralItem>> getDislikes(String mobile) async {
+
+    try{
+      Map<String, dynamic> params = {};
+      params["mobile"]=mobile;
+      AppHttpResponse response =
+      await getRequest(ProfileHttpRequestEndpoint_Dislike,params);
+
+      final List<GeneralItem> tempItems = [];
+
+      if (response.statusCode == 200 && response.data != null) {
+        for (var i = 0; i < response.data.length; i++) {
+          tempItems.add(mapGeneralItem(response.data[i]));
+        }
+      }
+      return tempItems;
+
+    }catch  (e,st){
+      print(e);
+      print(st);
+      showSnackbar(Get.context!, "something_wrong".tr, "error");
+      return [];
+    }
+  }
+
+
   Future<List<GeneralItem>> getIngredients( ) async {
 
     try{

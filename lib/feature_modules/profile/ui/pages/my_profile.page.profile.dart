@@ -231,6 +231,23 @@ class MyProfilePage_Profile extends StatelessWidget {
                       child: PrePostIconButton(
                         specialColor: 0,
                         onPressed: () {
+                          Get.toNamed(AppRouteNames.dislikeAuditRoute);
+                        },
+                        theme: 'dark',
+                        border: '',
+                        buttonTitle: "dislikes".tr,
+                        preIconData: Ionicons.thumbs_down_outline,
+                        postIconData:Localizations.localeOf(context)
+                            .languageCode
+                            .toString() ==
+                            'ar'? Ionicons.chevron_back :Ionicons.chevron_forward,
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrePostIconButton(
+                        specialColor: 0,
+                        onPressed: () {
                           Get.toNamed(AppRouteNames.refferalProgramRoute);
                         },
                         theme: 'dark',

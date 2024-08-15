@@ -35,10 +35,13 @@ class ProfileController extends GetxController {
   var userData = mapUserData({}).obs;
   var isProfileUpdating = false.obs;
   var isAllergiesFetching = false.obs;
+  var isDislikesFetching = false.obs;
   var isAllergiesUpdating = false.obs;
+  var isDislikesUpdating = false.obs;
   var isIngredientsFetching = false.obs;
   var ingredients = <GeneralItem>[].obs;
   var allergies = <GeneralItem>[].obs;
+  var dislikes = <GeneralItem>[].obs;
   var ingredientsToShow = <GeneralItem>[].obs;
 
   void updateProfilePicture(String base64encode) {
@@ -174,6 +177,49 @@ class ProfileController extends GetxController {
     }
 
   }
+
+  getDislikes() async {
+    if(! isDislikesFetching .value){
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? tMobile = prefs.getString('mobile');
+      if (tMobile != null && tMobile != '') {
+        isDislikesFetching.value = true;
+        var profileHttpService = ProfileHttpService();
+        dislikes.value = await profileHttpService.getDislikes(tMobile);
+        isDislikesFetching.value = false;
+      }else {
+        showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
+        showSnackbar(Get.context!, "login_message".tr, "error");
+        Get.offAllNamed(AppRouteNames.loginRoute);
+      }
+
+    }
+
+  }
+
+  updateDislikes() async {
+    if(! isDislikesUpdating.value && dislikes.isNotEmpty){
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? tMobile = prefs.getString('mobile');
+      if (tMobile != null && tMobile != '') {
+        isDislikesUpdating .value = true;
+        var profileHttpService = ProfileHttpService();
+        bool isSuccess = await profileHttpService.updateAllergies(dislikes,tMobile);
+        isDislikesUpdating.value = false;
+        if(isSuccess){
+          Get.back();
+          showSnackbar(Get.context!, "dislikes_updated_successfully".tr, "info");
+        }
+      }else {
+        showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
+        showSnackbar(Get.context!, "login_message".tr, "error");
+        Get.offAllNamed(AppRouteNames.loginRoute);
+      }
+
+    }
+
+  }
+
   updateAllergies() async {
     if(! isAllergiesUpdating.value && allergies.isNotEmpty){
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -225,6 +271,20 @@ class ProfileController extends GetxController {
          }
        }
        ingredientsToShow.value = tIngredients;
+    }
+  }
+
+  void updateIngredientValues(GeneralItem ingredient) {
+    if(dislikes.map((element) => element.id).toList().contains(ingredient.id)){
+      List<GeneralItem> tAllergies = [];
+      for (var element in dislikes) {
+        if(element.id != ingredient.id){
+          tAllergies.add(element);
+        }
+      }
+      dislikes.value = tAllergies;
+    }else{
+      dislikes.add(ingredient);
     }
   }
 
