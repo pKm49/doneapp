@@ -111,10 +111,10 @@ AppPages() => [
     name: AppRouteNames.mealSelectionRoute,
     page: () =>   MealSelectionPage_MySubscription(),
   ),
-  GetPage(
-    name: AppRouteNames.freezeSubscriptionRoute,
-    page: () =>   FreezeSubscriptionPage_MySubscription(),
-  ),
+  // GetPage(
+  //   name: AppRouteNames.freezeSubscriptionRoute,
+  //   page: () =>   FreezeSubscriptionPage_MySubscription(),
+  // ),
   GetPage(
     name: AppRouteNames.updateProfileRoute,
     page: () =>   EditProfilePage_Profile(),

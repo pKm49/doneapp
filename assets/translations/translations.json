@@ -102,6 +102,7 @@
       "no": "No",
       "meal_calendar": "Meal Calendar",
       "pause": "Pause",
+      "unpause": "UnPause",
       "select_meal": "Select Meal",
       "freeze": "Freeze",
       "freeze_sub": "Freeze Subscription",
@@ -252,8 +253,11 @@
       "customer_support": "Customer Support",
       "customer_support_message": "Please Contact Customer Support to proceed",
       "enter_address_nickname": "Home, Office, etc",
-      "address_nickname": "Nickname"
-
+      "address_nickname": "Nickname",
+      "sub_freeze_title": "Day Freeze Confirmation",
+      "sub_freeze_content": "Are you sure you wish to freeze subscription for the day?",
+      "sub_unfreeze_title": "Day Un-Freeze Confirmation",
+      "sub_unfreeze_content": "Are you sure you wish to un-freeze subscription for the day?"
     }
   },
   {
@@ -360,6 +364,7 @@
       "no": "لا",
       "meal_calendar": "تقويم الوجبات",
       "pause": "يوقف",
+      "unpause": "تسيح",
       "select_meal": "اختر وجبة",
       "freeze": "تجميد",
       "freeze_sub": "تجميد الاشتراك",
@@ -510,7 +515,11 @@
       "customer_support": "دعم العملاء",
       "customer_support_message": "يرجى الاتصال بدعم العملاء للمتابعة",
       "enter_address_nickname": "المنزل والمكتب، الخ",
-      "address_nickname": "كنية"
+      "address_nickname": "كنية",
+      "sub_freeze_title": "Day Freeze Confirmation",
+      "sub_freeze_content": "Are you sure you wish to freeze subscription for the day?",
+      "sub_unfreeze_title": "Day Un-Freeze Confirmation",
+      "sub_unfreeze_content": "Are you sure you wish to un-freeze subscription for the day?"
     }
   }
 ]

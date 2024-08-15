@@ -77,7 +77,7 @@ class  AppRouteNames {
 
   static const String mySubscriptionsRoute = '/my-subscriptions';
 
-  static const String freezeSubscriptionRoute = '/freeze-subscriptions';
+  // static const String freezeSubscriptionRoute = '/freeze-subscriptions';
 
   static const String subscriptionDetailsRoute = '/subscription-details';
 

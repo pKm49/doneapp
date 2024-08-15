@@ -23,7 +23,7 @@ class MySubscriptionController extends GetxController {
   var fourthWeekDays = <DateTime>[].obs;
   var fifthWeekDays = <DateTime>[].obs;
   var sixthWeekDays = <DateTime>[].obs;
-  var frozenDays = <String>[].obs;
+  // var frozenDays = <String>[].obs;
   var isDayMealSaving = false.obs;
   var isFreezing = false.obs;
   var isMealsFetching = false.obs;
@@ -42,41 +42,44 @@ class MySubscriptionController extends GetxController {
         var mySubsHttpService = MySubsHttpService();
         subscriptionDates.value = await mySubsHttpService.getSubscriptionDates(tMobile);
         isSubscriptionDatesLoading.value = false;
+        isFreezing.value = false;
         setCurrentMonth();
         if(setDate){
           setSelectedDate();
-
         }
-        frozenDays.value = [];
+        // frozenDays.value = [];
       } else {
+        isFreezing.value = false;
         showSnackbar(Get.context!, "couldnt_load_profiledata".tr, "error");
         showSnackbar(Get.context!, "login_message".tr, "error");
         Get.offAllNamed(AppRouteNames.loginRoute);
       }
 
+    }else{
+      isFreezing.value = false;
     }
   }
 
-  isAlreadySelectedForFreezing(DateTime dateTime){
-    final f = DateFormat('yyyy-MM-dd');
-    return frozenDays.contains(f.format(dateTime));
-  }
+  // isAlreadySelectedForFreezing(DateTime dateTime){
+  //   final f = DateFormat('yyyy-MM-dd');
+  //   return frozenDays.contains(f.format(dateTime));
+  // }
 
- addDayToFreeze(DateTime dateTime){
-   if(dateTime.month== currentMonth.value.month && isSubscriptionDay(dateTime)
-      && dateTime.isAfter(DateTime.now())
-       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.delivered
-       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
-       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.freezed){
-     final f = DateFormat('yyyy-MM-dd');
-     if(frozenDays.contains(f.format(dateTime)) ){
-       frozenDays.remove(f.format(dateTime));
-     }else{
-       frozenDays.add(f.format(dateTime));
-     }
-   }
-
- }
+ // addDayToFreeze(DateTime dateTime){
+ //   if(dateTime.month== currentMonth.value.month && isSubscriptionDay(dateTime)
+ //      && dateTime.isAfter(DateTime.now())
+ //       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.delivered
+ //       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.offDay
+ //       && getDayStatus(dateTime) != VALIDSUBSCRIPTIONDAY_STATUS.freezed){
+ //     final f = DateFormat('yyyy-MM-dd');
+ //     if(frozenDays.contains(f.format(dateTime)) ){
+ //       frozenDays.remove(f.format(dateTime));
+ //     }else{
+ //       frozenDays.add(f.format(dateTime));
+ //     }
+ //   }
+ //
+ // }
 
   void setSelectedDate() {
 
@@ -431,20 +434,24 @@ class MySubscriptionController extends GetxController {
 
   }
 
-  Future<void> freezeSubscription() async {
+  Future<void> freezeSubscription(DateTime dateTime, bool isFreeze) async {
     if(!isFreezing.value){
         final sharedController = Get.find<SharedController>();
         int subscriptionId = sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList().isNotEmpty?
         sharedController.mySubscriptions.where((p0) => p0.status=='in_progress').toList()[0].id:-1;
 
         if(subscriptionId != -1){
+          final f = DateFormat('yyyy-MM-dd');
+          List<String> frozenDays = [];
+          frozenDays.add(f.format(dateTime));
           isFreezing.value = true;
           var mySubsHttpService = MySubsHttpService();
-          bool isSuccess  =  await mySubsHttpService.freezeSubscriptionDays(subscriptionId,frozenDays);
-          isFreezing.value = false;
+          bool isSuccess  =  await mySubsHttpService.freezeSubscriptionDays(subscriptionId,frozenDays,isFreeze);
           if(isSuccess){
             showSnackbar(Get.context!, "subscription_frozen".tr, "info");
-            getSubscriptionDates(true);
+            getSubscriptionDates(false);
+          }else{
+            isFreezing.value = false;
           }
 
 
@@ -460,6 +467,7 @@ class MySubscriptionController extends GetxController {
 
 
   }
+
 
   removeSelectionPerCategory(int categoryId, ){
     double currentSelectedCalories = selectedMealConfig.value.recommendedCalories;

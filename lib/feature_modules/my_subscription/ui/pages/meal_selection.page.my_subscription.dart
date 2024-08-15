@@ -77,12 +77,19 @@ class _MealSelectionPage_MySubscriptionState
           ),
           actions: [
             Visibility(
-              visible: !mySubscriptionController.isMealsFetching.value,
+              visible: !mySubscriptionController.isDayMealSaving.value &&
+                  !mySubscriptionController.isMealsFetching.value && !mySubscriptionController
+                  .isFreezing.value && mySubscriptionController.selectedDate.value.isAfter(DateTime.now().add(const Duration(days: 2))) &&
+                  mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.offDay
+                  && mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.delivered,
               child: InkWell(
                 onTap: () {
                   if(!mySubscriptionController.isDayMealSaving.value &&
-                      !mySubscriptionController.isMealsFetching.value ){
-                    Get.toNamed(AppRouteNames.freezeSubscriptionRoute);
+                      !mySubscriptionController.isMealsFetching.value && !mySubscriptionController
+                      .isFreezing.value && mySubscriptionController.selectedDate.value.isAfter(DateTime.now().add(const Duration(days: 2))) &&
+                      mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.offDay
+                  && mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.delivered){
+                  showFreezeConfirmDialogue(context);
                   }
                 },
                 child: Container(
@@ -100,9 +107,21 @@ class _MealSelectionPage_MySubscriptionState
                   padding: EdgeInsets.symmetric(
                       vertical: APPSTYLE_SpaceSmall,
                       horizontal: APPSTYLE_SpaceSmall),
-                  child: Row(
+                  child:  mySubscriptionController
+                      .isFreezing.value
+                      ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          LoadingAnimationWidget.staggeredDotsWave(
+                                              color: APPSTYLE_BackgroundWhite,
+                                              size: 24,
+                                            ),
+                        ],
+                      ): Row(
                     children: [
-                      Icon(Ionicons.pause,
+                      Icon(mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.freezed ?
+                      Ionicons.play:  Ionicons.pause,
                           color: APPSTYLE_BackgroundWhite,
                           size: APPSTYLE_FontSize16),
                       addHorizontalSpace(APPSTYLE_SpaceExtraSmall),
@@ -110,7 +129,8 @@ class _MealSelectionPage_MySubscriptionState
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            "pause".tr,
+                            mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.freezed ?
+                            "unpause".tr:"pause".tr,
                             style: getBodyMediumStyle(context)
                                 .copyWith(color: APPSTYLE_BackgroundWhite),
                           ),
@@ -158,7 +178,7 @@ class _MealSelectionPage_MySubscriptionState
               ),
               addVerticalSpace(APPSTYLE_SpaceLarge),
               Visibility(
-                visible: !mySubscriptionController.isMealsFetching.value &&
+                visible: !mySubscriptionController.isMealsFetching.value && !mySubscriptionController.isFreezing.value &&
                     mySubscriptionController
                         .subscriptoinMealConfig.value.meals.isNotEmpty && (mySubscriptionController
                     .subscriptionDates[mySubscriptionController.selectedDate.value]  == VALIDSUBSCRIPTIONDAY_STATUS.mealSelected ||
@@ -479,7 +499,7 @@ class _MealSelectionPage_MySubscriptionState
                 ),
               ),
               Visibility(
-                visible: !mySubscriptionController.isMealsFetching.value &&
+                visible: !mySubscriptionController.isMealsFetching.value && !mySubscriptionController.isFreezing.value &&
                     mySubscriptionController
                         .subscriptoinMealConfig.value.meals.isNotEmpty && mySubscriptionController
                     .subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.delivered,
@@ -718,7 +738,7 @@ class _MealSelectionPage_MySubscriptionState
                 ),
               ),
               Visibility(
-                visible:!mySubscriptionController.isMealsFetching.value && mySubscriptionController
+                visible:!mySubscriptionController.isMealsFetching.value && !mySubscriptionController.isFreezing.value && mySubscriptionController
                     .subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.offDay,
                 child: Expanded(
                     child: Padding(
@@ -754,7 +774,7 @@ class _MealSelectionPage_MySubscriptionState
                     )),
               ),
               Visibility(
-                visible:!mySubscriptionController.isMealsFetching.value && mySubscriptionController
+                visible:!mySubscriptionController.isMealsFetching.value && !mySubscriptionController.isFreezing.value && mySubscriptionController
                     .subscriptionDates[mySubscriptionController.selectedDate.value] == VALIDSUBSCRIPTIONDAY_STATUS.freezed,
                 child: Expanded(
                     child: Padding(
@@ -790,17 +810,17 @@ class _MealSelectionPage_MySubscriptionState
                     )),
               ),
               Visibility(
-                visible: mySubscriptionController.isMealsFetching.value,
+                visible: mySubscriptionController.isMealsFetching.value ||  mySubscriptionController.isFreezing.value ,
                 child: MealSelectionTitleLoader()
               ),
               Visibility(
-                visible: mySubscriptionController.isMealsFetching.value,
+                visible: mySubscriptionController.isMealsFetching.value ||  mySubscriptionController.isFreezing.value ,
                 child: Expanded(
                   child: MealSelectionItemsLoader(),
                 ),
               ),
               Visibility(
-                visible: !mySubscriptionController.isMealsFetching.value &&
+                visible: !mySubscriptionController.isMealsFetching.value &&  !mySubscriptionController.isFreezing.value &&
                     mySubscriptionController
                         .subscriptoinMealConfig.value.meals.isNotEmpty &&
                     mySubscriptionController
@@ -951,4 +971,61 @@ class _MealSelectionPage_MySubscriptionState
       }
     });
   }
+
+
+  void showFreezeConfirmDialogue(BuildContext context ) async {
+
+    final dialogTitleWidget = Text(mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.freezed?
+    'sub_freeze_title'.tr:'sub_unfreeze_title'.tr,style: getHeadlineMediumStyle(context).copyWith(
+        color: APPSTYLE_Grey80,fontWeight: APPSTYLE_FontWeightBold));
+    final dialogTextWidget = Text(  mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.freezed?
+    'sub_freeze_content'.tr:'sub_unfreeze_content'.tr,style: getBodyMediumStyle(context),
+    );
+
+    final updateButtonTextWidget = Text('yes'.tr,style: TextStyle(color: APPSTYLE_PrimaryColor),);
+    final updateButtonCancelTextWidget = Text('no'.tr,style: TextStyle(color: APPSTYLE_Black),);
+
+    updateLogoutAction() async {
+      mySubscriptionController.freezeSubscription(mySubscriptionController.selectedDate.value,
+          mySubscriptionController.subscriptionDates[mySubscriptionController.selectedDate.value] != VALIDSUBSCRIPTIONDAY_STATUS.freezed);
+      Get.back();
+    }
+
+    updateAction() {
+      Navigator.pop(context);
+    }
+    List<Widget> actions = [
+
+      TextButton(
+          onPressed:updateAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonCancelTextWidget),
+
+      TextButton(
+          onPressed:updateLogoutAction,
+          style: APPSTYLE_TextButtonStylePrimary.copyWith(padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.symmetric(
+                  horizontal: APPSTYLE_SpaceLarge,
+                  vertical: APPSTYLE_SpaceSmall))),
+          child:  updateButtonTextWidget),
+    ];
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+            child: AlertDialog(
+              title: dialogTitleWidget,
+              content: dialogTextWidget,
+              actions: actions,
+            ),
+            onWillPop: () => Future.value(false));
+      },
+    );
+  }
+
 }
