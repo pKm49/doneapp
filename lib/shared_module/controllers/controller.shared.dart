@@ -1,3 +1,4 @@
+import 'package:doneapp/feature_modules/plan_purchase/models/payment_data.model.plan_purchase.dart';
 import 'package:doneapp/shared_module/constants/app_route_names.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart';
 import 'package:doneapp/shared_module/constants/default_values.constants.shared.dart';
@@ -354,5 +355,43 @@ class SharedController extends GetxController {
 
   }
 
-
+  // void getPaymentLink(int subscriptionId) async {
+  //   if(!isPlanActivating.value){
+  //     if(subscriptionId != -1){
+  //       isPlanActivating.value = true;
+  //       var sharedHttpService = SharedHttpService();
+  //
+  //       PaymentData tPaymentData = await sharedHttpService.getPaymentLink( subscriptionId);
+  //
+  //       print("payment data");
+  //       print(tPaymentData.paymentUrl);
+  //       print(tPaymentData.redirectUrl);
+  //       print(tPaymentData.refId);
+  //       print(tPaymentData.orderId);
+  //       if (tPaymentData.paymentUrl == "" ||
+  //           tPaymentData.redirectUrl == "") {
+  //         if ((tPaymentData == 0 || total.value == 0.0) && (paymentData.value.refId!='' && paymentData.value.orderId!='')) {
+  //           showSnackbar(Get.context!, "payment_capture_success".tr, "info");
+  //           Get.toNamed(AppRouteNames.otpVerificationSuccessRoute,arguments: [
+  //             ASSETS_SUCCESSMARK,"subscription_success","subscription_success_info",
+  //             'home',false,AppRouteNames.homeRoute,""
+  //           ])?.then((value) => Get.toNamed(AppRouteNames.homeRoute,arguments: [0]));
+  //         }else{
+  //           showSnackbar(Get.context!, "customer_support_message".tr, "error");
+  //         }
+  //         print("payment capture error");
+  //         isPlanActivating.value = false;
+  //       } else {
+  //         isPaymentGatewayLoading.value = true;
+  //         Get.toNamed(AppRouteNames.paymentPageRoute, arguments: [
+  //           paymentData.value.paymentUrl,
+  //           paymentData.value.redirectUrl,
+  //           paymentData.value.paymentCheckUrl
+  //         ])?.then((value) => checkOrderStatus(mobile));
+  //       }
+  //     }
+  //   }
+  //
+  //
+  // }
 }

@@ -107,10 +107,19 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                   fontWeight: APPSTYLE_FontWeightBold),
                             ),
                           ),
+                          // FittedBox(
+                          //   fit: BoxFit.scaleDown,
+                          //   child: Text(
+                          //     getGreetingText().tr,
+                          //     textAlign: TextAlign.start,
+                          //     style: getLabelLargeStyle(context).copyWith(
+                          //       color: APPSTYLE_BackgroundWhite,
+                          //     ),
+                          //   ),
+                          // ),
                           FittedBox(
                             fit: BoxFit.scaleDown,
-                            child: Text(
-                              getGreetingText().tr,
+                            child: Text("#${sharedController.userData.value.customerCode.toString()}",
                               textAlign: TextAlign.start,
                               style: getLabelLargeStyle(context).copyWith(
                                 color: APPSTYLE_BackgroundWhite,
@@ -156,12 +165,12 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                       children: [
                         Container(
                             width: screenwidth * .7,
-                            height: screenheight * .4,
+                            height: screenheight * .45,
                             child: Stack(
                               alignment: Alignment.topCenter,
                               children: [
                                 Container(
-                                  height: screenheight * .4,
+                                  height: screenheight * .45,
                                   width: screenwidth * .7,
                                   margin: const EdgeInsets.only(top: 70),
                                   decoration:
@@ -171,7 +180,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                   ),
                                 ),
                                 Container(
-                                  height: screenheight * .4,
+                                  height: screenheight * .45,
                                   width: screenwidth * .7,
                                   margin: const EdgeInsets.only(top: 70),
                                   child: ClipRRect(
@@ -190,7 +199,7 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                   ),
                                 ),
                                 Container(
-                                  height: screenheight * .4,
+                                  height: screenheight * .45,
                                   width: screenwidth * .7,
                                   padding: APPSTYLE_MediumPaddingAll,
                                   child: Column(
@@ -476,6 +485,23 @@ class _HomePage_CoreState extends State<HomePage_Core> {
                                                           APPSTYLE_BackgroundWhite),
                                             )
                                           ],
+                                        ),
+                                      ),
+                                      addVerticalSpace(APPSTYLE_SpaceSmall),
+                                      Visibility(
+                                        visible: !sharedController.userData
+                                            .value.subscriptionRemainingDays
+                                            .toLowerCase()
+                                            .replaceAll(' ', '')
+                                            .contains(
+                                            "noactivesubscription") &&
+                                            !sharedController
+                                                .isUserDataFetching.value,
+                                        child:   Text( 'next shift evening',
+                                          style: getBodyMediumStyle(context)
+                                              .copyWith(
+                                              color:
+                                              APPSTYLE_BackgroundWhite),
                                         ),
                                       ),
                                       Visibility(

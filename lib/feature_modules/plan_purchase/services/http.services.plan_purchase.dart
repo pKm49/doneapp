@@ -120,6 +120,30 @@ class PlanPurchaseHttpService {
     }
   }
 
+  Future<bool> checkDateAvailability(String date, String mobile) async {
+
+    try{
+      Map<String, dynamic> params = {};
+      params["date"]=date;
+      params["mobile"]=mobile;
+      AppHttpResponse response =
+      await getRequest(SubscriptionsHttpRequestEndpoint_CheckDateAvailability, params);
+
+      if(response.statusCode != 200){
+        showSnackbar(Get.context!, response.message, "error");
+      }
+
+      return response.statusCode ==200;
+
+
+    }catch  (e,st){
+      print(e);
+      print(st);
+      return false;
+    }
+  }
+
+
   Future<bool> checkOrderStatus(String referenceId) async {
 
     try{

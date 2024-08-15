@@ -443,7 +443,9 @@ class _SelectInitialDatePage_PlanPurchaseState extends State<SelectInitialDatePa
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(AppRouteNames.planPurchaseCheckoutRoute);
+                    if(!planPurchaseController.isDateChecking.value){
+                      planPurchaseController.checkDateStatus();
+                    }
                   },
                   style: getElevatedButtonStyle(context),
                   child:   Text("continue".tr,

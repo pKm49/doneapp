@@ -9,7 +9,8 @@ import 'package:doneapp/shared_module/constants/asset_urls.constants.shared.dart
 import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -34,6 +35,7 @@ class PlanPurchaseController extends GetxController {
   var isCouponChecking = false.obs;
   var isCouponCodeValid = false.obs;
   var isOrderCreating = false.obs;
+  var isDateChecking = false.obs;
   var isPaymentGatewayLoading = false.obs;
   var paymentGatewayIsLoading = false.obs;
 
@@ -192,6 +194,29 @@ class PlanPurchaseController extends GetxController {
       Get.offAllNamed(AppRouteNames.loginRoute);
     }
   }
+
+  void checkDateStatus( ) async {
+
+    var sharedPreferences = await SharedPreferences.getInstance();
+    final String? mobile = sharedPreferences.getString('mobile');
+
+    if (mobile != null && mobile != "" && !isDateChecking.value) {
+      isDateChecking.value = true;
+      var planPurchaseHttpService = PlanPurchaseHttpService();
+      String dateString = DateFormat("yyyy-MM-dd").format(selectedDate.value);
+      bool isSuccess = await planPurchaseHttpService
+          .checkDateAvailability(dateString,mobile);
+      isDateChecking.value = false;
+
+      if (isSuccess) {
+        isDateChecking.value = false;
+        Get.toNamed(AppRouteNames.planPurchaseCheckoutRoute);
+      }
+    }
+
+
+  }
+
 
   void checkOrderStatus(String mobile) async {
     isOrderCreating.value = true;

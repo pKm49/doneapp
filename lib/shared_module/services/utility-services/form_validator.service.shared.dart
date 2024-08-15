@@ -16,7 +16,7 @@ String? checkIfPasswordFieldValid(String? password) {
       r'^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)\S{5,}$';
   RegExp validPasswordRegex = new RegExp(validPasswordPattern);
 
-  if (password!.isEmpty || !validPasswordRegex.hasMatch(password)) {
+  if (password!.isEmpty || password.length<4) {
     return "password_validation_message".tr;
   }
 
@@ -29,8 +29,8 @@ String? checkIfConfirmPasswordFieldValid(
       r'^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)\S{5,}$';
   RegExp validPasswordRegex = new RegExp(validPasswordPattern);
 
-  if (confirmPassword!.isEmpty ||
-      !validPasswordRegex.hasMatch(confirmPassword)) {
+  if (password!.isEmpty || password.length<4) {
+
     return "password_validation_message".tr;
   }
 
