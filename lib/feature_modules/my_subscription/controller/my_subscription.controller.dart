@@ -8,6 +8,7 @@ import 'package:doneapp/shared_module/controllers/controller.shared.dart';
 import 'package:doneapp/shared_module/services/utility-services/toaster_snackbar_shower.service.shared.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MySubscriptionController extends GetxController {
@@ -31,6 +32,7 @@ class MySubscriptionController extends GetxController {
   var selectedDate = DateTime.now().obs;
   var subscriptoinMealConfig = mapSubscriptoinMealConfig({}, "").obs ;
   var selectedMealConfig = mapSubscriptoinMealConfig({}, "").obs ;
+  var itemScrollController = ItemScrollController();
 
   getSubscriptionDates(bool setDate, bool getSubs) async {
     if(!isSubscriptionDatesLoading.value){
@@ -342,7 +344,7 @@ class MySubscriptionController extends GetxController {
 
   }
 
-  addOrRemoveMeal(int categoryId, int mealId){
+  addOrRemoveMeal(int index, int categoryId, int mealId){
     double currentSelectedCalories = selectedMealConfig.value.recommendedCalories;
     List<SubscriptoinDailyMeal> meals = [];
     for (var element in subscriptoinMealConfig.value.meals) {
@@ -405,6 +407,13 @@ class MySubscriptionController extends GetxController {
     selectedMealConfig.value = SubscriptoinMealConfig(
         date: selectedMealConfig.value.date,
         recommendedCalories:currentSelectedCalories, meals: meals);
+    print("scrolling");
+    print(selectedMealConfig.value.meals.length);
+    print(index);
+    print(index+1);
+    if(selectedMealConfig.value.meals.length> (index+1) &&  isMealMaximumCountReached(categoryId)) {
+      itemScrollController.scrollTo(index: index+1, duration: Duration(milliseconds: 50));
+    }
 
   }
 

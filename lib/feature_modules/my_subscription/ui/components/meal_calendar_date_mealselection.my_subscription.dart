@@ -67,6 +67,7 @@ class MealCalendarDateMealSelectionComponent_MySubscription extends StatelessWid
                             status==VALIDSUBSCRIPTIONDAY_STATUS.offDay?APPSTYLE_PrimaryColor:
                             status==VALIDSUBSCRIPTIONDAY_STATUS.freezed?APPSTYLE_GuideOrange:
                             status==VALIDSUBSCRIPTIONDAY_STATUS.delivered?APPSTYLE_GuideGreen:
+                            status==VALIDSUBSCRIPTIONDAY_STATUS.mealNotSelected?APPSTYLE_PrimaryColor:
                              APPSTYLE_WhatsappGreen
                         ),
                       ),
